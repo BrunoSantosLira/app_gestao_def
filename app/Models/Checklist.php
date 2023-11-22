@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Servico;
+use App\Models\Campo;
 
 class Checklist extends Model
 {
@@ -14,5 +15,10 @@ class Checklist extends Model
     public function servico()
     {
         return $this->belongsTo(Servico::class);
+    }
+
+    public function campos()
+    {
+        return $this->hasMany(Campo::class);
     }
 }

@@ -13,6 +13,7 @@
                                 <h6 class="text-white text-capitalize ps-3">Lista de serviços</h6>
                             </div>
                             <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionar">Adicionar serviço</button>
+                            <a href="{{route('checklist.index')}}"> <button class="btn btn-outline-success btn-sm mt-3">Criar Checklist</button> </a> 
                             @if (request('status') == 'sucesso')
                                 <div class="alert alert-success text-white" role="alert">
                                     <strong>Sucesso!</strong> Adicionado com sucesso!
@@ -22,6 +23,9 @@
                                     <strong>ERRO!</strong> Erro na adição
                                 </div><br> 
                             @endif
+                            @foreach ($errors->all() as $error)
+                                <li class="text-danger">{{ $error }}</li>
+                            @endforeach
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
@@ -40,27 +44,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">#5</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">Fazer carreiras</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">2023-01-21</p>
-                                            </td>
-                                            <td class="float-end">
-                                                <button class="btn btn-outline-primary btn-sm">Atualizar</button>
-                                                <button class="btn btn-outline-danger  btn-sm">Excluir</button>
-                                            </td>
-                                        </tr>
+                                        @foreach ($servicos as $key => $s)                         
 
+                                            <tr>
+                                                <form action="{{route('servico.update', ['servico' => $s])}}" method="POST" class="d-inline-block">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <td>
+                                                        <div class="d-flex px-2">
+                                                            <div class="my-auto">
+                                                                <h6 class="mb-0 text-sm">#{{$s['id']}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0"> <input type="text" value="{{$s['nome']}}" class="form-control" name="nome"></p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0">{{ \Carbon\Carbon::parse($s['created_at'])->format('d/m/Y') }}</p>
+                                                    </td>
+                                                    <td class="float-end">
+                                                        <button type="submit" class="btn btn-outline-primary btn-sm">Atualizar</button>
+                                                </form>
+                                                        <form action="{{route('servico.destroy', ['servico' => $s])}}" method="post" class="d-inline-block" onsubmit="return confirmacao()">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-outline-danger  btn-sm">Excluir</button>
+                                                        </form>
+                                                    </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -99,6 +113,13 @@
             <x-footers.auth></x-footers.auth>
         </div>
     </main>
+    <script>
+        
+        function confirmacao(){       
+                       let resp = confirm('Ao excluir um serviço você estará excluindo todas as checklists atreladas a este serviço. Dar continuidade?');
+                       return resp;
+        }
+    </script>
     <x-plugins></x-plugins>
 
 </x-layout>

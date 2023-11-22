@@ -28,7 +28,7 @@ return [
     | services the application utilizes. Set this in your ".env" file.
     |
     */
-
+    'timezone' => 'America/Sao_Paulo',
     'env' => env('APP_ENV', 'production'),
 
     /*

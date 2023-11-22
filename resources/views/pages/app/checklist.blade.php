@@ -2,7 +2,15 @@
     <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Tables"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Tabelas"></x-navbars.navs.auth>
+        <style>
+            /* Estilo personalizado para campos de entrada visualmente desativados */
+            .custom-disabled {
+              background-color: #e9ecef; /* Cor de fundo desativada do Bootstrap */
+              opacity: 0.5; /* Opacidade para indicar visualmente desativação */
+              pointer-events: none; /* Impede interação com o campo */
+            }
+          </style>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
@@ -13,6 +21,7 @@
                                 <h6 class="text-white text-capitalize ps-3">Lista de Checklists</h6>
                             </div>
                             <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionar">Adicionar Checklist</button>
+                            <a href=" {{route('servico.index')}}"button type="button" class="btn btn-outline-success mt-3 btn-sm">Adicionar Serviço</button></a> 
                             @if (request('status') == 'sucesso')
                                 <div class="alert alert-success text-white" role="alert">
                                     <strong>Sucesso!</strong> Adicionado com sucesso!
@@ -22,6 +31,10 @@
                                     <strong>ERRO!</strong> Erro na adição
                                 </div><br> 
                             @endif
+                            @foreach ($errors->all() as $error)
+                                <li class="text-danger">{{ $error }}</li>
+                            @endforeach
+                            
                         </div>
                         <div class="card-body px-0 pb-2">
 
@@ -48,6 +61,9 @@
                                     <tbody>
                                         @foreach ($checklists as $key => $checklist)       
                                             <tr>
+                                                <form action="{{route('checklist.update', ['checklist' => $checklist])}}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
@@ -57,22 +73,30 @@
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist['nome']}}</p>
+                                                    <p class="text-sm font-weight-bold mb-0"> <input type="text" class="form-control" value="{{$checklist['nome']}}" name="nome"></p>
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist['servico']['nome']}}</p>
+                                                    <p class="text-sm font-weight-bold mb-0"> {{$checklist['servico']['nome']}}</p>
                                                 </td>
 
                                           
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist['created_at']}}</p>
+                                                    <p class="text-sm font-weight-bold mb-0"> {{ \Carbon\Carbon::parse($checklist['created_at'])->format('d/m/Y') }}
+                                                    </p>
                                                 </td>
                                                 <td class="float-end">
-                                                    <button class="btn btn-outline-warning btn-sm">Adicionar Campo</button>
-                                                    <button class="btn btn-outline-success btn-sm">Visualizar</button>
-                                                    <button class="btn btn-outline-primary btn-sm">Atualizar</button>
-                                                    <button class="btn btn-outline-danger  btn-sm">Excluir</button>
+                                                    <button type="submit" class="btn btn-outline-primary btn-sm">Atualizar</button>
+                                                </form>
+                                                    <button class="btn btn-outline-warning btn-sm" onclick="mostrarModal({{$checklist}})">Adicionar Campo</button>
+                                                    <a href="{{route('checklist.show', ['checklist' => $checklist->id])}}" style="text-decoration: none;color: inherit;"><button class="btn btn-outline-success btn-sm"> Visualizar</button></a>
+
+                                                    <form action="{{route('checklist.destroy', ['checklist' => $checklist->id])}}" method="POST" class="d-inline-block" onsubmit="return confirmacao()">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                                                    </form>
+                                                
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -83,20 +107,21 @@
                     </div>
                 </div>
             </div>
-                <!-- Modal -->
+                <!-- Modal adicionar Checklist-->
                 <div class="modal fade" id="ModalAdicionar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Adicionar checklist</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                         </div>
 
                         <div class="modal-body">
                             <form action="{{route('checklist.store')}}" method="POST">
                                 @csrf
                                 <label for="servico" class="form-label">Serviço pertencente</label>
-                                <select id="servico" class="form-select" name="servico_id">
+                                <select id="servico" class="form-select  p-2" name="servico_id">
                                     @foreach ($servicos as $key => $servico)
                                     <option value="{{$servico['id']}}">{{$servico['nome']}}</option>
                                     @endforeach
@@ -113,17 +138,102 @@
                         </div>
 
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                             
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Modal adicionarCampo -->
+                <div class="modal fade" id="ModalAdicionarCampo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Adicionar Campo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form action="{{route('campo.store')}}" method="POST">
+                                @csrf
+                             
+                                <label for="checklist" class="form-label" style="color: black">Checklist</label>
+                                <select id="servico" class="form-select custom-disabled" name="checklist_id" >
+                                    <option value="" id="option_checklist"></option>
+                                </select>
+
+                                <div class="mt-3 mb-3">
+                                    <label for="nome" class="form-label" style="color: black">Nome do campo</label>
+                                    <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+                                </div>
+                                <hr>
+                                <div class="mt-3 mb-3">
+                                    <label for="concluida" class="form-label" style="color: black">Concluida?</label>
+                                    <select id="concluida" class="form-select p-2" name="concluida">
+                                        <option value="0" class="form-control">NÃO</option>
+                                        <option value="1" class="form-control">SIM</option>
+                                    </select>
+                                    <label for="concluida" class="form-label">Informe se a tarefa já foi concluida</label>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary">Adicionar</button>
+                            </form>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+                <!-- Modal ATUALIZAR CHECKLIST Checklist-->
+                <div class="modal fade" id="ModalAtualizarChecklist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Atualizar Checklist</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                                 <div class="mt-3 mb-3">
+                                    <label for="nome" class="form-label">Nome da checklist</label>
+                                    <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enviar</button>     
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>     
                         </div>
 
                     </div>
                     </div>
                 </div>
+
             <x-footers.auth></x-footers.auth>
 
             <script>
-                console.log('OLAAAAAAAAAAAAAAAAAAAAAA')
+                  function mostrarModal(checklist) {
+                        console.log(checklist);
+                        document.getElementById('option_checklist').innerHTML = checklist['nome'] + `(${checklist['id']})`;
+                        document.getElementById('option_checklist').value = checklist['id'];
+                        
+                        console.log(document.getElementById('option_checklist').value)
+                        var meuModal = new bootstrap.Modal(document.getElementById('ModalAdicionarCampo'));
+                        meuModal.show();
+                    }
+
+                  function confirmacao(){
+                       
+                    let resp = confirm('Ao excluir uma Checklist você também excluirá todos os campos associados a ela. Deseja dar continuidade?');
+                    return resp;
+                  }
+
             </script>
         </div>
     </main>

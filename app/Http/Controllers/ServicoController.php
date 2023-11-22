@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Servico;
+use App\Models\Checklist;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class ServicoController extends Controller
      */
     public function index()
     {
-        return view('pages.app.servicos');
+        $servicos = Servico::all();
+        return view('pages.app.servicos', ['servicos' => $servicos]);
     }
 
     /**
@@ -29,6 +31,18 @@ class ServicoController extends Controller
      */
     public function store(Request $request)
     {
+        $regras = [
+            'nome' => 'required|min:3|max:40'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute precisa ser preenchido',
+            'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
+            'nome.max' => 'Pode haver no ate 40 caracteres'
+        ];
+
+        $request->validate($regras, $feedback);
+
         try {
             Servico::create($request->all());
             return redirect()->route('servico.index',['status'=> 'sucesso']);
@@ -59,7 +73,20 @@ class ServicoController extends Controller
      */
     public function update(Request $request, Servico $servico)
     {
-        //
+        $regras = [
+            'nome' => 'required|min:3|max:40'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute precisa ser preenchido',
+            'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
+            'nome.max' => 'Pode haver no ate 40 caracteres'
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $servico->update($request->all());
+        return back();
     }
 
     /**
@@ -67,6 +94,9 @@ class ServicoController extends Controller
      */
     public function destroy(Servico $servico)
     {
-        //
+        Checklist::campos()->delete(); //exclui todos os campos da checklist
+        $servico->checklists()->delete(); //exclui todos os campos da checklist
+        $servico->delete(); //excluir a checklist
+        return back();
     }
 }

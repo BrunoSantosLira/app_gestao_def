@@ -29,7 +29,25 @@ class CampoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $regras = [
+            'nome' => 'required|min:3|max:40'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute precisa ser preenchido',
+            'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
+            'nome.max' => 'Pode haver no ate 40 caracteres'
+        ];
+
+        $request->validate($regras, $feedback);
+
+        try {
+            Campo::create($request->all());
+            return redirect()->route('checklist.index',['status'=> 'sucesso']);
+        } catch (\Throwable $th) {
+            dd($th);
+            return redirect()->route('checklist.index',['status'=> 'erro']);
+        }
     }
 
     /**
@@ -53,7 +71,8 @@ class CampoController extends Controller
      */
     public function update(Request $request, Campo $campo)
     {
-        //
+        $campo->update($request->all());
+        return back();
     }
 
     /**
@@ -61,6 +80,7 @@ class CampoController extends Controller
      */
     public function destroy(Campo $campo)
     {
-        //
+        $campo->delete();
+        return back();
     }
 }

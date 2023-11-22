@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Checklist;
 use App\Models\Servico;
 use App\Http\Controllers\Controller;
@@ -38,6 +39,18 @@ class ChecklistController extends Controller
      */
     public function store(Request $request)
     {
+        $regras = [
+            'nome' => 'required|min:3|max:40'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute precisa ser preenchido',
+            'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
+            'nome.max' => 'Pode haver no ate 40 caracteres'
+        ];
+
+        $request->validate($regras, $feedback);
+
         try {
             Checklist::create($request->all());
             return redirect()->route('checklist.index',['status'=> 'sucesso']);
@@ -51,7 +64,8 @@ class ChecklistController extends Controller
      */
     public function show(Checklist $checklist)
     {
-        //
+        $checklist= $checklist->campos()->get();
+        return view('pages.app.checklistshow', ['checklist' => $checklist]);
     }
 
     /**
@@ -67,7 +81,20 @@ class ChecklistController extends Controller
      */
     public function update(Request $request, Checklist $checklist)
     {
-        //
+        $regras = [
+            'nome' => 'required|min:3|max:40'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute precisa ser preenchido',
+            'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
+            'nome.max' => 'Pode haver no ate 40 caracteres'
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $checklist->update($request->all());
+        return back();
     }
 
     /**
@@ -75,6 +102,9 @@ class ChecklistController extends Controller
      */
     public function destroy(Checklist $checklist)
     {
-        //
+        //$campos = $checklist->with('campos')->get()->find($checklist['id']);
+        $checklist->campos()->delete(); //exclui todos os campos da checklist
+        $checklist->delete(); //excluir a checklist
+        return back();
     }
 }
