@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="servicos"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Tables"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Tabelas"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
@@ -103,7 +103,7 @@
                         </div>
 
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                             
                         </div>
 

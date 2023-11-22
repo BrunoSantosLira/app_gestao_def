@@ -32,13 +32,13 @@ class ServicoController extends Controller
     public function store(Request $request)
     {
         $regras = [
-            'nome' => 'required|min:3|max:40'
+            'nome' => 'required|min:3|max:255'
         ];
 
         $feedback = [
             'required' => 'O campo :attribute precisa ser preenchido',
             'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
-            'nome.max' => 'Pode haver no ate 40 caracteres'
+            'nome.max' => 'Pode haver no ate 255 caracteres'
         ];
 
         $request->validate($regras, $feedback);
@@ -74,13 +74,13 @@ class ServicoController extends Controller
     public function update(Request $request, Servico $servico)
     {
         $regras = [
-            'nome' => 'required|min:3|max:40'
+            'nome' => 'required|min:3|max:255'
         ];
 
         $feedback = [
             'required' => 'O campo :attribute precisa ser preenchido',
             'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
-            'nome.max' => 'Pode haver no ate 40 caracteres'
+            'nome.max' => 'Pode haver no ate 255 caracteres'
         ];
 
         $request->validate($regras, $feedback);
@@ -94,7 +94,7 @@ class ServicoController extends Controller
      */
     public function destroy(Servico $servico)
     {
-        Checklist::campos()->delete(); //exclui todos os campos da checklist
+
         $servico->checklists()->delete(); //exclui todos os campos da checklist
         $servico->delete(); //excluir a checklist
         return back();

@@ -40,13 +40,13 @@ class ChecklistController extends Controller
     public function store(Request $request)
     {
         $regras = [
-            'nome' => 'required|min:3|max:40'
+            'nome' => 'required|min:3|max:255'
         ];
 
         $feedback = [
             'required' => 'O campo :attribute precisa ser preenchido',
             'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
-            'nome.max' => 'Pode haver no ate 40 caracteres'
+            'nome.max' => 'Pode haver no ate 255 caracteres'
         ];
 
         $request->validate($regras, $feedback);
@@ -82,13 +82,13 @@ class ChecklistController extends Controller
     public function update(Request $request, Checklist $checklist)
     {
         $regras = [
-            'nome' => 'required|min:3|max:40'
+            'nome' => 'required|min:3|max:255'
         ];
 
         $feedback = [
             'required' => 'O campo :attribute precisa ser preenchido',
             'nome.min' => 'Preencha o campo com ao menos 3 caracteres',
-            'nome.max' => 'Pode haver no ate 40 caracteres'
+            'nome.max' => 'Pode haver no ate 255 caracteres'
         ];
 
         $request->validate($regras, $feedback);

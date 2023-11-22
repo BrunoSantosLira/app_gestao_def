@@ -53,7 +53,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
+            <a class="nav-link text-white {{ $activePage == 'checklist' ? 'active bg-gradient-primary' : '' }} "
                 href="{{ route('checklist.index') }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
@@ -83,7 +83,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
+            <a class="nav-link text-white {{ $activePage == 'servicos' ? 'active bg-gradient-primary' : '' }} "
                 href="{{ route('servico.index') }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
