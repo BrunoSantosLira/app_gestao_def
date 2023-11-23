@@ -52,4 +52,21 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
+    public function rules(){
+        return [
+            'name' => 'required|max:255|min:3',
+            'email' => 'required|email|max:255|unique:users,email,' . $this->id,
+        ];
+    }
+
+    public function feedback(){
+        return [
+            'required:' => 'O campo :attribute deve ser preenchido',
+            'email.email' => 'Preencha com um email válido',
+            'email.unique' => 'EMAIL JA CADASTRADO!',
+            'max' => 'Pode haver ate 255 caracteres',
+            'min' => 'Preencha o campo com ao menos 3 caracteres'
+        ];
+    }
+
 }

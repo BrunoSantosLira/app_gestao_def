@@ -7,22 +7,51 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
+    public function index()
+    {
+        $usuarios = User::all();
+        return view('pages.app.cadastro.usuarios', ['usuarios' => $usuarios]);
+    }
+
+
     public function create()
     {
         return view('register.create');
     }
 
-    public function store(){
+    public function store(Request $request){
 
-        $attributes = request()->validate([
+        $regras = [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|min:5|max:255',
-        ]);
+        ];
+        $feedback = [
+            'required:' => 'O campo :attribute deve ser preenchido',
+            'email.email' => 'Preencha com um email válido',
+            'email.unique' => 'EMAIL JA CADASTRADO!',
+            'max' => 'Pode haver ate 255 caracteres',
+            'min' => 'Preencha o campo com ao menos 5 caracteres'
+        ];
 
-        $user = User::create($attributes);
-        auth()->login($user);
+        $request->validate($regras, $feedback);
+      
+        $user = User::create($request->all());
+        //auth()->login($user);
         
-        return redirect('/dashboard');
-    } 
+        return back();
+    }
+
+    public function update(Request $request, User $user)
+    {
+    }
+
+
+    public function destroy($id)
+    {
+        User::find($id)->delete();
+        return back();
+    }
+    
+    
 }

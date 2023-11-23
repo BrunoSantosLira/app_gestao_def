@@ -14,6 +14,7 @@
                             </div>
                             <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionar">Adicionar serviço</button>
                             <a href="{{route('checklist.index')}}"> <button class="btn btn-outline-success btn-sm mt-3">Criar Checklist</button> </a> 
+                            <a href="{{route('servico.exportar')}}"> <button class="btn btn-outline-success btn-sm mt-3">Gerar PDF</button> </a> 
                             @if (request('status') == 'sucesso')
                                 <div class="alert alert-success text-white" role="alert">
                                     <strong>Sucesso!</strong> Adicionado com sucesso!
@@ -45,7 +46,6 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($servicos as $key => $s)                         
-
                                             <tr>
                                                 <form action="{{route('servico.update', ['servico' => $s])}}" method="POST" class="d-inline-block">
                                                     @csrf

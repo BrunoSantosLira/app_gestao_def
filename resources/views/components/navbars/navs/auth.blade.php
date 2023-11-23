@@ -39,6 +39,10 @@
                         <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
                     </a>
                 </li>
+                <li class="nav-item px-3 d-flex align-items-center">
+                    {{auth()->user()->email}}
+                </li>
+             
             </ul>
         </div>
     </div>

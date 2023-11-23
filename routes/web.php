@@ -20,6 +20,10 @@ Route::get('/', function () {
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\ProdutosController;
+use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\CampoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
@@ -50,11 +54,18 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('billing');
 
     Route::resource('servico', ServicoController::class);
+    Route::get('servico.exportar', [\App\Http\Controllers\ServicoController::class, 'exportar'])->name('servico.exportar');
 
 	Route::resource('checklist', ChecklistController::class);
 
-	Route::resource('campo', CampoController::class);
+	Route::resource('clientes', ClientesController::class);
 
+	Route::resource('produtos', ProdutosController::class);
+	Route::resource('categorias', CategoriasController::class);
+	Route::resource('unidades', UnidadesController::class);
+
+	Route::resource('campo', CampoController::class);
+	Route::resource('usuarios', RegisterController::class);
 
 
 	Route::get('rtl', function () {

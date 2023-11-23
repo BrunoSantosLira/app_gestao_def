@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Servico;
 use App\Models\Checklist;
 use App\Http\Controllers\Controller;
@@ -98,5 +99,11 @@ class ServicoController extends Controller
         $servico->checklists()->delete(); //exclui todos os campos da checklist
         $servico->delete(); //excluir a checklist
         return back();
+    }
+
+    public function exportar(){
+        $servicos = Servico::all();
+        $pdf = Pdf::loadView('exportar.pdf', ['servicos' => $servicos]);
+        return $pdf->download('lista_de_serviços.pdf');
     }
 }
