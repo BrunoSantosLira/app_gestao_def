@@ -34,18 +34,18 @@
                         <div class="card-header p-3 pt-2">
                             <div
                                 class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="fa-solid fa-sitemap"></i>
+                                <i class="fa-solid fa-boxes-stacked"></i>
                             </div>
                             <div class="text-end pt-1">
                                 <p class="text-sm mb-0 text-capitalize">Total de produtos</p>
-                                <h4 class="mb-0">12</h4>
+                                <h4 class="mb-0">{{$quantidadeProdutos}}</h4>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
                             <p class="mb-0">
                                 <span class="text-success text-sm font-weight-bolder">
-                                    <a href="#">Veja mais</a>
+                                    <a href="{{route('produtos.index')}}">Veja mais</a>
                                 </span>
                             </p>
                         </div>
@@ -56,18 +56,18 @@
                         <div class="card-header p-3 pt-2">
                             <div
                                 class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">person</i>
+                                <i class="fa-solid fa-users"></i>
                             </div>
                             <div class="text-end pt-1">
                                 <p class="text-sm mb-0 text-capitalize">Clientes</p>
-                                <h4 class="mb-0">31</h4>
+                                <h4 class="mb-0">{{$quantidadeClientes}}</h4>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
                             <p class="mb-0">
                                 <span class="text-danger text-sm font-weight-bolder">
-                                    <a href="http://">Veja mais</a>
+                                    <a href="{{route('clientes.index')}}">Veja mais</a>
                                 </span> 
                             </p>
                         </div>

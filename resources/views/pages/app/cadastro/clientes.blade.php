@@ -28,7 +28,7 @@
                             @endforeach
                         </div>
                         <div class="card-body px-0 pb-2">
-                            <div class="table-responsive p-0"><!-- TABELA AQUI -->
+                            <div class="table-responsive p-1"><!-- TABELA AQUI -->
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>
@@ -62,7 +62,7 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">{{$cliente['id']}}</h6>
+                                                            <h6 class="mb-0 text-sm">#{{$cliente['id']}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -127,23 +127,23 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">*Nome</label>
-                            <input type="text" class="form-control" id="name" placeholder="Nome" name="nome">
+                            <input type="text" class="form-control border border-2 p-2" id="name" placeholder="Nome" name="nome">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">*Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="email" name="email">
+                            <input type="email" class="form-control border border-2 p-2" id="email" placeholder="email" name="email">
                         </div>
                         <div class="mb-3">
                             <label for="text" class="form-label">*CPF/CNPJ</label>
-                            <input type="text" class="form-control" id="text" placeholder="Senha" name="CPF/CNPJ">
+                            <input type="text" class="form-control border border-2 p-2" id="text" placeholder="Senha" name="CPF/CNPJ">
                         </div>
                         <div class="mb-3">
                             <label for="tel" class="form-label">*Telefone</label>
-                            <input type="tel" class="form-control" id="tel" placeholder="Telefone" name="telefone">
+                            <input type="tel" class="form-control border border-2 p-2" id="tel" placeholder="Telefone" name="telefone">
                         </div>
                         <div class="mb-3">
                             <label for="localizacao" class="form-label">*Localização</label>
-                            <input type="text" class="form-control" id="localizacao" placeholder="Localização:" name="localizacao">
+                            <input type="text" class="form-control border border-2 p-2" id="localizacao" placeholder="Localização:" name="localizacao">
                         </div>
                         <button type="submit" class="btn btn-primary">Adicionar</button>
                     </form>

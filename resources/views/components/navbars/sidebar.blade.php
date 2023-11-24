@@ -20,7 +20,8 @@
             <a class="nav-link text-white {{ $activePage == 'Usuarios' ? 'active bg-gradient-primary' : '' }} "
                 href="{{ route('usuarios.index') }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-users ps-2 pe-2 text-center"></i>
+                   
                 </div>
                 <span class="nav-link-text ms-1">Usuários</span>
             </a>
@@ -75,9 +76,46 @@
                 </ul>
             </div>
         </li>
-        
-        
 
+        <li class="nav-item">
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle text-white {{ $activePage == 'OS' ? 'active bg-gradient-primary' : '' }}" 
+                   href="{{ route('os.index') }}" 
+                   id="navbarDropdownMenuLink2" 
+                   role="button" 
+                   data-bs-toggle="dropdown" 
+                   aria-haspopup="true" 
+                   aria-expanded="false">
+                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-box-archive ps-2 pe-2 text-center"></i>
+                    </div>
+                     <span class="caret">OS</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <li>
+                        <a class="dropdown-item" href="{{route('os.index')}}">
+                            Listagem de OS
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('os.create')}}">
+                            Adicionar OS
+                        </a>
+                    </li>         
+                </ul>
+            </div>
+        </li>
+        
+        
+        <li class="nav-item">
+            <a class="nav-link text-white {{ $activePage == 'servicos' ? 'active bg-gradient-primary' : '' }} "
+                href="{{ route('servico.index') }}">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-list ps-2 pe-2 text-center"></i>
+                </div>
+                <span class="nav-link-text ms-1">Serviços</span>
+            </a>
+        </li>
 
         
         <li class="nav-item">
@@ -90,44 +128,18 @@
             </a>
         </li>
 
-        
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'servicos' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('servico.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Serviços</span>
-            </a>
+       
+
+            <!-- INICIO ITENS SERVIÇOS -->
+        <li class="nav-item mt-3">
+            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Estoque</h6>
         </li>
+    
         
         <!-- INICIO ITENS SERVIÇOS -->
         <li class="nav-item mt-3">
             <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Serviços</h6>
         </li>
-
-
-
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Cria lista de verificação</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Cria lista de produtos</span>
-            </a>
-        </li>
-
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "

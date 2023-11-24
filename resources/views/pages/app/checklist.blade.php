@@ -67,7 +67,7 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">{{$checklist['id']}}</h6>
+                                                            <h6 class="mb-0 text-sm">#{{$checklist['id']}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -129,7 +129,7 @@
 
                                 <div class="mt-3 mb-3">
                                     <label for="nome" class="form-label">Nome da checklist</label>
-                                    <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+                                    <input type="text" class="form-control border border-2 p-2" id="nome" placeholder="Nome" name="nome">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Adicionar</button>

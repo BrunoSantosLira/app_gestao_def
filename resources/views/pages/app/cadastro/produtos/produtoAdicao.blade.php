@@ -51,9 +51,16 @@
                                     @enderror
                                 </div>
                                 
+
+
+                                
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Estoque Atual</label>
-                                    <input type="number" name="estoqueAtual" class="form-control border border-2 p-2" value='0' min="0">
+                                    <label for="categoria" class="form-label">Unidade</label>
+                                    <select id="categoria" class="form-select p-2" name="unidade_id">
+                                        @foreach ($unidades as $key => $unidade)
+                                            <option class="" value="{{$unidade['id']}}">{{$unidade['unidade']}}  ({{$unidade['id']}})</option>
+                                        @endforeach
+                                    </select>
                                     @error('estoqueAtual')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -72,15 +79,29 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="categoria" class="form-label">Unidade</label>
-                                    <select id="categoria" class="form-select p-2" name="unidade_id">
-                                        @foreach ($unidades as $key => $unidade)
-                                            <option class="" value="{{$unidade['id']}}">{{$unidade['unidade']}}  ({{$unidade['id']}})</option>
-                                        @endforeach
-                                    </select>
+                                    <label class="form-label">Estoque Atual</label>
+                                    <input type="number" name="estoqueAtual" class="form-control border border-2 p-2" value='0' min="0">
                                     @error('estoqueAtual')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
+                                </div>
+                                                               
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Código de barras</label>
+                                    <input type="number" name="codigo_de_barras" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Código de barras">
+                                    @error('codigo_de_barras')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-12">
+                                    <label for="floatingTextarea2">Detalhes</label>
+                                    <textarea class="form-control border border-2 p-2"
+                                        placeholder="Detalhes do produto" id="detalhes" name="detalhes"
+                                        rows="4" cols="50">{{ old('about', auth()->user()->about) }}</textarea>
+                                        @error('detalhes')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                        @enderror
                                 </div>
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Adicionar</button>

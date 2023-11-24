@@ -6,11 +6,13 @@ use App\Models\Unidades;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\OS;
+
 
 class Produtos extends Model
 {
     use HasFactory;
-    protected $fillable = ['produto', 'preco', 'estoqueAtual', 'categoria_id', 'unidade_id'];
+    protected $fillable = ['produto', 'preco', 'estoqueAtual', 'categoria_id', 'unidade_id', 'codigo_de_barras', 'detalhes'];
 
     public function categoria()
     {
@@ -20,5 +22,10 @@ class Produtos extends Model
     public function unidade()
     {
         return $this->belongsTo(Unidades::class);
+    }
+
+    public function os()
+    {
+        return $this->hasMany(OS::class);
     }
 }

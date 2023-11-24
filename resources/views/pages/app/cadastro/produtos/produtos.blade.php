@@ -30,7 +30,7 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            CATEGORIA
+                                            Cod. Barra
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -47,6 +47,7 @@
                                             <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 ESTOQUE ATUAL
                                             </th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -55,24 +56,38 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">{{$produto['id']}}</h6>
+                                                            <h6 class="mb-0 text-sm">#{{$produto['id']}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="nome" value="{{$produto['categoria']['categoria']}}"></p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$produto['codigo_de_barras']}}</p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="nome" value="{{$produto['unidade']['unidade']}}"></p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$produto['unidade']['unidade']}}</p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="nome" value="{{$produto['produto']}}"></p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$produto['produto']}}</p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="email" value="R${{$produto['preco']}}"></p>
+                                                    <p class="text-sm font-weight-bold mb-0">R${{$produto['preco']}}</p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="CPF/CNPJ" value="{{$produto['estoqueAtual']}}"></p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$produto['estoqueAtual']}}</p>
+                                                </td>
+                                                <td>
+                                                    @if (auth()->user()->email == 'admin@material.com')
+                                                        <form method="GET" class="d-inline-block" action="{{route('produtos.edit', ['produto' => $produto->id])}}">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-outline-primary btn-sm">Atualizar</button>
+                                                        </form>     
+
+                                                        <form method="POST" class="d-inline-block" action="{{route('produtos.destroy', ['produto' => $produto->id])}}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                                                        </form>     
+                                                    @endif 
                                                 </td>
                                         </tr>
                                     @endforeach       

@@ -40,8 +40,10 @@
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 Serviço
                                             </th>
-                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Data de criação</th>
-                                            <th></th>
+                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Preço</th>
+                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Descrição</th>
+                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 float-end">Ações</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,15 +64,19 @@
                                                         <p class="text-sm font-weight-bold mb-0"> <input type="text" value="{{$s['nome']}}" class="form-control" name="nome"></p>
                                                     </td>
                                                     <td>
-                                                        <p class="text-sm font-weight-bold mb-0">{{ \Carbon\Carbon::parse($s['created_at'])->format('d/m/Y') }}</p>
+                                                        <p class="text-sm font-weight-bold mb-0"> <input type="number" value="{{$s['preco']}}" class="form-control" name="preco"></p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0"><input type="text" value="{{$s['descricao']}}" class="form-control" name="descricao"></p>
                                                     </td>
                                                     <td class="float-end">
-                                                        <button type="submit" class="btn btn-outline-primary btn-sm">Atualizar</button>
+                                                        <button type="submit" class="btn"><i class="fa-solid fa-pen-to-square fa-xl" style="color: #1160e8;"></i></button>
+                                                    </form>
                                                 </form>
                                                         <form action="{{route('servico.destroy', ['servico' => $s])}}" method="post" class="d-inline-block" onsubmit="return confirmacao()">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button class="btn btn-outline-danger  btn-sm">Excluir</button>
+                                                            <button class="btn"><i class="fa-solid fa-trash fa-xl" style="color: #f01800;"></i></button>
                                                         </form>
                                                     </td>
                                             </tr>
@@ -96,7 +102,17 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label for="nome" class="form-label">Nome do serviço</label>
-                                    <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+                                    <input type="text" class="form-control border border-2 p-2"  id="nome" placeholder="Nome" name="nome">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nome" class="form-label">Preço</label>
+                                    <input type="number" name="preco" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Preço">
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label for="floatingTextarea2">Descrição</label>
+                                    <textarea class="form-control border border-2 p-2"
+                                        placeholder="Detalhes do produto" id="descricao" name="descricao"
+                                        rows="4" cols="50"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Adicionar</button>
                             </form>

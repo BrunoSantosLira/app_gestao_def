@@ -33,7 +33,8 @@ class ServicoController extends Controller
     public function store(Request $request)
     {
         $regras = [
-            'nome' => 'required|min:3|max:255'
+            'nome' => 'required|min:3|max:255',
+            'preco' => 'required',
         ];
 
         $feedback = [
@@ -75,7 +76,8 @@ class ServicoController extends Controller
     public function update(Request $request, Servico $servico)
     {
         $regras = [
-            'nome' => 'required|min:3|max:255'
+            'nome' => 'required|min:3|max:255',
+            'preco' => 'required',
         ];
 
         $feedback = [

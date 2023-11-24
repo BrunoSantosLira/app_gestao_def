@@ -58,7 +58,7 @@
                                                         <td>
                                                             <div class="d-flex px-2">
                                                                 <div class="my-auto">
-                                                                    <h6 class="mb-0 text-sm">{{$usuario['id']}}</h6>
+                                                                    <h6 class="mb-0 text-sm">#{{$usuario['id']}}</h6>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -112,23 +112,23 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">*Nome do serviço</label>
-                            <input type="text" class="form-control" id="name" placeholder="Nome" name="name">
+                            <input type="text" class="form-control border border-2 p-2l" id="name" placeholder="Nome" name="name">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">*Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="email" name="email">
+                            <input type="email" class="form-control border border-2 p-2" id="email" placeholder="email" name="email">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">*Senha</label>
-                            <input type="password" class="form-control" id="password" placeholder="Senha" name="password">
+                            <input type="password" class="form-control border border-2 p-2" id="password" placeholder="Senha" name="password">
                         </div>
                         <div class="mb-3">
                             <label for="tel" class="form-label">Telefone</label>
-                            <input type="tel" class="form-control" id="tel" placeholder="Telefone" name="phone">
+                            <input type="tel" class="form-control border border-2 p-2" id="tel" placeholder="Telefone" name="phone">
                         </div>
                         <div class="mb-3">
                             <label for="Localidade" class="form-label">Localidade</label>
-                            <input type="text" class="form-control" id="Localidade" placeholder="Localização:" name="location">
+                            <input type="text" class="form-control border border-2 p-2" id="Localidade" placeholder="Localização:" name="location">
                         </div>
                         <button type="submit" class="btn btn-primary">Adicionar</button>
                     </form>

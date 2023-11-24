@@ -39,7 +39,7 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">{{$categoria['id']}}</h6>
+                                                            <h6 class="mb-0 text-sm">#{{$categoria['id']}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -81,7 +81,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="categoria" class="form-label">Nome da categoria:</label>
-                            <input type="text" class="form-control" id="categoria" placeholder="categoria" name="categoria">
+                            <input type="text" class="form-control border border-2 p-2 mb-2" id="categoria" placeholder="categoria" name="categoria">
                         <button type="submit" class="btn btn-primary">Adicionar</button>
                     </form>
                 </div>
