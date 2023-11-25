@@ -15,10 +15,12 @@
                             </div>
                         
                             <a href="{{route('os.create')}}"><button class="btn btn-outline-primary btn-sm mt-3">Adicionar OS</button></a> 
+                            <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarProdutoOS">Adicionar produto</button>
                             @foreach ($errors->all() as $error)
                                 <li class="text-danger">{{ $error }}</li>
                             @endforeach
                         </div>
+
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
                                 <table class="table align-items-center justify-content-center mb-0">
@@ -64,7 +66,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($os as $o)   
+                                        @foreach ($os as $key => $o)   
                                         @php
                                             $dataInicial = \Carbon\Carbon::parse($o['data_inicial']);
                                             $dataDeVencimento = $dataInicial->addDays($o['dias_garantia']);
@@ -115,7 +117,7 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">R${{$o['valorTotal']}}</h6>
+                                                            <h6 class="mb-0 text-sm">R${{{$o['os_produtos'][$key]['valorTotal']}}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -129,8 +131,8 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <a href="{{route('os.show', ['o' => $o->id])}}"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></a>
-                                                            <a href="{{route('os.edit', ['o' => $o->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></a>
+                                                            <a target="_blank" href="{{route('os.show', ['o' => $o->id])}}"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></a>
+                                                            <a target="_blank" href="{{route('os.edit', ['o' => $o->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></a>
                                                             <form action="{{route('os.destroy', ['o' => $o->id])}}" class="d-inline-block" method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -150,6 +152,53 @@
                 </div>
             </div>
             <x-footers.auth></x-footers.auth>
+        </div>
+        <!-- Modal USUÁRIO -->
+        <div class="modal fade" id="ModalAdicionarProdutoOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Produto na OS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="{{route('osprodutos.store')}}" method="POST">
+                        @csrf
+                        <label for="servico" class="form-label">OS</label>
+                        <select id="servico" class="form-select  p-2" name="os_id">
+                            @foreach ($os as $key => $o)
+                            <option value="{{$o['id']}}">{{$o['nome']}}</option>
+                            @endforeach
+                        </select>
+
+                        <label for="servico" class="form-label">Produto</label>
+                        <select id="servico" class="form-select  p-2" name="produto_id">
+                            @foreach ($produtos as $key => $produto)
+                            <option value="{{$produto['id']}}">{{$produto['produto']}}</option>
+                            @endforeach
+                        </select>
+
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Preço do produto</label>
+                            <input type="number" name="preco" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Preço">
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Quantidade</label>
+                            <input type="number" name="quantidade" class="form-control border border-2 p-2" value='0' placeholder="Preço">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+
+            </div>
+            </div>
         </div>
     </main>
     <script>

@@ -7,6 +7,7 @@ use App\Models\Unidades;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OS;
+use App\Models\osProdutos;
 
 
 class Produtos extends Model
@@ -27,5 +28,10 @@ class Produtos extends Model
     public function os()
     {
         return $this->hasMany(OS::class);
+    }
+
+    public function os_produto()
+    {
+        return $this->hasMany(osProdutos::class, 'produto_id');
     }
 }

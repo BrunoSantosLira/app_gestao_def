@@ -6,6 +6,7 @@ use App\Models\OS;
 use App\Models\Clientes;
 use App\Models\Servico;
 use App\Models\Produtos;
+use App\Models\osProdutos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,9 @@ class OSController extends Controller
      */
     public function index()
     {
-        $os = OS::with('cliente')->with('servico')->with('produto')->get();
-        return view('pages.app.cadastro.os.os',['os' => $os]);
+        $os = OS::with('os_produtos')->get();
+        $produtos = Produtos::all();
+        return view('pages.app.cadastro.os.os',['os' => $os, 'produtos' => $produtos]);
     }
 
     /**
@@ -50,13 +52,8 @@ class OSController extends Controller
         ];
   
         $request->validate($regras, $feedback);
-        
-        $valorProduto = Produtos::find($request->produto_id);
-        $valorServico = Servico::find($request->servico_id);
-        $dados = $request->all();
-        $dados['valorTotal'] = $valorProduto->preco + $valorServico->preco;
 
-        OS::create($dados);
+        OS::create($request->all());
         return back();
     }
 
@@ -65,8 +62,9 @@ class OSController extends Controller
      */
     public function show(OS $o)
     {
-        
-        return view('pages.app.cadastro.os.osshow');
+        $produtos = osProdutos::with('produto')->where('os_id', '=', $o->id)->get();
+        $o = Os::with('os_produtos')->where('id', '=', $o->id )->get();
+        return view('pages.app.cadastro.os.osshow', ['os' => $o, 'produtos' => $produtos]);
     }
 
     /**
@@ -99,12 +97,8 @@ class OSController extends Controller
         ];
         $request->validate($regras, $feedback);
 
-        $valorProduto = Produtos::find($request->produto_id);
-        $valorServico = Servico::find($request->servico_id);
-        $dados = $request->all();
-        $dados['valorTotal'] = $valorProduto->preco + $valorServico->preco;
 
-        $o->update($dados);
+        $o->update($request->all());
         return back();
     }
 

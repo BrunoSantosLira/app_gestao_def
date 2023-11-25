@@ -65,30 +65,7 @@
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="categoria" class="form-label">Serviço</label>
-                                    <select id="categoria" class="form-select p-2" name="servico_id">
-                                        <option class="" value="{{$os['servico_id']}}">({{$os['servico_id']}})</option>
-                                        @foreach ($servicos as $key => $servico)
-                                            <option class=""  value="{{$servico['id']}}">{{$servico['nome']}}  ({{$servico['id']}})</option>
-                                        @endforeach
-                                    </select>
-                                    @error('servico_id')
-                                    <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="categoria" class="form-label">Produto</label>
-                                    <select id="categoria" class="form-select p-2" name="produto_id">
-                                        <option class="" value="{{$os['produto_id']}}">({{$os['produto_id']}})</option>
-                                        @foreach ($produtos as $key => $produto)
-                                            <option class="" value="{{$produto['id']}}">{{$produto['produto']}}  ({{$produto['id']}})</option>
-                                        @endforeach
-                                    </select>
-                                    @error('produto_id')
-                                    <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
+
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Dias de garantia</label>
