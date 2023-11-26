@@ -38,7 +38,7 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
 </head>
-<body class="{{ $bodyClass }}">
+<body class="{{ $bodyClass }}"><!-- g-sidenav-show bg-gray-200 g-sidenav-show bg-gray-200 dark-version -->
 
 {{ $slot }}
 

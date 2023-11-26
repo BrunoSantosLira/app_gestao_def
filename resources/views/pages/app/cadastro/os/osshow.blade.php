@@ -21,19 +21,24 @@
                 <div class="card card-plain h-100">
                     <div class="card-header pb-0 p-3">
                         <a href="{{route('os.index')}}"><button class="btn btn-outline-primary btn-sm mt-3">Listagem de OS <i class="fa-solid fa-boxes-packing fa-lg" style="font-size: 1.2em"></i> </button></a> 
-                        <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarProdutoOS">Adicionar produto <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
-                        <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarServicoOS">Adicionar serviço <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
+
+                        
+                        <button class="btn btn-outline-success btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarProdutoOS">Adicionar produto <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
+                        <button class="btn btn-outline-success btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarServicoOS">Adicionar serviço <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
+
                         <button class="btn btn-outline-danger btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalExcluirProdutoOs">Excluir produto <i class="fa-solid fa-trash fa-lg" style="font-size: 1.2em"></i></button>
+                        <button class="btn btn-outline-danger btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalExcluirServiçoOs">Excluir serviço <i class="fa-solid fa-trash fa-lg" style="font-size: 1.2em"></i></button>
+                        <a href="{{route('os.exportar', ['o' => $os[0]['id']])}}"> <button class="btn btn-outline-warning btn-sm mt-3">Gerar PDF <i class="fa-solid fa-file-pdf fa-lg" style="font-size: 1.2em"></i></button> </a> 
+
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-3">N° OS: 1</h6>
+                                <h6 class="mb-3">N° OS: {{$os[0]['id']}}</h6>
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-3">Data de emissão: {{$os[0]['created_at']}}</h6>
+                                <h6 class="mb-3">Data de emissão: {{ date('d/m/Y', strtotime($os[0]['created_at'])) }}</h6>
                             </div>           
                         </div>
                     </div>
-                    {{$servicos}}
                     <div class="card-body p-3">
                             <div class="row">
                                 <div class="mb-3 col-md-12">
@@ -120,7 +125,7 @@
                             </div>
 
                             <hr>
-
+                            <h3>Produtos:</h3>
                         @foreach ($produtos as $produto)
                                     <div class="row">
                                         <div class="mb-3 col-md-3">                           
@@ -162,10 +167,56 @@
                             <h4>Total em produtos:</h4>
                             <p style="font-weight: bold">R${{$somaProdutosOS}}</p>
                         </div>
-                        <hr>
+                        <hr><br>
+
+                        <h3>Serviços:</h3>
+                        @foreach ($servicos as $servico)
+                                    <div class="row">
+                                        <div class="mb-3 col-md-3">                           
+                                            <div class="">
+                                                <h6>{{$servico['servico']['nome']}}</h6>
+                                                <hr>                                                            
+                                            </div>                          
+                                        </div>
+                                        <div class="mb-3 col-md-3">                           
+                                            <div class="">
+                                                <h6>Quantidade</h6>
+                                                <hr>
+                                                <div>
+                                                    {{$servico['quantidade']}}
+                                                </div>                                                              
+                                            </div>                          
+                                        </div>  
+                                        <div class="mb-3 col-md-3">                           
+                                            <div class="">
+                                                <h6>Preço unit.</h6>
+                                                <hr>
+                                                <div>
+                                                    R$ {{$servico['preco']}}
+                                                </div>                                                              
+                                            </div>                          
+                                        </div>  
+                                        <div class="mb-3 col-md-2">                           
+                                            <div class="">
+                                                <h6>Sub-total</h6>
+                                                <hr>
+                                                <div>
+                                                    R$ {{$servico['valorTotal']}}
+                                                </div>                                                              
+                                            </div>                          
+                                        </div>                                    
+                                    </div>
+                        @endforeach
+                        <div class="">
+                            <h4>Total em Serviços:</h4>
+                            <p style="font-weight: bold">R${{$somaServicosOS}}</p>
                         </div>
-
-
+                        <hr><br>
+                        <div class="float-end">
+                            <h4>Valor total</h4>
+                            <p style="font-weight: bold">R${{$os[0]['valorTotal']}}</p>
+                        </div>
+                  
                     </div>
                 </div>
             </div>
@@ -173,7 +224,7 @@
         </div>
         
     </div>
-         <!-- Modal USUÁRIO -->
+         <!-- Modal EXCLUIR PRODUTOS -->
          <div class="modal fade" id="ModalExcluirProdutoOs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
@@ -211,6 +262,45 @@
             </div>
             </div>
         </div>
+
+                <!-- Modal EXCLUIR Serviços da OS -->
+                <div class="modal fade" id="ModalExcluirServiçoOs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Excluir Produto da OS</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+        
+                        <div class="modal-body">
+                            <form action="{{route('osservicos.deletar')}}" method="POST">
+                                @csrf
+                                <label for="servico" class="form-label">OS</label>
+                                <select id="servico" class="form-select  p-2" name="os_id">
+                                    @foreach ($os as $key => $o)
+                                    <option value="{{$o['id']}}">{{$o['nome']}}</option>
+                                    @endforeach
+                                </select>
+        
+                                <label for="servico" class="form-label">Produto</label>
+                                <select id="servico" class="form-select  p-2" name="servico_id">
+                                    @foreach ($servicos as $key => $servico)
+                                    <option value="{{$servico['id']}}">{{$servico['servico']['nome']}} (R${{$servico['valorTotal']}})</option>
+                                    @endforeach
+                                </select>
+        
+        
+                                <button type="submit" class="btn btn-primary mt-2">Excluir</button>
+                            </form>
+                        </div>
+        
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+        
+                    </div>
+                    </div>
+                </div>
                 <!-- Modal ADICIONARPRODUTOOS -->
                 <div class="modal fade" id="ModalAdicionarProdutoOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">

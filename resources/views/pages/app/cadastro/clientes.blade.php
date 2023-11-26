@@ -126,7 +126,7 @@
                     <form action="{{route('clientes.store')}}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">*Nome</label>
+                            <label for="name" class="form-label">*Nome/Razão Social</label>
                             <input type="text" class="form-control border border-2 p-2" id="name" placeholder="Nome" name="nome">
                         </div>
                         <div class="mb-3">

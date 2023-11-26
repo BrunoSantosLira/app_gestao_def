@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('servico', ServicoController::class);
     Route::get('servico.exportar', [\App\Http\Controllers\ServicoController::class, 'exportar'])->name('servico.exportar');
+    Route::get('os.exportar', [\App\Http\Controllers\OSController::class, 'exportar'])->name('os.exportar');
 
 	Route::resource('checklist', ChecklistController::class);
 
@@ -70,6 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('osprodutos', OsProdutosController::class);
 	Route::resource('osservicos', OsServicoController::class);
 	Route::post('osprodutos/deletar', [App\Http\Controllers\OsProdutosController::class, 'deletar'])->name('osprodutos.deletar');
+	Route::post('osservicos/deletar', [App\Http\Controllers\OsServicoController::class, 'deletar'])->name('osservicos.deletar');
 
 	Route::resource('campo', CampoController::class);
 	Route::resource('usuarios', RegisterController::class);

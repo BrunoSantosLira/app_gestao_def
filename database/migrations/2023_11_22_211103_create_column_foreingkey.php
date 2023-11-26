@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::table('produtos', function (Blueprint $table) {
             // Remover a chave estrangeira se existir
-            $table->dropForeign(['categoria_id']);
-
+            if (Schema::hasColumn('produtos', 'categoria_id')) {
+                Schema::table('produtos', function (Blueprint $table) {
+                    $table->dropForeign(['categoria_id']);
+                });
+            }
             // Adicionar a nova chave estrangeira
+            $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')
                 ->references('id')
                 ->on('categorias')
@@ -28,14 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('produtos', function (Blueprint $table) {
-            // Remove a chave estrangeira
-            $table->dropForeign(['categoria_id']);
-            
-            // Remove a coluna
-            $table->dropColumn('categoria_id');
-        });
 
-        
     }
 };

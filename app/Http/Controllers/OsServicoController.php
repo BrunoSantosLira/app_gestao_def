@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\osServico;
+use App\Models\OS;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,14 @@ class OsServicoController extends Controller
     public function store(Request $request)
     {
   
-        osServico::create($request->all());
+        $dados = $request->all();
+        $dados['valorTotal'] = $request->preco * $request->quantidade;
+
+
+        osServico::create($dados);
+        $OS = OS::find($dados['os_id']);
+        $OS->valorTotal += $dados['valorTotal'];
+        $OS->save();
         return back();
     }
 
@@ -64,5 +72,25 @@ class OsServicoController extends Controller
     public function destroy(osServico $osServico)
     {
         //
+    }
+
+    public function deletar(Request $request)
+    {
+        $registro = osServico::find($request->servico_id);
+        // Verifica se o registro foi encontrado
+        if ($registro) {
+            // Chama o método delete() na instância do modelo
+
+            $result = $registro->delete(); //deleta o registro
+            $OS = OS::find($request->os_id);
+            $produto = $registro->getAttributes();
+         
+            $OS->valorTotal -= $produto['valorTotal']; //excluir o valor dele na coluna total da OS
+            $OS->save();
+            return back();
+
+            dd($OS);
+        }
+            return back();
     }
 }
