@@ -49,7 +49,7 @@ class ProdutosController extends Controller
 
 
         Produtos::create($request->all());
-        return back();
+        return back()->with('success', 'Produto adicionado com sucesso!');
 
     }
 
@@ -88,7 +88,7 @@ class ProdutosController extends Controller
   
         $request->validate($regras, $feedback);
         $produto->update($request->all());
-        return back();
+        return back()->with('success', 'Produto atualizado com sucesso!');
     }
 
     /**
@@ -97,6 +97,6 @@ class ProdutosController extends Controller
     public function destroy(Produtos $produto)
     {   
         $produto->delete();
-        return back();
+        return back()->with('success', 'Produto deletado com sucesso!');
     }
 }

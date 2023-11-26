@@ -21,7 +21,11 @@
                 <div class="card card-plain h-100">
                     <div class="card-header pb-0 p-3">
                         <a href="{{route('produtos.index')}}"><button class="btn btn-outline-primary btn-sm mt-3">Listagem de produtos <i class="fa-solid fa-boxes-packing fa-lg" style="font-size: 1.2em"></i> </button></a> 
-
+                        @if (Session::has('success'))
+                            <div class="alert alert-success text-white">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
                                 <h6 class="mb-3">Inserção de produtos</h6>

@@ -31,6 +31,11 @@
                             @endforeach
                         </div>
                     </div>
+                    @if (Session::has('success'))
+                        <div class="alert alert-success text-white">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
                     <div class="card-body p-3">
                         <form method='POST' action='{{ route('produtos.update', ['produto' => $produto->id]) }}'>
                             @csrf
@@ -82,8 +87,8 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Estoque Atual</label>
-                                    <input type="number" name="estoqueAtual" class="form-control border border-2 p-2" value='{{$produto['estoqueAtual']}}' min="0" disabled>
-                                    <small>O estoque não pode ser alterado aqui</small>
+                                    <input type="number" name="estoqueAtual" class="form-control border border-2 p-2" value='{{$produto['estoqueAtual']}}' min="0" >
+                                    
                                     @error('estoqueAtual')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror

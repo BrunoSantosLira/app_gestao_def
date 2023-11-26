@@ -56,7 +56,7 @@ class OSController extends Controller
         $request->validate($regras, $feedback);
 
         OS::create($request->all());
-        return back();
+        return back()->with('success', 'OS adicionada com sucesso!');
     }
 
     /**
@@ -108,7 +108,7 @@ class OSController extends Controller
 
 
         $o->update($request->all());
-        return back();
+        return back()->with('success', 'OS atualizada com sucesso!');
     }
 
     /**
@@ -117,7 +117,7 @@ class OSController extends Controller
     public function destroy(OS $o)
     {
         $o->delete();
-        return back();
+        return back()->with('success', 'OS removida com sucesso!');
     }
 
     public function exportar(Request $request){

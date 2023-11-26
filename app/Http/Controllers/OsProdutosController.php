@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\osProdutos;
+use App\Models\Produtos;
 use App\Models\OS;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -40,13 +41,22 @@ class OsProdutosController extends Controller
   
         $request->validate($regras, $feedback);
         $dados = $request->all();
-        $dados['valorTotal'] = $request->preco * $request->quantidade;
+        $dados['valorTotal'] = $request->preco * $request->quantidade; //calculando o valor total
 
+        //alterando o estoque
+        $produto = Produtos::find($request->produto_id);
+        if($produto['estoqueAtual'] >= $request->quantidade){
+            $produto['estoqueAtual'] -= $request->quantidade;
+            $produto->save();
+        }else{
+            return back()->withErrors('Produto com estoque insuficiente')->withInput();
+        };
 
         osProdutos::create($dados);
         $OS = OS::find($dados['os_id']);
         $OS->valorTotal += $dados['valorTotal'];
         $OS->save();
+
         return back();
     }
 
@@ -77,6 +87,7 @@ class OsProdutosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    /*
     public function destroy($osprodutos)
     {
     // Busca o modelo pelo ID
@@ -91,7 +102,7 @@ class OsProdutosController extends Controller
         dd($OS);
         }
         return back();
-    }
+    }*/
 
 
     public function deletar(Request $request)
@@ -99,13 +110,22 @@ class OsProdutosController extends Controller
         // Busca o modelo pelo ID
         $registro = osProdutos::find($request->produto_id);
 
+
+        
+
         // Verifica se o registro foi encontrado
         if ($registro) {
             // Chama o método delete() na instância do modelo
-
             $result = $registro->delete(); //deleta o registro
             $OS = OS::find($request->os_id);
             $produto = $registro->getAttributes();
+
+            
+            //alterando o estoque(adicionando de volta ao estoque)
+            $produtoEstoque = Produtos::find($registro['produto_id']);
+            $produtoEstoque['estoqueAtual'] += $registro->quantidade;
+            $produtoEstoque->save();
+
          
             $OS->valorTotal -= $produto['valorTotal']; //excluir o valor dele na coluna total da OS
             $OS->save();

@@ -15,9 +15,11 @@
                             </div>
                         
                             <a href="{{route('os.create')}}"><button class="btn btn-outline-primary btn-sm mt-3">Adicionar OS</button></a> 
-                            @foreach ($errors->all() as $error)
-                                <li class="text-danger">{{ $error }}</li>
-                            @endforeach
+                            @if (Session::has('success'))
+                                <div class="alert alert-success text-white">
+                                    {{ Session::get('success') }}
+                                </div>
+                            @endif
                         </div>
 
                         <div class="card-body px-0 pb-2">

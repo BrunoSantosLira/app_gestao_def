@@ -26,9 +26,11 @@
                             <div class="col-md-8 d-flex align-items-center">
                                 <h6 class="mb-3">Editar OS</h6>
                             </div>
-                            @foreach ($errors->all() as $error)
-                                <li class="text-danger">{{ $error }}</li>
-                            @endforeach
+                            @if (Session::has('success'))
+                                <div class="alert alert-success text-white">
+                                    {{ Session::get('success') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body p-3">

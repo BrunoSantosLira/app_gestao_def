@@ -38,7 +38,7 @@ class ClientesController extends Controller
         $regras = [
             'nome' => 'required|max:255',
             'email' => 'required|email|max:255|unique:clientes,email',
-            'CPF/CNPJ' => 'required|min:11|max:255',
+            'CPF/CNPJ' => 'required|min:11|max:255|unique:clientes,CPF/CNPJ',
         ];
         $feedback = [
             'required' => 'O campo :attribute deve ser preenchido',
@@ -51,7 +51,7 @@ class ClientesController extends Controller
   
         $request->validate($regras, $feedback);
         $cliente = Clientes::create($request->all());
-        return back();
+        return back()->with('success', 'Cliente adicionado com sucesso!');
     }
 
     /**
@@ -115,7 +115,7 @@ class ClientesController extends Controller
         $clientes->fill($request->all());
 
         $clientes->save();
-        return back();
+        return back()->with('success', 'Cliente atualizado com sucesso!');
     }
 
     /**
@@ -125,6 +125,6 @@ class ClientesController extends Controller
     {
       
         $cliente->delete();
-        return back();
+        return back()->with('success', 'Cliente deletado com sucesso!');
     }
 }

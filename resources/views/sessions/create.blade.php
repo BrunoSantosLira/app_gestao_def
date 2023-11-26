@@ -62,11 +62,6 @@
                                             <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Login
                                                 </button>
                                         </div>
-                                        <p class="text-sm text-center">
-                                            Esqueceu sua senha?
-                                            <a href="{{ route('verify') }}"
-                                                class="text-primary text-gradient font-weight-bold">Aqui</a>
-                                        </p>
                                     </form>
                                 </div>
                             </div>

@@ -53,6 +53,11 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
                     <li>
+                        <a class="dropdown-item" href="{{route('produtos.index')}}">
+                            Listagem de produtos
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" href="{{route('produtos.create')}}">
                             Adicionar Produto
                         </a>
@@ -123,36 +128,6 @@
             </a>
         </li>
 
-       
-
-            <!-- INICIO ITENS SERVIÇOS -->
-        <li class="nav-item mt-3">
-            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Estoque</h6>
-        </li>
-    
-        <li class="nav-item">
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle text-white {{ $activePage == 'ProdutosEstoque' ? 'active bg-gradient-primary' : '' }}" 
-                   href="{{ route('clientes.index') }}" 
-                   id="navbarDropdownMenuLink2" 
-                   role="button" 
-                   data-bs-toggle="dropdown" 
-                   aria-haspopup="true" 
-                   aria-expanded="false">
-                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-box-archive ps-2 pe-2 text-center"></i>
-                    </div>
-                     <span class="caret">Produtos</span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                    <li>
-                        <a class="dropdown-item" href="{{route('produtos.index')}}">
-                            Listagem de produtos
-                        </a>
-                    </li>      
-                </ul>
-            </div>
-        </li>
         
         <!-- INICIO ITENS SERVIÇOS -->
         <li class="nav-item mt-3">
@@ -161,7 +136,7 @@
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
+                href="">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
                 </div>
@@ -177,7 +152,7 @@
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
+                href="">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
                 </div>
@@ -186,7 +161,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
+                href="">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
                 </div>
@@ -195,7 +170,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
+                href="">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
                 </div>
@@ -205,7 +180,7 @@
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
+                href="">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
                 </div>
@@ -215,7 +190,7 @@
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
+                href="">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
                 </div>
@@ -225,7 +200,7 @@
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
+                href="">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
                 </div>
@@ -235,7 +210,7 @@
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('user-profile') }}">
+                href="">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
                 </div>

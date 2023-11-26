@@ -39,7 +39,7 @@ class RegisterController extends Controller
         $user = User::create($request->all());
         //auth()->login($user);
         
-        return back();
+        return back()->with('success', 'Usuário adicionado com sucesso!');
     }
 
     public function update(Request $request, User $user)
@@ -50,7 +50,7 @@ class RegisterController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return back();
+        return back()->with('success', 'Usuário deletado com sucesso!');
     }
     
     

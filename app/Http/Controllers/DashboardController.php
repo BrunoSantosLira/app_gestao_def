@@ -10,8 +10,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $clientes = Clientes::all();
+        $produtos =  Produtos::with('categoria')->with('unidade')->get();
         $quantidadeClientes = Clientes::count();
         $quantidadeProdutos = Produtos::count();
-        return view('dashboard.index',['quantidadeClientes' => $quantidadeClientes, 'quantidadeProdutos' => $quantidadeProdutos]);
+        return view('dashboard.index',['quantidadeClientes' => $quantidadeClientes, 'quantidadeProdutos' => $quantidadeProdutos, 'clientes' => $clientes, 'produtos' => $produtos]);
     }
 }

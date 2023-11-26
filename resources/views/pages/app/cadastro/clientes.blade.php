@@ -12,6 +12,11 @@
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                                 <h6 class="text-white text-capitalize ps-3">Lista de clientes</h6>
                             </div>
+                            @if (Session::has('success'))
+                                <div class="alert alert-success text-white">
+                                    {{ Session::get('success') }}
+                                </div>
+                            @endif
                             <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarCliente">Adicionar Cliente</button>
                          
                             @if (request('status') == 'sucesso')
