@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Servico;
 use App\Models\Clientes;
 use App\Models\Produtos;
-use App\Models\OsProdutos;
+use App\Models\osProdutos;
 
 class OS extends Model
 {
@@ -23,7 +23,7 @@ class OS extends Model
 
     public function os_produtos()
     {
-        return $this->hasMany(OsProdutos::class, 'os_id');
+        return $this->hasMany(osProdutos::class, 'os_id');
     }
 
 }
