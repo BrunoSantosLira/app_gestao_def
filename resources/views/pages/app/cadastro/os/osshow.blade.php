@@ -21,7 +21,9 @@
                 <div class="card card-plain h-100">
                     <div class="card-header pb-0 p-3">
                         <a href="{{route('os.index')}}"><button class="btn btn-outline-primary btn-sm mt-3">Listagem de OS <i class="fa-solid fa-boxes-packing fa-lg" style="font-size: 1.2em"></i> </button></a> 
-
+                        <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarProdutoOS">Adicionar produto <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
+                        <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarServicoOS">Adicionar serviço <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
+                        <button class="btn btn-outline-danger btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalExcluirProdutoOs">Excluir produto <i class="fa-solid fa-trash fa-lg" style="font-size: 1.2em"></i></button>
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
                                 <h6 class="mb-3">N° OS: 1</h6>
@@ -31,9 +33,8 @@
                             </div>           
                         </div>
                     </div>
+                    {{$servicos}}
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('os.store') }}'>
-                            @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-12">
                                     <hr>
@@ -119,122 +120,189 @@
                             </div>
 
                             <hr>
-                            @foreach ($produtos as $produto)
-                                {{$produto}}
-                                <div class="row">
-                                    <div class="mb-3 col-md-3">                           
-                                        <div class="">
-                                            <h6>{{$produto['produto']['produto']}}</h6>
-                                            <hr>                                                            
-                                        </div>                          
+
+                        @foreach ($produtos as $produto)
+                                    <div class="row">
+                                        <div class="mb-3 col-md-3">                           
+                                            <div class="">
+                                                <h6>{{$produto['produto']['produto']}}</h6>
+                                                <hr>                                                            
+                                            </div>                          
+                                        </div>
+                                        <div class="mb-3 col-md-3">                           
+                                            <div class="">
+                                                <h6>Quantidade</h6>
+                                                <hr>
+                                                <div>
+                                                    {{$produto['quantidade']}}
+                                                </div>                                                              
+                                            </div>                          
+                                        </div>  
+                                        <div class="mb-3 col-md-3">                           
+                                            <div class="">
+                                                <h6>Preço unit.</h6>
+                                                <hr>
+                                                <div>
+                                                    R${{$produto['preco']}}
+                                                </div>                                                              
+                                            </div>                          
+                                        </div>  
+                                        <div class="mb-3 col-md-2">                           
+                                            <div class="">
+                                                <h6>Sub-total</h6>
+                                                <hr>
+                                                <div>
+                                                    R${{$produto['valorTotal']}}
+                                                </div>                                                              
+                                            </div>                          
+                                        </div>                                    
                                     </div>
-                                    <div class="mb-3 col-md-3">                           
-                                        <div class="">
-                                            <h6>Quantidade</h6>
-                                            <hr>
-                                            <div>
-                                                {{$produto['quantidade']}}
-                                            </div>                                                              
-                                        </div>                          
-                                    </div>  
-                                    <div class="mb-3 col-md-3">                           
-                                        <div class="">
-                                            <h6>Preço unit.</h6>
-                                            <hr>
-                                            <div>
-                                                R${{$produto['preco']}}
-                                            </div>                                                              
-                                        </div>                          
-                                    </div>  
-                                    <div class="mb-3 col-md-2">                           
-                                        <div class="">
-                                            <h6>Sub-total</h6>
-                                            <hr>
-                                            <div>
-                                                R${{$produto['valorTotal']}}
-                                            </div>                                                              
-                                        </div>                          
-                                    </div>
-                                    <div class="mb-3 col-md-1">                           
-                                        <div class="">
-                                            <h6>Ações</h6>
-                                            <hr>
-                                            <div>
-                                                <form method="POST" action="{{ route('osprodutos.destroy', ['osproduto' => $produto->id]) }}" class="d-inline-block">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" style="background: none; border:none;" class="btn-xl">
-                                                        <i class="fa-solid fa-trash m-2" style="color: #f01800;"></i>
-                                                    </button>
-                                                </form>
-                                            </div>                                                              
-                                        </div>                          
-                                    </div>                                       
-                                </div>
                         @endforeach
-
-                        
-                            <hr>
-                            <div class="row">
-                                <div class="mb-3 col-md-3">                           
-                                    <div class="">
-                                        <h6>Serviço</h6>
-                                        <hr>
-                                        <div>
-                                            Dolor anim consequat aute nulla non minim fugiat anim fugiat culpa.
-                                        </div>                                                              
-                                    </div>                          
-                                </div>
-                                <div class="mb-3 col-md-3">                           
-                                    <div class="">
-                                        <h6>Quantidade</h6>
-                                        <hr>
-                                        <div>
-                                            Excepteur adipisicing in dolor incididunt nostrud irure do incididunt nulla deserunt consequat mollit in.
-                                        </div>                                                              
-                                    </div>                          
-                                </div>  
-                                <div class="mb-3 col-md-3">                           
-                                    <div class="">
-                                        <h6>Preço unit.</h6>
-                                        <hr>
-                                        <div>
-                                            R$120.12
-                                        </div>                                                              
-                                    </div>                          
-                                </div>  
-                                <div class="mb-3 col-md-3">                           
-                                    <div class="">
-                                        <h6>Sub-total</h6>
-                                        <hr>
-                                        <div>
-                                            R$120.12
-                                        </div>                                                              
-                                    </div>                          
-                                </div>                                    
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="mb-3 col-md-12">                           
-                                    <div class="bold">
-                                        <h5>Valor Total</h5>
-                                        <div class="text-bold text-dark">
-                                            R$120.12
-                                        </div>                                                              
-                                    </div>                          
-                                </div>                                  
-                            </div>
-
+                        <div class="">
+                            <h4>Total em produtos:</h4>
+                            <p style="font-weight: bold">R${{$somaProdutosOS}}</p>
                         </div>
-                            <button type="submit" class="btn bg-gradient-dark">Adicionar</button>
-                        </form>
+                        <hr>
+                        </div>
+
 
                     </div>
                 </div>
             </div>
 
         </div>
+        
     </div>
-   
+         <!-- Modal USUÁRIO -->
+         <div class="modal fade" id="ModalExcluirProdutoOs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Excluir Produto da OS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
+                <div class="modal-body">
+                    <form action="{{route('osprodutos.deletar')}}" method="POST">
+                        @csrf
+                        <label for="servico" class="form-label">OS</label>
+                        <select id="servico" class="form-select  p-2" name="os_id">
+                            @foreach ($os as $key => $o)
+                            <option value="{{$o['id']}}">{{$o['nome']}}</option>
+                            @endforeach
+                        </select>
+
+                        <label for="servico" class="form-label">Produto</label>
+                        <select id="servico" class="form-select  p-2" name="produto_id">
+                            @foreach ($produtos as $key => $produto)
+                            <option value="{{$produto['id']}}">{{$produto['produto']['produto']}} (R${{$produto['valorTotal']}})</option>
+                            @endforeach
+                        </select>
+
+
+                        <button type="submit" class="btn btn-primary mt-2">Excluir</button>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+
+            </div>
+            </div>
+        </div>
+                <!-- Modal ADICIONARPRODUTOOS -->
+                <div class="modal fade" id="ModalAdicionarProdutoOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Adicionar Produto na OS</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+        
+                        <div class="modal-body">
+                            <form action="{{route('osprodutos.store')}}" method="POST">
+                                @csrf
+                                <label for="servico" class="form-label">OS</label>
+                                <select id="servico" class="form-select  p-2" name="os_id">
+                                    @foreach ($os as $key => $o)
+                                    <option value="{{$o['id']}}">{{$o['nome']}}</option>
+                                    @endforeach
+                                </select>
+        
+                                <label for="servico" class="form-label">Produto</label>
+                                <select id="servico" class="form-select  p-2" name="produto_id">
+                                    @foreach ($produtosTabela as $key => $produto)
+                                    <option value="{{$produto['id']}}">{{$produto['produto']}}</option>
+                                    @endforeach
+                                </select>
+        
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Preço do produto</label>
+                                    <input type="number" name="preco" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Preço">
+                                </div>
+        
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Quantidade</label>
+                                    <input type="number" name="quantidade" class="form-control border border-2 p-2" value='0' placeholder="Preço">
+                                </div>
+        
+                                <button type="submit" class="btn btn-primary">Adicionar</button>
+                            </form>
+                        </div>
+        
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+        
+                    </div>
+                    </div>
+                </div>
+                        <!-- Modal aad servicos -->
+                        <div class="modal fade" id="ModalAdicionarServicoOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Adicionar serviço na OS</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                
+                                <div class="modal-body">
+                                    <form action="{{route('osservicos.store')}}" method="POST">
+                                        @csrf
+                                        <label for="servico" class="form-label">OS</label>
+                                        <select id="servico" class="form-select  p-2" name="os_id">
+                                            @foreach ($os as $key => $o)
+                                            <option value="{{$o['id']}}">{{$o['nome']}}</option>
+                                            @endforeach
+                                        </select>
+                
+                                        <label for="servico" class="form-label">Serviço</label>
+                                        <select id="servico" class="form-select  p-2" name="servico_id">
+                                            @foreach ($servicosTabela as $key => $servico)
+                                            <option value="{{$servico['id']}}">{{$servico['nome']}}</option>
+                                            @endforeach
+                                        </select>
+                
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Preço do produto</label>
+                                            <input type="number" name="preco" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Preço">
+                                        </div>
+                
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Quantidade</label>
+                                            <input type="number" name="quantidade" class="form-control border border-2 p-2" value='0' placeholder="Preço">
+                                        </div>
+                
+                                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                                    </form>
+                                </div>
+                
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                
+                            </div>
+                            </div>
+                        </div>
 </x-layout>

@@ -27,6 +27,7 @@ use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\CampoController;
 use App\Http\Controllers\OSController;
 use App\Http\Controllers\OsProdutosController;
+use App\Http\Controllers\OsServicoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
@@ -67,6 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('unidades', UnidadesController::class);
 	Route::resource('os', OSController::class);
 	Route::resource('osprodutos', OsProdutosController::class);
+	Route::resource('osservicos', OsServicoController::class);
+	Route::post('osprodutos/deletar', [App\Http\Controllers\OsProdutosController::class, 'deletar'])->name('osprodutos.deletar');
 
 	Route::resource('campo', CampoController::class);
 	Route::resource('usuarios', RegisterController::class);

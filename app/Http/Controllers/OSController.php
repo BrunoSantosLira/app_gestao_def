@@ -7,6 +7,7 @@ use App\Models\Clientes;
 use App\Models\Servico;
 use App\Models\Produtos;
 use App\Models\osProdutos;
+use App\Models\osServico;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -63,8 +64,14 @@ class OSController extends Controller
     public function show(OS $o)
     {
         $produtos = osProdutos::with('produto')->where('os_id', '=', $o->id)->get();
+        $servicos = osServico::with('servico')->where('os_id', '=', $o->id)->get();
+        // Substitua 'osProdutos' pelo nome correto do seu modelo
+        $somaProdutosOS = osProdutos::where('os_id', $o->id)->sum('valorTotal');
+
+        $produtosTabela = Produtos::all();
+        $servicosTabela = Servico::all();
         $o = Os::with('os_produtos')->where('id', '=', $o->id )->get();
-        return view('pages.app.cadastro.os.osshow', ['os' => $o, 'produtos' => $produtos]);
+        return view('pages.app.cadastro.os.osshow', ['os' => $o, 'produtos' => $produtos, 'produtosTabela' => $produtosTabela, 'somaProdutosOS' =>  $somaProdutosOS, 'servicos' => $servicos, 'servicosTabela' => $servicosTabela]);
     }
 
     /**

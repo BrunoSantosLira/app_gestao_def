@@ -29,7 +29,9 @@ class OsServicoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+  
+        osServico::create($request->all());
+        return back();
     }
 
     /**

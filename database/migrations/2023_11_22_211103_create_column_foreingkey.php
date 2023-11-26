@@ -31,9 +31,11 @@ return new class extends Migration
         Schema::table('produtos', function (Blueprint $table) {
             // Remove a chave estrangeira
             $table->dropForeign(['categoria_id']);
-
+            
             // Remove a coluna
             $table->dropColumn('categoria_id');
         });
+
+        
     }
 };
