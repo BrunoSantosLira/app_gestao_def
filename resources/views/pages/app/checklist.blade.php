@@ -2,7 +2,7 @@
     <x-navbars.sidebar activePage="checklist"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Tabelas"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="checklist"></x-navbars.navs.auth>
         <style>
             /* Estilo personalizado para campos de entrada visualmente desativados */
             .custom-disabled {
@@ -86,15 +86,16 @@
                                                     </p>
                                                 </td>
                                                 <td class="float-end">
-                                                    <button type="submit" class="btn btn-outline-primary btn-sm">Atualizar</button>
+                                                    <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></button>
                                                 </form>
-                                                    <button class="btn btn-outline-warning btn-sm" onclick="mostrarModal({{$checklist}})">Adicionar Campo</button>
-                                                    <a href="{{route('checklist.show', ['checklist' => $checklist->id])}}" style="text-decoration: none;color: inherit;"><button class="btn btn-outline-success btn-sm"> Visualizar</button></a>
+                                                    <button style="background: none; border:none;" class="btn-xl" onclick="mostrarModal({{$checklist}})"><i class="fa-solid fa-square-plus" style="color: #d6811f;"></i></button>
+                                                    <a href="{{route('checklist.show', ['checklist' => $checklist->id])}}" style="text-decoration: none;color: inherit;"><button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></button>
+
 
                                                     <form action="{{route('checklist.destroy', ['checklist' => $checklist->id])}}" method="POST" class="d-inline-block" onsubmit="return confirmacao()">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                                                        <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
                                                     </form>
                                                 
                                                 </td>

@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200 ">
-    <x-navbars.sidebar activePage="checklistshow"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="checklist"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Tabelas"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="checklist"></x-navbars.navs.auth>
         <style>
             /* Estilo personalizado para campos de entrada visualmente desativados */
             .custom-disabled {
@@ -42,12 +42,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($checklist as $c)
+                                        @foreach ($checklist as $key => $c)
                                         <tr>
                                             <td>                    
                                                 <div class="d-flex px-2">
                                                     <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">#{{$c['id']}}</h6>
+                                                        <h6 class="mb-0 text-sm">#{{$key + 1}}</h6>
                                                     </div>
                                                 </div>
                                             </td>
@@ -70,12 +70,12 @@
                                                               NÃO
                                                             </label>
                                                           </div>
-                                                          <button type="submit" class="btn btn-outline-primary btn-sm d-inline-block">Atualizar</button>
-                                                    </form>
+                                                          <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></button>
+                                                        </form>
                                                     <form action="{{ route('campo.destroy', ['campo' => $c['id']]) }}" method="POST" class="d-inline-block" onsubmit="return confirmacao()">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-outline-danger btn-sm d-inline-block">Excluir</button>
+                                                        <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
                                                     </form>
                                                 </p>
                                             </td>

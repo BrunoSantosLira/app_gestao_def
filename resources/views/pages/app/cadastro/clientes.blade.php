@@ -96,13 +96,13 @@
                                                 <td class="float-end">
                                                 @if (auth()->user()->email == 'admin@material.com')
                                                         @if ($cliente['email'] != auth()->user()->email)
-                                                        <button type="submit" class="btn btn-outline-primary btn-sm">Atualizar</button> 
+                                                        <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></button> 
                                                         </form>
                                                         
                                                         <form method="POST" class="d-inline-block" action="{{route('clientes.destroy', ['cliente' => $cliente->id])}}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                                                            <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
                                                         </form>     
                                                     @endif
                                                 @endif 

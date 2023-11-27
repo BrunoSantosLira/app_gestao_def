@@ -86,7 +86,7 @@
                                                                 <form method="POST" action="{{route('usuarios.destroy', ['usuario' => $usuario['id']])}}" class="d-inline-block">                                                           
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="btn btn-outline-danger  btn-sm">Excluir</button>        
+                                                                <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>        
                                                             </form>
                                                             @endif
                                                         @endif 

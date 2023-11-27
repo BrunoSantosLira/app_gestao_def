@@ -52,7 +52,7 @@
                                                         <form method="POST" class="d-inline-block" action="{{route('unidades.destroy', ['unidade' => $unidade->id])}}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
+                                                            <button type="submit"  style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
                                                         </form>     
                                                 @endif 
                                                 </td>
