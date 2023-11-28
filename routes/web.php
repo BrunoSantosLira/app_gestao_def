@@ -26,6 +26,7 @@ use App\Http\Controllers\OSController;
 use App\Http\Controllers\OsProdutosController;
 use App\Http\Controllers\OsServicoController;
 use App\Http\Controllers\EntradasController;
+use App\Http\Controllers\SaidasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
@@ -64,9 +65,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('produtos', ProdutosController::class);
 	Route::resource('entradas', EntradasController::class);
+	Route::resource('saidas', SaidasController::class);
 	Route::resource('categorias', CategoriasController::class);
 	Route::resource('unidades', UnidadesController::class);
 	Route::resource('os', OSController::class);
+	// routes/web.php
+
+
 	Route::resource('osprodutos', OsProdutosController::class);
 	Route::resource('osservicos', OsServicoController::class);
 	Route::post('osprodutos/deletar', [App\Http\Controllers\OsProdutosController::class, 'deletar'])->name('osprodutos.deletar');

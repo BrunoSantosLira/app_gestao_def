@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Entradas;
+use App\Models\Saidas;
 use App\Models\Produtos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class EntradasController extends Controller
+class SaidasController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $entradas = Entradas::with('produto')->paginate(5);
+        $saidas = Saidas::with('produto')->paginate(5);
         $produtos = Produtos::all();
-        return view('pages.app.estoque.entrada', ['produtos' => $produtos, 'entradas' => $entradas]);
+        
+        return view('pages.app.estoque.saida', ['produtos' => $produtos, 'saidas' => $saidas]);
     }
 
     /**
@@ -40,21 +41,25 @@ class EntradasController extends Controller
         ];
   
         $request->validate($regras, $feedback);
-        Entradas::create($request->all());
 
-        //Adicionando ao estoque de tal produto
+        //Reduzindo o estoque
         $produto = Produtos::find($request->produto_id);
-        $produto['estoqueAtual'] += $request->quantidade;
-        $produto->save();
 
+        if($produto['estoqueAtual'] > 0 && $produto['estoqueAtual'] >= $request->quantidade){
+            Saidas::create($request->all());
+            $produto['estoqueAtual'] -= $request->quantidade;
+            $produto->save();
+            return back()->with('success', 'O estoque do produto foi reduzido com sucesso');
+        }
 
-        return back()->with('success', 'Estoque aumentado com sucesso!');
+        return back()->with('erro', 'O estoque do produto já está zerado ou a quantidade de retirada foi maior do que a disponível');
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Entradas $entradas)
+    public function show(Saidas $saidas)
     {
         //
     }
@@ -62,7 +67,7 @@ class EntradasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Entradas $entradas)
+    public function edit(Saidas $saidas)
     {
         //
     }
@@ -70,7 +75,7 @@ class EntradasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Entradas $entradas)
+    public function update(Request $request, Saidas $saidas)
     {
         //
     }
@@ -78,7 +83,7 @@ class EntradasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Entradas $entradas)
+    public function destroy(Saidas $saidas)
     {
         //
     }

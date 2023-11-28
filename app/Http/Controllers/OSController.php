@@ -17,11 +17,22 @@ class OSController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $os = OS::with('os_produtos')->get();
-        $produtos = Produtos::all();
-        return view('pages.app.cadastro.os.os',['os' => $os, 'produtos' => $produtos]);
+        if($request->all()){
+            //Busca as OS pelo buscador a partir do unique_id
+            $os = OS::where('unique_id', 'like', "$request->id%")->get();
+            $produtos = Produtos::all();
+            return view('pages.app.cadastro.os.os',['os' => $os, 'produtos' => $produtos]);
+
+        }else{
+
+            $os = OS::all();
+            $produtos = Produtos::all();
+            return view('pages.app.cadastro.os.os',['os' => $os, 'produtos' => $produtos]);
+
+        };
+
     }
 
     /**
@@ -55,7 +66,11 @@ class OSController extends Controller
   
         $request->validate($regras, $feedback);
 
-        OS::create($request->all());
+        $dados = $request->all();
+        $ultimoID = OS::latest()->value('id') + 1;
+        $dados['unique_id'] = now()->format('Ymd') . '/' . $ultimoID ;
+
+        OS::create($dados);
         return back()->with('success', 'OS adicionada com sucesso!');
     }
 

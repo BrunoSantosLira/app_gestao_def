@@ -13,7 +13,7 @@ class OS extends Model
 {
     use HasFactory;
     protected $table = 'os';
-    protected $fillable = ['nome', 'servico_id', 'cliente_id', 'produto_id', 'responsavel', 'observacoes', 'status','data_inicial','data_final','dias_garantia', 'valorTotal'];
+    protected $fillable = ['nome', 'servico_id', 'cliente_id', 'produto_id', 'responsavel', 'observacoes', 'status','data_inicial','data_final','dias_garantia', 'valorTotal', 'unique_id'];
 
 
     public function cliente()

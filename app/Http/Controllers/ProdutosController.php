@@ -39,8 +39,8 @@ class ProdutosController extends Controller
             'preco' => 'required',
             'estoqueAtual' => 'required',
             'codigo_de_barras' => 'required|unique:produtos,codigo_de_barras',
-            'valorCompra' => 'required',
-            'valorVenda' => 'required',
+            'valorCompra' => 'required|min:1',
+            'valorVenda' => 'required|min:1',
             'NCM' => 'required|min:10',
             'codDistribuidor' => 'required',
             'codPessoal' => 'required',
@@ -49,6 +49,8 @@ class ProdutosController extends Controller
             'required' => 'O campo :attribute deve ser preenchido',
             'codigo_de_barras.unique' => 'Esse código de barras já foi registrado!',
             'NCM.min' => 'O código precisa ter 8 dígitos',
+            'valorCompra.min' => 'O valor precisa ser de ao menos 1',
+            'valorVenda.min' => 'O valor precisa ser de ao menos 1',
         ];
   
         $request->validate($regras, $feedback);

@@ -85,7 +85,7 @@
                                                                                                
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Valor  de compra:</label>
-                                    <input type="number" name="valorCompra" class="form-control border border-2 p-2" value='{{$produto['valorCompra']}}' step="0.01" min="0" placeholder="Valor  de compra">
+                                    <input type="number" name="valorCompra" class="form-control border border-2 p-2" value='{{$produto['valorCompra']}}' step="0.01" min="1" placeholder="Valor  de compra">
                                     @error('valorCompra')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -94,7 +94,7 @@
                                 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Valor  de venda:</label>
-                                    <input type="number" name="valorVenda" class="form-control border border-2 p-2" value='{{$produto['valorVenda']}}' step="0.01" min="0" placeholder="Valor  de venda">
+                                    <input type="number" name="valorVenda" class="form-control border border-2 p-2" value='{{$produto['valorVenda']}}' step="0.01" min="1" placeholder="Valor  de venda">
                                     @error('valorCompra')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -129,7 +129,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Estoque Atual</label>
-                                    <input type="number" name="estoqueAtual" class="form-control border border-2 p-2" value='{{$produto['estoqueAtual']}}' min="0" >
+                                    <input disabled type="number" name="estoqueAtual" class="form-control border border-2 p-2" value='{{$produto['estoqueAtual']}}' min="0" >
                                     
                                     @error('estoqueAtual')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
@@ -188,6 +188,31 @@
             </div>
 
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // Seleciona o elemento de input
+              const inputCodigoNCM = document.getElementById('codigoNCM');
+            
+              // Adiciona um ouvinte de evento para reagir a mudanças no input
+              inputCodigoNCM.addEventListener('input', formatarCodigoNCM);
+            
+              function formatarCodigoNCM() {
+                // Obtém o valor atual do input
+                let codigoNCM = inputCodigoNCM.value;
+            
+                // Remove qualquer caractere não numérico
+                codigoNCM = codigoNCM.replace(/\D/g, '');
+            
+                // Adiciona o formato desejado
+                if (codigoNCM.length > 0) {
+                  codigoNCM = `${codigoNCM.substring(0, 4)}.${codigoNCM.substring(4, 6)}.${codigoNCM.substring(6)}`;
+                }
+            
+                // Atualiza o valor do input
+                inputCodigoNCM.value = codigoNCM;
+              }
+            });
+            </script>
         <x-footers.auth></x-footers.auth>
     </div>
     <x-plugins></x-plugins>

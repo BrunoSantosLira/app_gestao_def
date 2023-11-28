@@ -136,7 +136,7 @@
             <a class="nav-link text-white {{ $activePage == 'entradas' ? 'active bg-gradient-primary' : '' }} "
                 href="{{ route('entradas.index') }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-arrow-right ps-2 pe-2 text-center"></i>
                 </div>
                 <span class="nav-link-text ms-1">Entradas</span>
             </a>
@@ -144,9 +144,9 @@
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'saidas' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('checklist.index') }}">
+                href="{{ route('saidas.index') }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-arrow-left ps-2 pe-2 text-center"></i>
                 </div>
                 <span class="nav-link-text ms-1">Saídas</span>
             </a>

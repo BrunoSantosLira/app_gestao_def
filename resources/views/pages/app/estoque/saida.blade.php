@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage="entradas"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="saidas"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="entradas"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="saidas"></x-navbars.navs.auth>
 
         <!-- End Navbar -->
         <div class="container-fluid py-4">
@@ -11,14 +11,19 @@
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white text-capitalize ps-3">Listagem de entradas</h6>
+                                <h6 class="text-white text-capitalize ps-3">Listagem de Saidas</h6>
                             </div>
                         
-                            <button class="btn btn-outline-primary btn-sm mt-3" data-bs-toggle="modal" data-bs-target="#ModalAdicionarEntrada">Adicionar entrada de produto em estoque</button>
+                            <button class="btn btn-outline-primary btn-sm mt-3" data-bs-toggle="modal" data-bs-target="#ModalAdicionarSaida">Adicionar saida de produto em estoque</button>
                             @if (Session::has('success'))
                                 <div class="alert alert-success text-white">
                                     {{ Session::get('success') }}
                                 </div>
+                            @endif
+                            @if (Session::has('erro'))
+                            <div class="alert alert-danger text-white">
+                                {{ Session::get('erro') }}
+                            </div>
                             @endif
                             @foreach ($errors->all() as $error)
                             <li class="text-danger">{{ $error }}</li>
@@ -30,25 +35,26 @@
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ $entradas->previousPageUrl() }}" aria-label="Previous">
+                                            <a class="page-link" href="{{ $saidas->previousPageUrl() }}" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                 
                                         {{-- Loop através das páginas geradas pela pagination do Laravel --}}
-                                        @foreach ($entradas->links()->elements[0] as $page => $url)
-                                            <li class="page-item {{ $entradas->currentPage() == $page ? 'active' : '' }}">
+                                        @foreach ($saidas->links()->elements[0] as $page => $url)
+                                            <li class="page-item {{ $saidas->currentPage() == $page ? 'active' : '' }}">
                                                 <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                             </li>
                                         @endforeach
                                 
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ $entradas->nextPageUrl() }}" aria-label="Next">
+                                            <a class="page-link" href="{{ $saidas->nextPageUrl() }}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </nav>
+                                
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
 
@@ -71,36 +77,36 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Data da entrada
+                                            Data da saida
                                             </th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($entradas as $key => $entrada)       
+                                        @foreach ($saidas as $key => $saida)       
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2">
                                                     <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">#{{$entrada['id']}}</h6>
+                                                        <h6 class="mb-0 text-sm">#{{$saida['id']}}</h6>
                                                     </div>
                                                 </div>
                                             </td>   
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{$entrada['produto']['produto']}}</p>
+                                                <p class="text-sm font-weight-bold mb-0">{{$saida['produto']['produto']}}</p>
                                             </td>
 
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{$entrada['quantidade']}}</p>
+                                                <p class="text-sm font-weight-bold mb-0">{{$saida['quantidade']}}</p>
                                             </td>
 
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{$entrada['tipo']}}</p>
+                                                <p class="text-sm font-weight-bold mb-0">{{$saida['tipo']}}</p>
                                             </td>
 
                                             
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{\Carbon\Carbon::parse($entrada['created_at'])->format('d/m/Y')}}</p>
+                                                <p class="text-sm font-weight-bold mb-0">{{\Carbon\Carbon::parse($saida['created_at'])->format('d/m/Y')}}</p>
                                             </td>
 
 
@@ -109,22 +115,23 @@
                                     </tbody>
 
                                 </table>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
              <!-- Modal -->
-             <div class="modal fade" id="ModalAdicionarEntrada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div class="modal fade" id="ModalAdicionarSaida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Entrada de estoque</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Saida de estoque</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        <form action="{{route('entradas.store')}}" method="POST">
+                        <form action="{{route('saidas.store')}}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="nome" class="form-label">Produto</label>
@@ -136,11 +143,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="nome" class="form-label">Quantidade</label>
-                                <input type="number"  class="form-control border border-2 p-2" name="quantidade" placeholder="Quantidade a ser adicionada">
+                                <input type="number"  class="form-control border border-2 p-2" name="quantidade" placeholder="Quantidade a ser retirada">
                             </div>
                             <div class="mb-3 col-md-12">
                                 <label for="floatingTextarea2">Tipo de entrada</label>
-                                <input type="text"  class="form-control border border-2 p-2" placeholder="Descreva o tipo de entrada" name="tipo">
+                                <input type="text"  class="form-control border border-2 p-2" placeholder="Descreva o tipo de saida" name="tipo">
 
                             </div>
                             <button type="submit" class="btn btn-primary">Adicionar</button>

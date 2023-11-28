@@ -22,7 +22,20 @@
                             @endif
                         </div>
 
+                        <form class="row m-3"  method="GET" action="{{route('os.index')}}">
+                            <h5>Busca por ID</h5>
+                            <div class="col-auto">
+                              <label for="inputPassword2" class="visually-hidden">ID</label>
+                              <input type="text" class="form-control border border-2 p-2" id="inputPassword2" placeholder="Exemplo: 20231131/14" name="id">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit"  style="background-color: #fb7609; border:none; border-radius:5px;" class=" btn btn-xl" ><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i></button>
+                            </div>
+                        </form>
+                        <hr>
+
                         <div class="card-body px-0 pb-2">
+                            
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
@@ -66,7 +79,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style="font-size: 10px">
                                         @foreach ($os as $key => $o)   
                                         @php
                                             $dataInicial = \Carbon\Carbon::parse($o['data_inicial']);
@@ -74,43 +87,43 @@
                                         @endphp                                               
                                         <tr>
                                                 <td>
-                                                    <div class="d-flex px-2">
+                                                    <div class="d-flex">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">#{{$o['id']}}</h6>
+                                                            <h6 class="mb-0 text-sm">#{{$o['unique_id']}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="d-flex px-2">
+                                                    <div class="d-flex ">
                                                         <div class="my-auto">
                                                             <h6 class="mb-0 text-sm">{{$o['cliente']['nome']}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="d-flex px-2">
+                                                    <div class="d-flex ">
                                                         <div class="my-auto">
                                                             <h6 class="mb-0 text-sm">{{$o['responsavel']}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="d-flex px-2">
+                                                    <div class="d-flex ">
                                                         <div class="my-auto">
                                                             <h6 class="mb-0 text-sm">{{ date('d/m/Y', strtotime($o['data_inicial'])) }}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="d-flex px-2">
+                                                    <div class="d-flex ">
                                                         <div class="my-auto">
                                                             <h6 class="mb-0 text-sm">{{ date('d/m/Y', strtotime($o['data_final'])) }}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="d-flex px-2">
-                                                        <div class="my-auto">
+                                                    <div class="d-flex">
+                                                        <div class="my-auto " style="font-size: 14px">
                                                             <span class="badge bg-success text-dark">{{ $dataDeVencimento->format('d/m/Y') }}</span>
                                                         </div>
                                                     </div>
@@ -124,7 +137,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex px-2">
-                                                        <div class="my-auto">
+                                                        <div class="my-auto" style="font-size: 14px">
                                                                 <span class="badge {{$o['status'] == 'finalizado' ? 'bg-success' : 'bg-warning'}} text-dark">{{$o['status']}}</span>
                                                         </div>
                                                     </div>
@@ -132,12 +145,12 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <a target="_blank" href="{{route('os.show', ['o' => $o->id])}}"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></a>
-                                                            <a target="_blank" href="{{route('os.edit', ['o' => $o->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></a>
+                                                            <a target="_blank" href="{{route('os.show', ['o' => $o->id])}}"><i class="fa-solid fa-eye m-2" style="color: #31b452; font-size:1.5em;"></i></a>
+                                                            <a target="_blank" href="{{route('os.edit', ['o' => $o->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.5em;"></i></a>
                                                             <form action="{{route('os.destroy', ['o' => $o->id])}}" class="d-inline-block" method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
+                                                                <button type="submit" style="background: none; border:none;" class="btn-xl" ><i  class="fa-solid fa-trash m-2" style="color: #f01800; font-size:1.5em;"></i></button>
                                                             </form>
                                                         </div>
                                                     </div>

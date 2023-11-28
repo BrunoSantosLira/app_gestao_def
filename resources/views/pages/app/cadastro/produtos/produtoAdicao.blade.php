@@ -82,7 +82,7 @@
                                                                
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Valor  de compra:</label>
-                                    <input type="number" name="valorCompra" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Valor  de compra">
+                                    <input type="number" name="valorCompra" class="form-control border border-2 p-2" value='' step="0.01" min="1" placeholder="Valor  de compra">
                                     @error('valorCompra')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -90,7 +90,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Valor  de venda:</label>
-                                    <input type="number" name="valorVenda" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Valor  de venda">
+                                    <input type="number" name="valorVenda" class="form-control border border-2 p-2" value='' step="0.01" min="1" placeholder="Valor  de venda">
                                     @error('valorCompra')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
