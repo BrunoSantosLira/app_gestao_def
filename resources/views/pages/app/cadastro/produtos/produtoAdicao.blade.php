@@ -40,26 +40,69 @@
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Nome do produto</label>
-                                    <input type="text" name="produto" class="form-control border border-2 p-2" value=''>
+                                    <label class="form-label">Nome do produto:</label>
+                                    <input type="text" name="produto" class="form-control border border-2 p-2" value='' placeholder="Nome:">
                                     @error('produto')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">NCM de 8 dígitos:</label>
+                                    <input type="text" maxlength="10" name="NCM" class="form-control border border-2 p-2" value='' id="codigoNCM" placeholder="XXXX.XX.XX"">
+                                    @error('NCM')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Código do distribuidor:</label>
+                                    <input type="text" name="codDistribuidor" class="form-control border border-2 p-2" value='' placeholder="Insira aqui">
+                                    @error('codDistribuidor')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Meu Código:</label>
+                                    <input type="text" name="codPessoal" class="form-control border border-2 p-2" value='' placeholder="Insira aqui">
+                                    @error('codPessoal')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 </div>
                                
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Preço do produto</label>
+                                    <label class="form-label">Preço do produto:</label>
                                     <input type="number" name="preco" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Preço">
                                     @error('preco')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
+
+                                                               
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Valor  de compra:</label>
+                                    <input type="number" name="valorCompra" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Valor  de compra">
+                                    @error('valorCompra')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Valor  de venda:</label>
+                                    <input type="number" name="valorVenda" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Valor  de venda">
+                                    @error('valorCompra')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+                                
+                                
                                 
 
 
                                 
                                 <div class="mb-3 col-md-6">
-                                    <label for="categoria" class="form-label">Unidade</label>
+                                    <label for="categoria" class="form-label">Unidade:</label>
                                     <select id="categoria" class="form-select p-2" name="unidade_id">
                                         @foreach ($unidades as $key => $unidade)
                                             <option class="" value="{{$unidade['id']}}">{{$unidade['unidade']}}  ({{$unidade['id']}})</option>
@@ -71,7 +114,7 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="categoria" class="form-label">Categoria</label>
+                                    <label for="categoria" class="form-label">Categoria:</label>
                                     <select id="categoria" class="form-select p-2" name="categoria_id">
                                         @foreach ($categorias as $key => $categoria)
                                             <option class="" value="{{$categoria['id']}}">{{$categoria['categoria']}}  ({{$categoria['id']}})</option>
@@ -83,7 +126,7 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Estoque Atual</label>
+                                    <label class="form-label">Estoque Atual:</label>
                                     <input type="number" name="estoqueAtual" class="form-control border border-2 p-2" value='0' min="0">
                                     @error('estoqueAtual')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
@@ -91,7 +134,7 @@
                                 </div>
                                                                
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Código de barras</label>
+                                    <label class="form-label">Código de barras:</label>
                                     <input type="number" name="codigo_de_barras" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Código de barras">
                                     @error('codigo_de_barras')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
@@ -99,7 +142,7 @@
                                 </div>
 
                                 <div class="mb-3 col-md-12">
-                                    <label for="floatingTextarea2">Detalhes</label>
+                                    <label for="floatingTextarea2">Detalhes:</label>
                                     <textarea class="form-control border border-2 p-2"
                                         placeholder="Detalhes do produto" id="detalhes" name="detalhes"
                                         rows="4" cols="50">{{ old('about', auth()->user()->about) }}</textarea>
@@ -118,6 +161,31 @@
         </div>
         <x-footers.auth></x-footers.auth>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Seleciona o elemento de input
+          const inputCodigoNCM = document.getElementById('codigoNCM');
+        
+          // Adiciona um ouvinte de evento para reagir a mudanças no input
+          inputCodigoNCM.addEventListener('input', formatarCodigoNCM);
+        
+          function formatarCodigoNCM() {
+            // Obtém o valor atual do input
+            let codigoNCM = inputCodigoNCM.value;
+        
+            // Remove qualquer caractere não numérico
+            codigoNCM = codigoNCM.replace(/\D/g, '');
+        
+            // Adiciona o formato desejado
+            if (codigoNCM.length > 0) {
+              codigoNCM = `${codigoNCM.substring(0, 4)}.${codigoNCM.substring(4, 6)}.${codigoNCM.substring(6)}`;
+            }
+        
+            // Atualiza o valor do input
+            inputCodigoNCM.value = codigoNCM;
+          }
+        });
+        </script>
     <x-plugins></x-plugins>
 
 </x-layout>

@@ -24,7 +24,7 @@
 
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-3">Inserção de produtos</h6>
+                                <h6 class="mb-3">Edição de produtos</h6>
                             </div>
                             @foreach ($errors->all() as $error)
                                 <li class="text-danger">{{ $error }}</li>
@@ -42,9 +42,34 @@
                             @method('PATCH')
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Nome do produto</label>
+                                    <label class="form-label">Nome do produto:</label>
                                     <input type="text" name="produto" class="form-control border border-2 p-2" value='{{$produto['produto']}}'>
                                     @error('produto')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
+                                
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">NCM de 8 dígitos:</label>
+                                    <input type="text" maxlength="10" name="NCM" class="form-control border border-2 p-2" value='{{$produto['NCM']}}' id="codigoNCM" placeholder="XXXX.XX.XX"">
+                                    @error('NCM')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Código do distribuidor:</label>
+                                    <input type="text" name="codDistribuidor" class="form-control border border-2 p-2" value='{{$produto['codDistribuidor']}}' placeholder="Insira aqui">
+                                    @error('codDistribuidor')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Meu Código:</label>
+                                    <input type="text" name="codPessoal" class="form-control border border-2 p-2" value='{{$produto['codPessoal']}}' placeholder="Insira aqui">
+                                    @error('codPessoal')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 </div>
@@ -57,6 +82,23 @@
                                     @enderror
                                 </div>
                                 
+                                                                                               
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Valor  de compra:</label>
+                                    <input type="number" name="valorCompra" class="form-control border border-2 p-2" value='{{$produto['valorCompra']}}' step="0.01" min="0" placeholder="Valor  de compra">
+                                    @error('valorCompra')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Valor  de venda:</label>
+                                    <input type="number" name="valorVenda" class="form-control border border-2 p-2" value='{{$produto['valorVenda']}}' step="0.01" min="0" placeholder="Valor  de venda">
+                                    @error('valorCompra')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
 
 
                                 <div class="mb-3 col-md-6">
@@ -116,6 +158,30 @@
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Atualizar</button>
                         </form>
+
+                        <div class="col-md-8 d-flex align-items-center">
+                            <h6 class="mb-3">Dados monetários</h6>
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Margem de lucro:</label>
+                                <input disabled type="text" name="produto" class="form-control border border-2 p-2" value='{{number_format($dadosMonetarios['MargemLucro'],2)}}%'>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Markup:</label>
+                                <input disabled type="text" name="produto" class="form-control border border-2 p-2" value='{{number_format($dadosMonetarios['Variação Percentual:'],2)}}'>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Lucro ou prejuízo absoluto:</label>
+                                <input disabled type="text" name="produto" class="form-control border border-2 p-2" value='{{number_format($dadosMonetarios['lucro/prejuico bruto'],2)}}'>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Rentabilidade:</label>
+                                <input disabled type="text" name="produto" class="form-control border border-2 p-2" value='{{number_format($dadosMonetarios['Rentabilidade'],2)}}%'>
+                            </div>
+                        </div>
+                        
 
                     </div>
                 </div>

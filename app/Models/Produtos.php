@@ -13,7 +13,7 @@ use App\Models\osProdutos;
 class Produtos extends Model
 {
     use HasFactory;
-    protected $fillable = ['produto', 'preco', 'estoqueAtual', 'categoria_id', 'unidade_id', 'codigo_de_barras', 'detalhes'];
+    protected $fillable = ['produto', 'preco', 'estoqueAtual', 'categoria_id', 'unidade_id', 'codigo_de_barras', 'detalhes', 'valorCompra','valorVenda', 'NCM','codDistribuidor','codPessoal','unique_id'];
 
     public function categoria()
     {
@@ -34,4 +34,6 @@ class Produtos extends Model
     {
         return $this->hasMany(osProdutos::class, 'produto_id');
     }
+
+    
 }
