@@ -57,7 +57,9 @@ class ContratoController extends Controller
      */
     public function show(Contrato $contrato)
     {
-        //
+        $contrato = Contrato::with('cliente')->where('id', '=', $contrato->id )->get();
+
+        return view('pages.app.servicos.contratos.contrato_show', ["contrato" => $contrato]);
     }
 
     /**
@@ -65,7 +67,8 @@ class ContratoController extends Controller
      */
     public function edit(Contrato $contrato)
     {
-        //
+        $clientes = Clientes::all();
+        return view('pages.app.servicos.contratos.contrato_edit', ["contrato" => $contrato, 'clientes' => $clientes]);
     }
 
     /**
@@ -73,7 +76,25 @@ class ContratoController extends Controller
      */
     public function update(Request $request, Contrato $contrato)
     {
-        //
+        $regras = [
+            'nome' => 'required|min:3',
+            'responsável' => 'required|min:3',
+            'data_inicio' => 'required',
+            'data_fim' => 'required',
+            'metodo_de_pagemento'  => 'required',
+            'quantidade_parcelas'  => 'required',
+            'corpo'  => 'required',
+            
+        ];
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'min' => 'O campo :attribute precisa ter ao menos 3 caracteres'
+        ];
+  
+        $request->validate($regras, $feedback);
+
+        $contrato->update($request->all());
+        return back()->with('success', 'Contrato atualizado com sucesso!');
     }
 
     /**
@@ -81,6 +102,7 @@ class ContratoController extends Controller
      */
     public function destroy(Contrato $contrato)
     {
-        //
+        $contrato->delete();
+        return back()->with('success', 'Contrato Removido com sucesso!');
     }
 }

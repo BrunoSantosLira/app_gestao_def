@@ -75,14 +75,14 @@
                                                     <td>
                                                         <div class="d-flex ">
                                                             <div class="my-auto">
-                                                                <h6 class="mb-0 text-sm">{{$contrato['responsável']}}</h6>
+                                                                <h6 class="mb-0 text-sm">{{$contrato['cliente']['nome']}}</h6>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex ">
                                                             <div class="my-auto">
-                                                                <h6 class="mb-0 text-sm">{{$contrato['cliente']['nome']}}</h6>
+                                                                <h6 class="mb-0 text-sm">{{$contrato['responsável']}}</h6>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -114,15 +114,16 @@
                                                             </div>
                                                         </div>
                                                     </td>
+
                                                     <td>
                                                         <div class="d-flex px-2">
-                                                            <div class="my-auto" style="font-size: 14px">
-                                                                    <span class="badge {{$contrato['status'] == 'finalizado' ? 'bg-success' : 'bg-warning'}} text-dark">{{$contrato['status']}}</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex px-2">
+                                                            <a target="_blank" href="{{route('contrato.show', ['contrato' => $contrato->id])}}"><i class="fa-solid fa-eye m-2" style="color: #31b452; font-size:1.5em;"></i></a>
+                                                            <a target="_blank" href="{{route('contrato.edit', ['contrato' => $contrato->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.5em;"></i></a>
+                                                            <form action="{{route('contrato.destroy', ['contrato' => $contrato->id])}}" class="d-inline-block" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" style="background: none; border:none;" class="btn-xl" ><i  class="fa-solid fa-trash m-2" style="color: #f01800; font-size:1.5em;"></i></button>
+                                                            </form>
                                                         </div>
                                                     </td>
                                             </tr>
