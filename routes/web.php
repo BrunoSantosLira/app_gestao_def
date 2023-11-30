@@ -27,6 +27,7 @@ use App\Http\Controllers\OsProdutosController;
 use App\Http\Controllers\OsServicoController;
 use App\Http\Controllers\EntradasController;
 use App\Http\Controllers\SaidasController;
+use App\Http\Controllers\ContratoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
@@ -69,6 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('categorias', CategoriasController::class);
 	Route::resource('unidades', UnidadesController::class);
 	Route::resource('os', OSController::class);
+	Route::resource('contrato', ContratoController::class);
 	// routes/web.php
 
 

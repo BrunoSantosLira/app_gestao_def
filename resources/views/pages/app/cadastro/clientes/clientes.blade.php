@@ -17,7 +17,7 @@
                                     {{ Session::get('success') }}
                                 </div>
                             @endif
-                            <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarCliente">Adicionar Cliente</button>
+                            <a href="{{route('clientes.create')}}"><button class="btn btn-outline-primary btn-sm mt-3">Adicionar cliente</button></a> 
                          
                             @if (request('status') == 'sucesso')
                                 <div class="alert alert-success text-white" role="alert">
@@ -91,13 +91,13 @@
                                                     <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="telefone" value="{{$cliente['telefone']}}"></p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="localizacao" value="{{$cliente['localizacao']}}"></p>
+                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="localizacao" value="{{$cliente['logradouro']}}"></p>
                                                 </td>
                                                 <td class="float-end">
                                                 @if (auth()->user()->email == 'admin@material.com')
                                                         @if ($cliente['email'] != auth()->user()->email)
-                                                        <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></button> 
-                                                        </form>
+                                                        <a target="_blank" href="{{route('clientes.edit', ['cliente' => $cliente->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.2em;"></i></a>
+                                                    </form>
                                                         
                                                         <form method="POST" class="d-inline-block" action="{{route('clientes.destroy', ['cliente' => $cliente->id])}}">
                                                             @csrf

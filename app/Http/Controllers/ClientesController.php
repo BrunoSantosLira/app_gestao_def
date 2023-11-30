@@ -19,7 +19,7 @@ class ClientesController extends Controller
     public function index()
     {
         $clientes = Clientes::all();
-        return view('pages.app.cadastro.clientes',['clientes' => $clientes]);
+        return view('pages.app.cadastro.clientes.clientes',['clientes' => $clientes]);
     }
 
     /**
@@ -27,7 +27,7 @@ class ClientesController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.app.cadastro.clientes.clientecreate');
     }
 
     /**
@@ -39,6 +39,13 @@ class ClientesController extends Controller
             'nome' => 'required|max:255',
             'email' => 'required|email|max:255|unique:clientes,email',
             'CPF/CNPJ' => 'required|min:11|max:255|unique:clientes,CPF/CNPJ',
+            'logradouro' => 'required',
+            'logradouroNumero' => 'required',
+            'complemento' => 'required',
+            'bairro' => 'required',
+            'cidade' => 'required',
+            'UF' => 'required|max:2',
+            'CEP' => 'required',
         ];
         $feedback = [
             'required' => 'O campo :attribute deve ser preenchido',
@@ -46,7 +53,8 @@ class ClientesController extends Controller
             'email.unique' => 'EMAIL JA CADASTRADO!',
             'CPF/CNPJ.unique' => 'CPF/CNPJ JA CADASTRADO!',
             'max' => 'Pode haver ate 255 caracteres',
-            'min' => 'Preencha o campo com ao menos 1 caracteres'
+            'min' => 'Preencha o campo com ao menos 1 caracteres',
+            "UF.max" => "Preencha com a sigla"
         ];
   
         $request->validate($regras, $feedback);
@@ -65,9 +73,10 @@ class ClientesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Clientes $clientes)
+    public function edit(Clientes $cliente)
     {
-        //
+       
+        return view('pages.app.cadastro.clientes.clienteedit', ['cliente' => $cliente]);
     }
 
     /**
@@ -79,19 +88,24 @@ class ClientesController extends Controller
 
         $regras = [
             'nome' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:clientes,email,' . $clientes['id'],
+            'email' => 'required|email|max:255',
             'CPF/CNPJ' => 'required|min:11|max:255',
+            'logradouro' => 'required',
+            'logradouroNumero' => 'required',
+            'complemento' => 'required',
+            'bairro' => 'required',
+            'cidade' => 'required',
+            'UF' => 'required|max:2',
+            'CEP' => 'required',
         ];
-
         $feedback = [
             'required' => 'O campo :attribute deve ser preenchido',
             'email.email' => 'Preencha com um email válido',
-            'email.unique' => 'EMAIL JA CADASTRADO!',
-            'CPF/CNPJ.unique' => 'CPF/CNPJ JA CADASTRADO!',
             'max' => 'Pode haver ate 255 caracteres',
-            'min' => 'Preencha o campo com ao menos 1 caracteres'
+            'min' => 'Preencha o campo com ao menos 1 caracteres',
+            "UF.max" => "Preencha com a sigla"
         ];
-        
+  
         if($clientes === NULL){
             return response()->json(['erro' => 'Recurso não encontrado'], 404)  ;
         }
