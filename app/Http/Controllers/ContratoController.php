@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contrato;
+use App\Models\Servico;
+use App\Models\ContratoProdutos;
+use App\Models\ContratoServicos;
 use App\Models\Clientes;
+use App\Models\Produtos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ContratoController extends Controller
 {
@@ -49,6 +54,7 @@ class ContratoController extends Controller
   
         $request->validate($regras, $feedback);
         Contrato::create($request->all());
+        
         return back()->with('success', 'Contrato adicionado com sucesso!');
     }
 
@@ -67,8 +73,15 @@ class ContratoController extends Controller
      */
     public function edit(Contrato $contrato)
     {
+        $produtosTabela = Produtos::all();
+        $servicosTabela = Servico::all();
         $clientes = Clientes::all();
-        return view('pages.app.servicos.contratos.contrato_edit', ["contrato" => $contrato, 'clientes' => $clientes]);
+        $produtos = ContratoProdutos::with('produto')->where('contrato_id', '=', $contrato->id)->get();
+        $servicos = ContratoServicos::with('servico')->where('contrato_id', '=', $contrato->id)->get();
+        $somaProdutosContrato = ContratoProdutos::where('contrato_id', $contrato->id)->sum('valorTotal');
+        $somaServicosContrato = ContratoServicos::where('contrato_id', $contrato->id)->sum('valorTotal');
+
+        return view('pages.app.servicos.contratos.contrato_edit', ["contrato" => $contrato, 'clientes' => $clientes, 'produtosTabela' => $produtosTabela, 'produtos' => $produtos, 'somaProdutosContrato' => $somaProdutosContrato, 'servicosTabela' => $servicosTabela, 'servicos' => $servicos, 'somaServicosContrato' => $somaServicosContrato]);
     }
 
     /**
@@ -104,5 +117,51 @@ class ContratoController extends Controller
     {
         $contrato->delete();
         return back()->with('success', 'Contrato Removido com sucesso!');
+    }
+
+
+    public function exportar(Request $request){
+        $contrato = Contrato::with('cliente')->where('id', '=', $request->contrato )->get();
+
+        $pdf = Pdf::loadView('pages.app.servicos.contratos.contratoPDF2', ['contrato' => $contrato]);
+   
+        return $pdf->download('contrato.pdf');
+    }
+
+    public function update_corpo(Request $request, $id)
+        {
+            // Obtém o modelo com base no ID
+            $registro = Contrato::find($id);
+
+            // Atualiza apenas o campo desejado
+            $registro->update([
+                'corpo' => $request->corpo,
+            ]);
+
+            return back()->with('success', 'Contrato atualizado com sucesso!');
+        }
+        
+    public function aprovar(Contrato $contrato){
+        // Obtém o modelo com base no ID
+        $produtosDoContrato = $contrato->contrato_produtos;
+
+
+        // Atualiza apenas o campo desejado
+        $contrato->update([
+            'status' => 1
+        ]);
+
+                // Atualiza a quantidade em estoque de cada produto
+        foreach ($produtosDoContrato as $produto) {
+            // Supondo que haja um campo 'quantidade_em_estoque' no modelo de Produto
+            //alterando o estoque(adicionando de volta ao estoque)
+            $produtoEstoque = Produtos::find($produto->produto_id);
+
+            $produtoEstoque['estoqueAtual'] -= $produto->quantidade;
+            $produtoEstoque->save();
+            // Reduz a quantidade em estoque (ajuste conforme necessário)
+
+        }
+
     }
 }

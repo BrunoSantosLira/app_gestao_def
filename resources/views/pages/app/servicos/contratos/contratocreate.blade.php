@@ -119,9 +119,9 @@
 
                                 <div class="mb-3 col-md-12">
                                     <label for="floatingTextarea2">Corpo do contrato</label>
-                                    <textarea class="form-control border border-2 p-2"
-                                        placeholder="Detalhes do produto" id="observacoes" name="corpo"
-                                        rows="4" cols="50">{{ old('about', auth()->user()->about) }}</textarea>
+                                    <textarea name = "corpo" id ="summernote"  cols="30" rows="10" >
+                                        @include('pages.app.servicos.contratos.contratobase')
+                                    </textarea>
                                         @error('observacoes')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                         @enderror
@@ -135,6 +135,16 @@
             </div>
 
         </div>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+        <script>
+        $('#summernote').summernote({
+            placeholder: 'Hello Bootstrap 5',
+            tabsize: 2,
+            height: 1200
+        });
+        </script>
         <x-footers.auth></x-footers.auth>
     </div>
     <x-plugins></x-plugins>

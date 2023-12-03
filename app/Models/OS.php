@@ -8,6 +8,7 @@ use App\Models\Servico;
 use App\Models\Clientes;
 use App\Models\Produtos;
 use App\Models\osProdutos;
+use App\Models\ContratoProdutos;
 
 class OS extends Model
 {
@@ -25,5 +26,6 @@ class OS extends Model
     {
         return $this->hasMany(osProdutos::class, 'os_id');
     }
+
 
 }

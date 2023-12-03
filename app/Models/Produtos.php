@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OS;
 use App\Models\osProdutos;
+use App\Models\ContratoProdutos;
 use App\Models\Entradas;
 use App\Models\Saidas;
 
@@ -36,6 +37,12 @@ class Produtos extends Model
     {
         return $this->hasMany(osProdutos::class, 'produto_id');
     }
+
+    public function contrato_Produtos()
+    {
+        return $this->hasMany(ContratoProdutos::class, 'produto_id');
+    }
+    
 
     public function entradas()
     {

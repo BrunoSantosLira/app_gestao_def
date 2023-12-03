@@ -23,8 +23,13 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\CampoController;
 use App\Http\Controllers\OSController;
+
 use App\Http\Controllers\OsProdutosController;
 use App\Http\Controllers\OsServicoController;
+use App\Http\Controllers\ContratoProdutosController;
+use App\Http\Controllers\ContratoServicosController;
+
+
 use App\Http\Controllers\EntradasController;
 use App\Http\Controllers\SaidasController;
 use App\Http\Controllers\ContratoController;
@@ -59,6 +64,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('servico', ServicoController::class);
     Route::get('servico.exportar', [\App\Http\Controllers\ServicoController::class, 'exportar'])->name('servico.exportar');
     Route::get('os.exportar', [\App\Http\Controllers\OSController::class, 'exportar'])->name('os.exportar');
+	Route::get('contrato.exportar', [\App\Http\Controllers\ContratoController::class, 'exportar'])->name('contrato.exportar');
+	Route::get('contrato.update_corpo/{id}', [\App\Http\Controllers\ContratoController::class, 'update_corpo'])->name('update_corpo');
+
 
 	Route::resource('checklist', ChecklistController::class);
 
@@ -75,9 +83,18 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::resource('osprodutos', OsProdutosController::class);
+	Route::resource('contratoprodutos', ContratoProdutosController::class);
+	Route::resource('contratoservicos', ContratoServicosController::class);
 	Route::resource('osservicos', OsServicoController::class);
+
 	Route::post('osprodutos/deletar', [App\Http\Controllers\OsProdutosController::class, 'deletar'])->name('osprodutos.deletar');
+	Route::post('contratoProdutos/deletar', [App\Http\Controllers\ContratoProdutosController::class, 'deletar'])->name('contratoProdutos.deletar');
+	Route::post('contratoServicos/deletar', [App\Http\Controllers\ContratoServicosController::class, 'deletar'])->name('contratoServicos.deletar');
+	
 	Route::post('osservicos/deletar', [App\Http\Controllers\OsServicoController::class, 'deletar'])->name('osservicos.deletar');
+
+	Route::get('contrato/aprovar/{contrato}', [App\Http\Controllers\ContratoController::class, 'aprovar'])->name('contrato.aprovar');
+
 
 	Route::resource('campo', CampoController::class);
 	Route::resource('usuarios', RegisterController::class);

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Checklist;
 use App\Models\OS;
 use App\Models\osServico;
+use App\Models\ContratoServicos;
 
 class Servico extends Model
 {
@@ -25,5 +26,10 @@ class Servico extends Model
     public function os_servico()
     {
         return $this->hasMany(osServico::class, 'servico_id');
+    }
+
+    public function contrato_servico()
+    {
+        return $this->hasMany(ContratoServicos::class, 'servico_id');
     }
 }

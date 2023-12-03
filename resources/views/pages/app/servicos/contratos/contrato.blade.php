@@ -110,14 +110,14 @@
                                                     <td>
                                                         <div class="d-flex px-2">
                                                             <div class="my-auto">
-                                                                <h6 class="mb-0 text-sm">{{{($contrato['status'] == 0) ? 'aberto' : 'finalizado'}}}</h6>
+                                                                <h6 class="mb-0 text-sm">{{{($contrato['status'] == 0) ? 'ABERTO' : 'FINALIZADO'}}}</h6>
                                                             </div>
                                                         </div>
                                                     </td>
 
                                                     <td>
                                                         <div class="d-flex px-2">
-                                                            <a target="_blank" href="{{route('contrato.show', ['contrato' => $contrato->id])}}"><i class="fa-solid fa-eye m-2" style="color: #31b452; font-size:1.5em;"></i></a>
+                                                            <a target="_blank" href="{{route('contrato.aprovar', ['contrato' => $contrato->id])}}"><i class="fa-solid fa-check m-2" style="color: #31b452; font-size:1.5em;"></i></a>
                                                             <a target="_blank" href="{{route('contrato.edit', ['contrato' => $contrato->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.5em;"></i></a>
                                                             <form action="{{route('contrato.destroy', ['contrato' => $contrato->id])}}" class="d-inline-block" method="POST">
                                                                 @csrf

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Clientes;
+use App\Models\ContratoProdutos;
+use App\Models\ContratoServicos;
 
 class Contrato extends Model
 {
@@ -14,6 +16,16 @@ class Contrato extends Model
     public function cliente()
     {
         return $this->belongsTo(Clientes::class);
+    }
+
+    public function contrato_produtos()
+    {
+        return $this->hasMany(ContratoProdutos::class, 'contrato_id');
+    }
+
+    public function contrato_servicos()
+    {
+        return $this->hasMany(ContratoServicos::class, 'contrato_id');
     }
 
 }
