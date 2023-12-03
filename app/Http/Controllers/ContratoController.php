@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Saidas;
 use App\Models\Contrato;
 use App\Models\Servico;
 use App\Models\ContratoProdutos;
@@ -157,11 +158,19 @@ class ContratoController extends Controller
             //alterando o estoque(adicionando de volta ao estoque)
             $produtoEstoque = Produtos::find($produto->produto_id);
 
+            $saida = [
+                'produto_id' => $produto->produto_id,
+                'tipo' => 'SAIDA POR APROVAÇAO DE CONTRATO N:'. $contrato->id,
+                'quantidade' => $produto->quantidade
+            ];
+
+
             $produtoEstoque['estoqueAtual'] -= $produto->quantidade;
             $produtoEstoque->save();
+            Saidas::create($saida);
             // Reduz a quantidade em estoque (ajuste conforme necessário)
 
         }
-
+        return back()->with('success', 'Contrato Aprovado com sucesso!');
     }
 }
