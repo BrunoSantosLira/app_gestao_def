@@ -20,6 +20,11 @@
                                     {{ Session::get('success') }}
                                 </div>
                             @endif
+                            @if (Session::has('error'))
+                            <div class="alert alert-danger text-white">
+                                {{ Session::get('error') }}
+                            </div>
+                        @endif
                         </div>
 
                         <div class="card-body px-0 pb-2">

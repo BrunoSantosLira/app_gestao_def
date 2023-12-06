@@ -143,51 +143,55 @@ class ContratoController extends Controller
             return back()->with('success', 'Contrato atualizado com sucesso!');
         }
         
-    public function aprovar(Contrato $contrato){
-        // Obtém o modelo com base no ID
-        $produtosDoContrato = $contrato->contrato_produtos;
+        public function aprovar(Contrato $contrato)
+        {
+            $produtosDoContrato = $contrato->contrato_produtos;
         
-
-        // Atualiza apenas o campo desejado
-        $contrato->update([
-            'status' => 1
-        ]);
-
-                // Atualiza a quantidade em estoque de cada produto
-        foreach ($produtosDoContrato as $produto) {
-            // Supondo que haja um campo 'quantidade_em_estoque' no modelo de Produto
-            //alterando o estoque(adicionando de volta ao estoque)
-            $produtoEstoque = Produtos::find($produto->produto_id);
-
-            $saida = [
-                'produto_id' => $produto->produto_id,
-                'tipo' => 'SAIDA POR APROVAÇAO DE CONTRATO N:'. $contrato->id,
-                'quantidade' => $produto->quantidade
-            ];
-
-
-            $produtoEstoque['estoqueAtual'] -= $produto->quantidade;
-            $produtoEstoque->save();
-            Saidas::create($saida);
-            // Reduz a quantidade em estoque (ajuste conforme necessário)
-
+            // Verifica o estoque antes de processar os produtos
+            foreach ($produtosDoContrato as $produto) {
+                $produtoEstoque = Produtos::find($produto->produto_id);
+        
+                if ($produtoEstoque['estoqueAtual'] < $produto->quantidade) {
+                    return back()->with('error', 'HÁ PRODUTOS COM ESTOQUE INSUFICIENTE NO CONTRATO');
+                }
+            }
+        
+            // Atualiza a quantidade em estoque e cria as saídas
+            foreach ($produtosDoContrato as $produto) {
+                $produtoEstoque = Produtos::find($produto->produto_id);
+        
+                $saida = [
+                    'produto_id' => $produto->produto_id,
+                    'tipo' => 'SAIDA POR APROVAÇAO DE CONTRATO N:'. $contrato->id,
+                    'quantidade' => $produto->quantidade
+                ];
+        
+                $produtoEstoque['estoqueAtual'] -= $produto->quantidade;
+                $produtoEstoque->save();
+        
+                Saidas::create($saida);
+            }
+        
+            // Atualiza o status do contrato apenas se todos os produtos tiverem estoque suficiente
+            $contrato->update(['status' => 1]);
+        
+            // Cria as parcelas com base na quantidade especificada no contrato
+            for ($i = 1; $i <= $contrato->quantidade_parcelas; $i++) {
+                $valorParcela = 12; // Implemente essa lógica conforme necessário
+                $dataVencimento = now()->addMonths($i);
+        
+                // Crie a parcela
+                $parcela = new Parcelas([
+                    'valor' => $valorParcela,
+                    'data_vencimento' => $dataVencimento,
+                    'status_pagamento' => 'Pendente', // Defina o status inicial conforme necessário
+                ]);
+        
+                // Associe a parcela ao contrato
+                $contrato->parcelas()->save($parcela);
+            }
+        
+            return back()->with('success', 'Contrato Aprovado com sucesso!');
         }
-
-        // Crie as parcelas com base na quantidade especificada no contrato
-        for ($i = 1; $i <= $contrato->quantidade_parcelas; $i++) {
-            $valorParcela = 12; // Implemente essa lógica conforme necessário
-            $dataVencimento = now()->addMonths($i);
-
-            // Crie a parcela
-            $parcela = new Parcelas([
-                'valor' => $valorParcela,
-                'data_vencimento' => $dataVencimento,
-                'status_pagamento' => 'Pendente', // Defina o status inicial conforme necessário
-            ]);
-
-            // Associe a parcela ao contrato
-            $contrato->parcelas()->save($parcela);
-        }
-        return back()->with('success', 'Contrato Aprovado com sucesso!');
-    }
+        
 }
