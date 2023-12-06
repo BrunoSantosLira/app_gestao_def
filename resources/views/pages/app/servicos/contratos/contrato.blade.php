@@ -120,6 +120,9 @@
                                                             @if ($contrato['status'] == 0)
                                                                 <a  href="{{route('contrato.aprovar', ['contrato' => $contrato->id])}}"><i class="fa-solid fa-check m-2" style="color: #31b452; font-size:1.5em;"></i></a>
                                                             @endif
+                                                            @if ($contrato['status'] == 1)
+                                                                <a  href="{{route('parcelas.index', ['contrato' => $contrato->id])}}"><i class="fa-solid fa-file m-2" style="color: #000000; font-size:1.5em;"></i></a>
+                                                            @endif
                                                             <a target="_blank" href="{{route('contrato.edit', ['contrato' => $contrato->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.5em;"></i></a>
                                                             <form action="{{route('contrato.destroy', ['contrato' => $contrato->id])}}" class="d-inline-block" method="POST">
                                                                 @csrf

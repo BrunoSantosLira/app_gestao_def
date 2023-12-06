@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Clientes;
 use App\Models\ContratoProdutos;
 use App\Models\ContratoServicos;
+use App\Models\Parcelas;
 
 class Contrato extends Model
 {
@@ -26,6 +27,11 @@ class Contrato extends Model
     public function contrato_servicos()
     {
         return $this->hasMany(ContratoServicos::class, 'contrato_id');
+    }
+
+    public function parcelas()
+    {
+        return $this->hasMany(Parcelas::class);
     }
 
 }

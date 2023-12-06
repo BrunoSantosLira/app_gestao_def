@@ -28,6 +28,7 @@ use App\Http\Controllers\OsProdutosController;
 use App\Http\Controllers\OsServicoController;
 use App\Http\Controllers\ContratoProdutosController;
 use App\Http\Controllers\ContratoServicosController;
+use App\Http\Controllers\ParcelasController;
 
 
 use App\Http\Controllers\EntradasController;
@@ -79,6 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('unidades', UnidadesController::class);
 	Route::resource('os', OSController::class);
 	Route::resource('contrato', ContratoController::class);
+
+	Route::get('parcelas.index/{contrato}', [\App\Http\Controllers\ParcelasController::class, 'index'])->name('parcelas.index');
+	Route::get('parcelas.aprovar/{parcela}', [\App\Http\Controllers\ParcelasController::class, 'aprovar'])->name('parcelas.aprovar');
+
 	// routes/web.php
 
 

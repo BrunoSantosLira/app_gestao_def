@@ -12,6 +12,7 @@ use App\Models\Produtos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Parcelas;
 
 class ContratoController extends Controller
 {
@@ -145,7 +146,7 @@ class ContratoController extends Controller
     public function aprovar(Contrato $contrato){
         // Obtém o modelo com base no ID
         $produtosDoContrato = $contrato->contrato_produtos;
-
+        
 
         // Atualiza apenas o campo desejado
         $contrato->update([
@@ -170,6 +171,22 @@ class ContratoController extends Controller
             Saidas::create($saida);
             // Reduz a quantidade em estoque (ajuste conforme necessário)
 
+        }
+
+        // Crie as parcelas com base na quantidade especificada no contrato
+        for ($i = 1; $i <= $contrato->quantidade_parcelas; $i++) {
+            $valorParcela = 12; // Implemente essa lógica conforme necessário
+            $dataVencimento = now()->addMonths($i);
+
+            // Crie a parcela
+            $parcela = new Parcelas([
+                'valor' => $valorParcela,
+                'data_vencimento' => $dataVencimento,
+                'status_pagamento' => 'Pendente', // Defina o status inicial conforme necessário
+            ]);
+
+            // Associe a parcela ao contrato
+            $contrato->parcelas()->save($parcela);
         }
         return back()->with('success', 'Contrato Aprovado com sucesso!');
     }
