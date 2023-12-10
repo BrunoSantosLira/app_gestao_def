@@ -39,6 +39,7 @@ class ClientesController extends Controller
             'nome' => 'required|max:255',
             'email' => 'required|email|max:255|unique:clientes,email',
             'CPF/CNPJ' => 'required|min:11|max:255|unique:clientes,CPF/CNPJ',
+            'rg' => 'required|min:10|max:255|unique:clientes,rg',
             'logradouro' => 'required',
             'logradouroNumero' => 'required',
             'complemento' => 'required',
@@ -46,14 +47,17 @@ class ClientesController extends Controller
             'cidade' => 'required',
             'UF' => 'required|max:2',
             'CEP' => 'required',
+            'telefone' => 'required',
         ];
         $feedback = [
             'required' => 'O campo :attribute deve ser preenchido',
             'email.email' => 'Preencha com um email válido',
             'email.unique' => 'EMAIL JA CADASTRADO!',
             'CPF/CNPJ.unique' => 'CPF/CNPJ JA CADASTRADO!',
+            'rg.unique' => 'RG JA CADASTRADO!',
+            'rg.min' => 'RG precisa ter no minimo 11 digitos',
             'max' => 'Pode haver ate 255 caracteres',
-            'min' => 'Preencha o campo com ao menos 1 caracteres',
+            'min' => 'Preencha o campo com ao menos 11 caracteres',
             "UF.max" => "Preencha com a sigla"
         ];
   
@@ -90,6 +94,7 @@ class ClientesController extends Controller
             'nome' => 'required|max:255',
             'email' => 'required|email|max:255',
             'CPF/CNPJ' => 'required|min:11|max:255',
+            'rg' => 'required|min:10|max:255',
             'logradouro' => 'required',
             'logradouroNumero' => 'required',
             'complemento' => 'required',
@@ -97,13 +102,15 @@ class ClientesController extends Controller
             'cidade' => 'required',
             'UF' => 'required|max:2',
             'CEP' => 'required',
+            'telefone' => 'required',
         ];
         $feedback = [
             'required' => 'O campo :attribute deve ser preenchido',
             'email.email' => 'Preencha com um email válido',
             'max' => 'Pode haver ate 255 caracteres',
             'min' => 'Preencha o campo com ao menos 1 caracteres',
-            "UF.max" => "Preencha com a sigla"
+            "UF.max" => "Preencha com a sigla",
+            'rg.min' => 'RG precisa ter no minimo 11 digitos',
         ];
   
         if($clientes === NULL){

@@ -59,11 +59,19 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label for="text" class="form-label">*CPF/CNPJ</label>
-                                    <input type="text" class="form-control border border-2 p-2" id="text" placeholder="Senha" name="CPF/CNPJ">
+                                    <input type="text" class="form-control border border-2 p-2" id="text" placeholder="Insira corretamente" name="CPF/CNPJ">
                                 @error('CPF/CNPJ')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
                                 </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="text" class="form-label">RG</label>
+                                    <input type="text" class="form-control border border-2 p-2" id="text" placeholder="Insira corretamente" name="rg">
+                                @error('rg')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
 
                                 <div class="mb-3 col-md-6">
                                     <label for="tel" class="form-label">*Telefone</label>

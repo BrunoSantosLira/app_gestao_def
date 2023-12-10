@@ -116,7 +116,7 @@
                         <h3 class="text-center">Contrato</h3>
                         <div class="border " id="p1">
                                 <textarea disabled name = "corpo" id ="summernote"  cols="30" rows="10" class="disable">
-                                    @include('pages.app.servicos.contratos.contratoPDF', ['contrato' => $contrato])
+                                    @include('pages.app.servicos.contratos.contratoPDF2', ['contrato' => $contrato])
                                 </textarea>
                         </div>
                     </div>

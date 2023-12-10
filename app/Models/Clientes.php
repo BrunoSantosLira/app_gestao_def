@@ -10,7 +10,7 @@ use App\Models\Contrato;
 class Clientes extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'email', 'CPF/CNPJ', 'telefone', 'logradouro', 'logradouroNumero', 'complemento', 'bairro', 'cidade', 'UF', 'CEP'];
+    protected $fillable = ['nome', 'email', 'CPF/CNPJ', 'telefone', 'logradouro', 'logradouroNumero', 'complemento', 'bairro', 'cidade', 'UF', 'CEP', 'rg'];
 
     public function os()
     {
