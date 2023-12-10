@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Parcelas;
+use App\Models\Vendas;
 
 class ContratoController extends Controller
 {
@@ -143,8 +144,8 @@ class ContratoController extends Controller
             return back()->with('success', 'Contrato atualizado com sucesso!');
         }
         
-        public function aprovar(Contrato $contrato)
-        {
+    public function aprovar(Contrato $contrato)
+    {
             $produtosDoContrato = $contrato->contrato_produtos;
         
             // Verifica o estoque antes de processar os produtos
@@ -162,7 +163,7 @@ class ContratoController extends Controller
         
                 $saida = [
                     'produto_id' => $produto->produto_id,
-                    'tipo' => 'SAIDA POR APROVAÇAO DE CONTRATO N:'. $contrato->id,
+                    'tipo' => 'SAIDA POR APROVAÇAO DE CONTRATO N:' . $contrato->id,
                     'quantidade' => $produto->quantidade
                 ];
         
@@ -175,16 +176,37 @@ class ContratoController extends Controller
             // Atualiza o status do contrato apenas se todos os produtos tiverem estoque suficiente
             $contrato->update(['status' => 1]);
         
-            // Cria as parcelas com base na quantidade especificada no contrato
-            for ($i = 1; $i <= $contrato->quantidade_parcelas; $i++) {
-                $valorParcela = 12; // Implemente essa lógica conforme necessário
+            // Cria o registro de venda na tabela Vendas
+            $venda = new Vendas([
+                'os_id' => null,
+                'contrato_id' => $contrato->id,
+                'valor' => $contrato->valorTotal,
+                'tipo' => 'Contrato'
+                // Atribua outros valores conforme necessário
+            ]);
+        
+            $venda->save();
+        
+            // Cria as parcelas com base no valor total do contrato e na quantidade de parcelas
+            $valorTotalContrato = $contrato->valorTotal;
+            $quantidadeParcelas = $contrato->quantidade_parcelas;
+        
+            if ($valorTotalContrato > 0 && $quantidadeParcelas > 0) {
+                $valorParcela = $valorTotalContrato / $quantidadeParcelas;
+            } else {
+                // Caso contrário, define um valor padrão (ajuste conforme necessário)
+                $valorParcela = 0;
+            }
+        
+            // Criação das parcelas
+            for ($i = 1; $i <= $quantidadeParcelas; $i++) {
                 $dataVencimento = now()->addMonths($i);
         
-                // Crie a parcela
+                // Crie a parcela com base no valor calculado
                 $parcela = new Parcelas([
                     'valor' => $valorParcela,
                     'data_vencimento' => $dataVencimento,
-                    'status_pagamento' => 'Pendente', // Defina o status inicial conforme necessário
+                    'status_pagamento' => 'Pendente',
                 ]);
         
                 // Associe a parcela ao contrato
@@ -192,6 +214,7 @@ class ContratoController extends Controller
             }
         
             return back()->with('success', 'Contrato Aprovado com sucesso!');
-        }
+    }
+        
         
 }

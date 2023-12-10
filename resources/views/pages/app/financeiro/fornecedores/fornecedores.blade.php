@@ -33,6 +33,20 @@
                             @endforeach
                         </div>
 
+                        
+                        <form class="row m-3"  method="GET" action="{{route('fornecedores.index')}}">
+                            <h5>Buscar pelo CNPJ</h5>
+                            <div class="col-auto">
+                              <label for="inputPassword2" class="visually-hidden">CNPJ</label>
+                              <input type="text" class="form-control border border-2 p-2" id="inputPassword2" placeholder="Insira o CNPJ" name="cnpj">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit"  style="background-color: #fb7609; border:none; border-radius:5px;" class=" btn btn-xl" ><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i></button>
+                            </div>
+                        </form>
+                        <hr>
+
+
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-1"><!-- TABELA AQUI -->
                                 <table class="table align-items-center justify-content-center mb-0">

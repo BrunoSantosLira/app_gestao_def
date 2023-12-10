@@ -196,7 +196,7 @@
             <a class="nav-link text-white {{ $activePage == 'fornecedores' ? 'active bg-gradient-primary' : '' }} "
                 href="{{ route('fornecedores.index') }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-users ps-2 pe-2 text-center"></i>
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-users-rectangle ps-2 pe-2 text-center"></i>
                 </div>
                 <span class="nav-link-text ms-1">Fornecedores</span>
             </a>
@@ -212,10 +212,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="">
+            <a class="nav-link text-white {{ $activePage == 'vendas' ? 'active bg-gradient-primary' : '' }} "
+                href="{{ route('vendas.index') }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-money-bills ps-2 pe-2 text-center"></i>
                 </div>
                 <span class="nav-link-text ms-1">Vendas</span>
             </a>

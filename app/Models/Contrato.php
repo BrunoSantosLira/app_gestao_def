@@ -8,6 +8,7 @@ use App\Models\Clientes;
 use App\Models\ContratoProdutos;
 use App\Models\ContratoServicos;
 use App\Models\Parcelas;
+use App\Models\Vendas;
 
 class Contrato extends Model
 {
@@ -32,6 +33,12 @@ class Contrato extends Model
     public function parcelas()
     {
         return $this->hasMany(Parcelas::class);
+    }
+
+    
+    public function vendas()
+    {
+        return $this->hasMany(Vendas::class);
     }
 
 }

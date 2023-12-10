@@ -145,6 +145,9 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
+                                                            @if ($o['status'] != 'finalizado')
+                                                                <a  href="{{route('os.aprovar', ['os' => $o->id])}}"><i class="fa-solid fa-check m-2" style="color: #31b452; font-size:1.5em;"></i></a>
+                                                            @endif
                                                             <a target="_blank" href="{{route('os.show', ['o' => $o->id])}}"><i class="fa-solid fa-eye m-2" style="color: #31b452; font-size:1.5em;"></i></a>
                                                             <a target="_blank" href="{{route('os.edit', ['o' => $o->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.5em;"></i></a>
                                                             <form action="{{route('os.destroy', ['o' => $o->id])}}" class="d-inline-block" method="POST">

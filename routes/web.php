@@ -31,6 +31,7 @@ use App\Http\Controllers\ContratoServicosController;
 use App\Http\Controllers\ParcelasController;
 
 use App\Http\Controllers\FornecedoresController;
+use App\Http\Controllers\VendasController;
 
 
 use App\Http\Controllers\EntradasController;
@@ -84,6 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('contrato', ContratoController::class);
 
 	Route::resource('fornecedores', FornecedoresController::class);
+	Route::resource('vendas', VendasController::class);
 
 	Route::get('parcelas.index/{contrato}', [\App\Http\Controllers\ParcelasController::class, 'index'])->name('parcelas.index');
 	Route::get('parcelas.aprovar/{parcela}', [\App\Http\Controllers\ParcelasController::class, 'aprovar'])->name('parcelas.aprovar');
@@ -103,6 +105,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('osservicos/deletar', [App\Http\Controllers\OsServicoController::class, 'deletar'])->name('osservicos.deletar');
 
 	Route::get('contrato/aprovar/{contrato}', [App\Http\Controllers\ContratoController::class, 'aprovar'])->name('contrato.aprovar');
+	Route::get('os/aprovar/{os}', [App\Http\Controllers\OSController::class, 'aprovar'])->name('os.aprovar');
 
 
 	Route::resource('campo', CampoController::class);

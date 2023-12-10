@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\osProdutos;
 use App\Models\Produtos;
+use App\Models\Saidas;
 use App\Models\OS;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -47,6 +48,14 @@ class OsProdutosController extends Controller
         $produto = Produtos::find($request->produto_id);
         if($produto['estoqueAtual'] >= $request->quantidade){
             $produto['estoqueAtual'] -= $request->quantidade;
+
+            $saida = [
+                'produto_id' => $request->produto_id,
+                'tipo' => 'SAIDA POR OS ',
+                'quantidade' => $request->quantidade
+            ];
+            Saidas::create($saida);
+
             $produto->save();
         }else{
             return back()->withErrors('Produto com estoque insuficiente')->withInput();

@@ -100,10 +100,8 @@
                                         <option class="" value="orçamento">Orçamento</option>
                                         <option class="" value="aberto">Aberto</option>
                                         <option class="" value="andamento">Em andamento</option>
-                                        <option class="" value="finalizado">Finalizado</option>
                                         <option class="" value="cancelado">Cancelado</option>
                                         <option class="" value="Aguardando Peças">Aguardando Peças</option>
-                                        <option class="" value="aprovado">Aprovado</option>
                                     </select>
                                     @error('status')
                                     <p class='text-danger inputerror'>{{ $message }} </p>

@@ -21,12 +21,15 @@
                 <div class="card card-plain h-100">
                     <div class="card-header pb-0 p-3">
                         <a href="{{route('os.index')}}"><button class="btn btn-outline-primary btn-sm mt-3">Listagem de OS <i class="fa-solid fa-boxes-packing fa-lg" style="font-size: 1.2em"></i> </button></a> 
-                        
-                        <button class="btn btn-outline-success btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarProdutoOS">Adicionar produto <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
-                        <button class="btn btn-outline-success btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarServicoOS">Adicionar serviço <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
+                       
+                        @if ($os[0]['status'] != 'finalizado')
+                            <button class="btn btn-outline-success btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarProdutoOS">Adicionar produto <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
+                            <button class="btn btn-outline-success btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarServicoOS">Adicionar serviço <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
 
-                        <button class="btn btn-outline-danger btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalExcluirProdutoOs">Excluir produto <i class="fa-solid fa-trash fa-lg" style="font-size: 1.2em"></i></button>
-                        <button class="btn btn-outline-danger btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalExcluirServiçoOs">Excluir serviço <i class="fa-solid fa-trash fa-lg" style="font-size: 1.2em"></i></button>
+                            <button class="btn btn-outline-danger btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalExcluirProdutoOs">Excluir produto <i class="fa-solid fa-trash fa-lg" style="font-size: 1.2em"></i></button>
+                            <button class="btn btn-outline-danger btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalExcluirServiçoOs">Excluir serviço <i class="fa-solid fa-trash fa-lg" style="font-size: 1.2em"></i></button>              
+                        @endif
+
                         <a href="{{route('os.exportar', ['o' => $os[0]['id']])}}"> <button class="btn btn-outline-warning btn-sm mt-3">Gerar PDF <i class="fa-solid fa-file-pdf fa-lg" style="font-size: 1.2em"></i></button> </a> 
                         @if ($errors->any())
                             <div class="alert alert-danger">

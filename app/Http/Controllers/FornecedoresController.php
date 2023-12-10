@@ -11,10 +11,18 @@ class FornecedoresController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $fornecedores = Fornecedores::all();
-        return view('pages.app.financeiro.fornecedores.fornecedores', ['fornecedores' => $fornecedores]);
+        if($request->all()){
+            //Busca os fornecedores pelo buscador a partir do unique_id
+            $fornecedores = Fornecedores::where('cnpj', 'like', "$request->cnpj%")->get();
+            return view('pages.app.financeiro.fornecedores.fornecedores', ['fornecedores' => $fornecedores]);
+
+        }else{
+            $fornecedores = Fornecedores::all();
+            return view('pages.app.financeiro.fornecedores.fornecedores', ['fornecedores' => $fornecedores]);
+        };
+
     }
 
     /**
