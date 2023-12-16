@@ -34,6 +34,28 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-1"><!-- TABELA AQUI -->
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $clientes->previousPageUrl() }}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                
+                                        {{-- Loop através das páginas geradas pela pagination do Laravel --}}
+                                        @foreach ($clientes->links()->elements[0] as $page => $url)
+                                            <li class="page-item {{ $clientes->currentPage() == $page ? 'active' : '' }}">
+                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                            </li>
+                                        @endforeach
+                                
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $clientes->nextPageUrl() }}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>

@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage="ProdutosEstoque"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="Produtos"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="ProdutosEstoque"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Produtos"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
@@ -23,6 +23,30 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
+
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $produtos->previousPageUrl() }}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                
+                                        {{-- Loop através das páginas geradas pela pagination do Laravel --}}
+                                        @foreach ($produtos->links()->elements[0] as $page => $url)
+                                            <li class="page-item {{ $produtos->currentPage() == $page ? 'active' : '' }}">
+                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                            </li>
+                                        @endforeach
+                                
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $produtos->nextPageUrl() }}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
 

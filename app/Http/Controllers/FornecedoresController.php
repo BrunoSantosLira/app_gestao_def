@@ -13,17 +13,16 @@ class FornecedoresController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->all()){
-            //Busca os fornecedores pelo buscador a partir do unique_id
-            $fornecedores = Fornecedores::where('cnpj', 'like', "$request->cnpj%")->get();
-            return view('pages.app.financeiro.fornecedores.fornecedores', ['fornecedores' => $fornecedores]);
-
-        }else{
-            $fornecedores = Fornecedores::all();
-            return view('pages.app.financeiro.fornecedores.fornecedores', ['fornecedores' => $fornecedores]);
-        };
-
+        if ($request->filled('cnpj')) {
+            // Busca os fornecedores pelo buscador a partir do cnpj
+            $fornecedores = Fornecedores::where('cnpj', 'like', "$request->cnpj%")->paginate(5);
+        } else {
+            $fornecedores = Fornecedores::paginate(5);
+        }
+    
+        return view('pages.app.financeiro.fornecedores.fornecedores', ['fornecedores' => $fornecedores]);
     }
+    
 
     /**
      * Show the form for creating a new resource.

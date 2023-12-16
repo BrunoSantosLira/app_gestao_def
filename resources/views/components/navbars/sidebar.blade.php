@@ -203,8 +203,8 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="{{route('contrato.index')}}">
+            <a class="nav-link text-white {{ $activePage == 'compras' ? 'active bg-gradient-primary' : '' }} "
+                href="{{route('compras.index')}}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
                 </div>

@@ -20,21 +20,18 @@ class OSController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->all()){
-            //Busca as OS pelo buscador a partir do unique_id
-            $os = OS::where('unique_id', 'like', "$request->id%")->get();
-            $produtos = Produtos::all();
-            return view('pages.app.cadastro.os.os',['os' => $os, 'produtos' => $produtos]);
-
-        }else{
-
-            $os = OS::all();
-            $produtos = Produtos::all();
-            return view('pages.app.cadastro.os.os',['os' => $os, 'produtos' => $produtos]);
-
-        };
-
+        if ($request->filled('id')) {
+            // Busca as OS pelo buscador a partir do unique_id
+            $os = OS::where('unique_id', 'like', "$request->id%")->paginate(5);
+        } else {
+            $os = OS::paginate(5);
+        }
+    
+        $produtos = Produtos::paginate(5);
+    
+        return view('pages.app.cadastro.os.os', ['os' => $os, 'produtos' => $produtos]);
     }
+    
 
     /**
      * Show the form for creating a new resource.

@@ -15,7 +15,7 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        $produtos =  Produtos::with('categoria')->with('unidade')->get();
+        $produtos =  Produtos::with('categoria')->with('unidade')->paginate(5);
         return view('pages.app.cadastro.produtos.produtos', ['produtos' => $produtos]);
     }
 

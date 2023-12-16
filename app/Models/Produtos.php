@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\OS;
 use App\Models\osProdutos;
 use App\Models\ContratoProdutos;
+use App\Models\CompraProdutos;
 use App\Models\Entradas;
 use App\Models\Saidas;
 
@@ -41,6 +42,11 @@ class Produtos extends Model
     public function contrato_Produtos()
     {
         return $this->hasMany(ContratoProdutos::class, 'produto_id');
+    }
+
+    public function compra_Produtos()
+    {
+        return $this->hasMany(CompraProdutos::class, 'produto_id');
     }
     
 

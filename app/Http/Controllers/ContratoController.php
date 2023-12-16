@@ -22,7 +22,7 @@ class ContratoController extends Controller
      */
     public function index()
     {
-        $contratos = Contrato::with('cliente')->get();
+        $contratos = Contrato::with('cliente')->paginate(5);
         return view('pages.app.servicos.contratos.contrato', ["contratos" => $contratos]);
     }
 
@@ -213,7 +213,7 @@ class ContratoController extends Controller
                 $contrato->parcelas()->save($parcela);
             }
         
-            return back()->with('success', 'Contrato Aprovado com sucesso!');
+        return back()->with('success', 'Contrato Aprovado com sucesso!');
     }
         
         

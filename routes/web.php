@@ -32,6 +32,8 @@ use App\Http\Controllers\ParcelasController;
 
 use App\Http\Controllers\FornecedoresController;
 use App\Http\Controllers\VendasController;
+use App\Http\Controllers\ComprasController;
+use App\Http\Controllers\CompraProdutosController;
 
 
 use App\Http\Controllers\EntradasController;
@@ -86,6 +88,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('fornecedores', FornecedoresController::class);
 	Route::resource('vendas', VendasController::class);
+	Route::resource('compras', ComprasController::class);
+	Route::resource('compra_produtos', CompraProdutosController::class);
+	Route::post('compraProdutos/deletar', [App\Http\Controllers\CompraProdutosController::class, 'deletar'])->name('compraProdutos.deletar');
+	Route::get('compra/aprovar/{compra}', [App\Http\Controllers\ComprasController::class, 'aprovar'])->name('compra.aprovar');
+
 
 	Route::get('parcelas.index/{contrato}', [\App\Http\Controllers\ParcelasController::class, 'index'])->name('parcelas.index');
 	Route::get('parcelas.aprovar/{parcela}', [\App\Http\Controllers\ParcelasController::class, 'aprovar'])->name('parcelas.aprovar');

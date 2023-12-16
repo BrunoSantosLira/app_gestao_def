@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Compras;
+use App\Models\CompraProdutos;
+use App\Models\Fornecedores;
+use App\Models\Produtos;
+use App\Models\Entradas;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class ComprasController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $compras = Compras::with('fornecedor')->paginate(5);
+        return view('pages.app.financeiro.vendas_compras.compras', ['compras' => $compras]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $fornecedores = Fornecedores::all();
+        return view('pages.app.financeiro.vendas_compras.adicionar_compra', ['fornecedores' => $fornecedores]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+
+        $regras = [
+            'nome' => 'required|min:3',
+            'detalhes' => 'required|min:3',
+            'metodo_de_pagemento' => 'required',
+        ];
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'min' => 'O campo :attribute precisa ter ao menos 3 caracteres'
+        ];
+  
+        $request->validate($regras, $feedback);
+
+        Compras::create($request->all());
+        return back()->with('success', 'Ordem de compra adicionada com sucesso!');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Compras $compra)
+    {
+        $produtosTabela = Produtos::all();
+        $produtos = CompraProdutos::with('produto')->where('compra_id', '=', $compra->id)->get();
+        $somaProdutos = CompraProdutos::where('compra_id', $compra->id)->sum('valorTotal');
+        $fornecedores = Fornecedores::all();
+        return view('pages.app.financeiro.vendas_compras.compras_view', ['compra' => $compra, 'fornecedores' => $fornecedores, 'produtosTabela' => $produtosTabela, 'produtos' => $produtos, 'somaProdutos' => $somaProdutos]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Compras $compra)
+    {
+        $produtosTabela = Produtos::all();
+        $produtos = CompraProdutos::with('produto')->where('compra_id', '=', $compra->id)->get();
+        $somaProdutos = CompraProdutos::where('compra_id', $compra->id)->sum('valorTotal');
+        $fornecedores = Fornecedores::all();
+        return view('pages.app.financeiro.vendas_compras.compras_edit', ['compra' => $compra, 'fornecedores' => $fornecedores, 'produtosTabela' => $produtosTabela, 'produtos' => $produtos, 'somaProdutos' => $somaProdutos]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Compras $compra)
+    {
+        $regras = [
+            'nome' => 'required|min:3',
+            'detalhes' => 'required|min:3',
+            'metodo_de_pagemento' => 'required',
+        ];
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'min' => 'O campo :attribute precisa ter ao menos 3 caracteres'
+        ];
+  
+        $request->validate($regras, $feedback);
+
+        $compra->update($request->all());
+        return back()->with('success', 'Compra atualizada com sucesso!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Compras $compra)
+    {
+        $compra->delete();
+        return back()->with('success', 'Compra deletada com sucesso!');
+    }
+
+    public function aprovar(Compras $compra){
+        $produtosDoContrato = $compra->compra_produtos;
+
+        // Atualiza a quantidade em estoque e cria as entradas
+        foreach ($produtosDoContrato as $produto) {
+            $produtoEstoque = Produtos::find($produto->produto_id);
+    
+            $entrada = [
+                'produto_id' => $produto->produto_id,
+                'tipo' => 'ENTRADA POR APROVAÇAO DE COMPRA N:' . $compra->id,
+                'quantidade' => $produto->quantidade
+            ];
+    
+            $produtoEstoque['estoqueAtual'] += $produto->quantidade;
+            $produtoEstoque->save();
+    
+            Entradas::create($entrada);
+        }
+
+        // Atualiza o status da ordem de ccompra apenas 
+        $compra->update(['status' => 1]);
+        return back()->with('success', 'Ordem de compra Aprovada com sucesso!');
+    }
+}
