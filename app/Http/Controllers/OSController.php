@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\OS;
+use App\Models\Impostos;
 use App\Models\Clientes;
 use App\Models\Servico;
 use App\Models\Produtos;
@@ -150,6 +151,28 @@ class OSController extends Controller
 
     public function aprovar(OS $os){
         // Atualiza o status da os apenas se todos os produtos tiverem estoque suficiente
+
+        $impostos = Impostos::all();
+        $valor_com_impostos = $os->valorTotal;
+
+        foreach ($impostos as $imposto) {
+            
+
+            if ($imposto->nome  == 'ICMS') {
+                $valor_icms = $os->valorTotal * ($imposto->aliquota / 100);
+                $valor_com_impostos -= $valor_icms;
+            }
+
+            if ($imposto->nome  == 'PIS') {
+                $valor_icms = $os->valorTotal * ($imposto->aliquota / 100);
+
+                
+            }
+
+        }
+        dd($valor_com_impostos);
+
+        /*
         $os->update(['status' => 'finalizado']);
 
         // Cria o registro de venda na tabela Vendas
@@ -164,5 +187,6 @@ class OSController extends Controller
         $venda->save();
 
         return back()->with('success', 'OS Aprovada com sucesso!');
+        */
     }
 }

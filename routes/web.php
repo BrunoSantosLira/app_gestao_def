@@ -30,10 +30,14 @@ use App\Http\Controllers\ContratoProdutosController;
 use App\Http\Controllers\ContratoServicosController;
 use App\Http\Controllers\ParcelasController;
 
+use App\Http\Controllers\ContaController;
+use App\Http\Controllers\ContaEntradasController;
+
 use App\Http\Controllers\FornecedoresController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\CompraProdutosController;
+use App\Http\Controllers\ImpostosController;
 
 
 use App\Http\Controllers\EntradasController;
@@ -77,6 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('checklist', ChecklistController::class);
 
 	Route::resource('clientes', ClientesController::class);
+	Route::resource('impostos', ImpostosController::class);
 
 	Route::resource('produtos', ProdutosController::class);
 	Route::resource('entradas', EntradasController::class);
@@ -85,6 +90,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('unidades', UnidadesController::class);
 	Route::resource('os', OSController::class);
 	Route::resource('contrato', ContratoController::class);
+
+
+	Route::resource('conta', ContaController::class);
+	Route::resource('conta_entradas', ContaEntradasController::class);
 
 	Route::resource('fornecedores', FornecedoresController::class);
 	Route::resource('vendas', VendasController::class);
