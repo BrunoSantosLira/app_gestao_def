@@ -95,6 +95,10 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             DETALHES
                                             </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            DATA
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -128,6 +132,13 @@
                                                 <div class="d-flex px-2">
                                                     <div class="my-auto">
                                                         <h6 class="mb-0 text-sm">{{$h->detalhes}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>   
+                                            <td>
+                                                <div class="d-flex px-2">
+                                                    <div class="my-auto">
+                                                        <h6 class="mb-0 text-sm">{{ date('d/m/Y', strtotime($h['created_at'])) }}</h6>
                                                     </div>
                                                 </div>
                                             </td>   

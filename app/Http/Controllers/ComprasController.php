@@ -6,6 +6,10 @@ use App\Models\Compras;
 use App\Models\CompraProdutos;
 use App\Models\Fornecedores;
 use App\Models\Produtos;
+
+use App\Models\ContaEntradas;
+use App\Models\Conta;
+
 use App\Models\Entradas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -110,6 +114,7 @@ class ComprasController extends Controller
         $produtosDoContrato = $compra->compra_produtos;
 
         // Atualiza a quantidade em estoque e cria as entradas
+        
         foreach ($produtosDoContrato as $produto) {
             $produtoEstoque = Produtos::find($produto->produto_id);
     
@@ -124,6 +129,21 @@ class ComprasController extends Controller
     
             Entradas::create($entrada);
         }
+
+        //FINANCEIRO
+        // 1 => CONTA  PRINCIPAL
+        $conta = Conta::find(1);
+        $conta['capital'] -= $compra->valorTotal;
+        $conta->save();
+
+        $ContaEntradas = new ContaEntradas([
+            'conta_id' => 1,
+            'tipo' => 'saida',
+            'capital' => $compra->valorTotal,
+            'detalhes' => 'APROVAÇÃO DE ORDEM DE COMPRA N:' . $compra->id
+            // Atribua outros valores conforme necessário
+        ]);
+        $ContaEntradas->save();
 
         // Atualiza o status da ordem de ccompra apenas 
         $compra->update(['status' => 1]);

@@ -7,6 +7,10 @@ use App\Models\Contrato;
 use App\Models\Servico;
 use App\Models\ContratoProdutos;
 use App\Models\ContratoServicos;
+
+use App\Models\ContaEntradas;
+use App\Models\Conta;
+
 use App\Models\Clientes;
 use App\Models\Produtos;
 use App\Http\Controllers\Controller;
@@ -187,6 +191,22 @@ class ContratoController extends Controller
         
             $venda->save();
         
+            //FINANCEIRO
+            // 1 => CONTA  PRINCIPAL
+            $conta = Conta::find(1);
+            $conta['capital'] += $contrato->valorTotal;
+            $conta->save();
+
+            $ContaEntradas = new ContaEntradas([
+                'conta_id' => 1,
+                'tipo' => 'entrada',
+                'capital' => $contrato->valorTotal,
+                'detalhes' => 'APROVAÇÃO DE CONTRATO N:' . $contrato->id
+                // Atribua outros valores conforme necessário
+            ]);
+            $ContaEntradas->save();
+            //FIM FINANCEIRO
+
             // Cria as parcelas com base no valor total do contrato e na quantidade de parcelas
             $valorTotalContrato = $contrato->valorTotal;
             $quantidadeParcelas = $contrato->quantidade_parcelas;

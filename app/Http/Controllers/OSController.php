@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\OS;
 use App\Models\Impostos;
+use App\Models\ContaEntradas;
+use App\Models\Conta;
+
 use App\Models\Clientes;
 use App\Models\Servico;
 use App\Models\Produtos;
@@ -170,9 +173,9 @@ class OSController extends Controller
             }
 
         }
-        dd($valor_com_impostos);
+        
 
-        /*
+        
         $os->update(['status' => 'finalizado']);
 
         // Cria o registro de venda na tabela Vendas
@@ -186,7 +189,23 @@ class OSController extends Controller
     
         $venda->save();
 
+        //FINANCEIRO
+        // 1 => CONTA  PRINCIPAL
+        $conta = Conta::find(1);
+        $conta['capital'] += $os->valorTotal;
+        $conta->save();
+
+        $ContaEntradas = new ContaEntradas([
+            'conta_id' => 1,
+            'tipo' => 'entrada',
+            'capital' => $os->valorTotal,
+            'detalhes' => 'APROVAÇÃO DA OS N:' . $os->id
+            // Atribua outros valores conforme necessário
+        ]);
+        $ContaEntradas->save();
+        //FIM FINANCEIRO
+
         return back()->with('success', 'OS Aprovada com sucesso!');
-        */
+        
     }
 }
