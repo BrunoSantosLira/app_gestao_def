@@ -18,15 +18,18 @@ class DashboardController extends Controller
         // Inicializar um array para armazenar o total de vendas por mês
         $vendasPorMes = [];
 
-        // Loop através das vendas e calcular o total por mês
         foreach ($vendas as $venda) {
             $dataVenda = \Carbon\Carbon::parse($venda->created_at);
             $mesAno = $dataVenda->format('Y-m'); // Obtém o formato ano-mês
-
+        
+            // Verifica se a chave já existe no array e inicializa com zero se não existir
+            if (!isset($vendasPorMes[$mesAno])) {
+                $vendasPorMes[$mesAno] = 0;
+            }
+        
             // Adiciona o valor da venda ao total para esse mês
-            $vendasPorMes[$mesAno] = ($vendasPorMes[$mesAno] ?? 0) + $venda->valor;
+            $vendasPorMes[$mesAno] += $venda->valor;
         }
-
 
 
         // Obter a data de 30 dias atrás a partir de hoje
