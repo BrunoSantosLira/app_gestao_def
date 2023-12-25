@@ -46,6 +46,6 @@ class DashboardController extends Controller
         
         $quantidadeClientes = Clientes::count();
         $quantidadeProdutos = Produtos::count();
-        return view('dashboard.index',['quantidadeClientes' => $quantidadeClientes, 'quantidadeProdutos' => $quantidadeProdutos, 'clientes' => $clientes, 'produtos' => $produtos, 'Valorvendas' => $Valorvendas, 'vendasPorMes' => $vendasPorMes, 'contaCapital' => $contaCapital[0]['capital']]);
+        return view('dashboard.index',['quantidadeClientes' => $quantidadeClientes, 'quantidadeProdutos' => $quantidadeProdutos, 'clientes' => $clientes, 'produtos' => $produtos, 'Valorvendas' => $Valorvendas]);
     }
 }

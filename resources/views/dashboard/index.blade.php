@@ -16,7 +16,7 @@
                             </div>
                             <div class="text-end pt-1">
                                 <p class="text-sm mb-0 text-capitalize">Capital Total</p>
-                                <h4 class="mb-0">R${{$contaCapital}}</h4>
+                                <h4 class="mb-0">R$TESTE</h4>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
