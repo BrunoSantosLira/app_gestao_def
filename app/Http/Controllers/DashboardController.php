@@ -44,10 +44,10 @@ class DashboardController extends Controller
         $produtos =  Produtos::with('categoria')->with('unidade')->get();
         $contaCapital = Conta::all();
         
-        //$capitalTotal = $contaCapital[0]['capital'];
+        $capitalTotal = $contaCapital[0]['capital'];
         
         $quantidadeClientes = Clientes::count();
         $quantidadeProdutos = Produtos::count();
-        return view('dashboard.index',['quantidadeClientes' => $quantidadeClientes, 'quantidadeProdutos' => $quantidadeProdutos, 'clientes' => $clientes, 'produtos' => $produtos, 'Valorvendas' => $Valorvendas,  'contaCapital' => 0]);
+        return view('dashboard.index',['quantidadeClientes' => $quantidadeClientes, 'quantidadeProdutos' => $quantidadeProdutos, 'clientes' => $clientes, 'produtos' => $produtos, 'Valorvendas' => $Valorvendas,  'contaCapital' => $capitalTotal]);
     }
 }
