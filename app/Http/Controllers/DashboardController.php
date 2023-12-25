@@ -43,7 +43,13 @@ class DashboardController extends Controller
         $clientes = Clientes::all();
         $produtos =  Produtos::with('categoria')->with('unidade')->get();
         $contaCapital = Conta::all();
-        $capitalTotal = $contaCapital[0]['capital'];
+
+        if($contaCapital[0]['capital']){
+            $capitalTotal = $contaCapital[0]['capital'];
+        }else{
+            $capitalTotal = 0;
+        }
+  
         
         $quantidadeClientes = Clientes::count();
         $quantidadeProdutos = Produtos::count();
