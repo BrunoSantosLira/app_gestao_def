@@ -7,9 +7,23 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $usuarios = User::all();
+        
+        $query  = User::query();
+
+        // Verifica se foi fornecida na requisição
+        if ($request->filled('name')) {
+            $query->where('name', 'like', "$request->name%");
+        }
+
+        // Verifica se foi fornecida na requisição
+        if ($request->filled('email')) {
+            $query->where('email', 'like', "$request->email%");
+        }
+
+        $usuarios = $query->paginate(5);
+
         return view('pages.app.cadastro.usuarios', ['usuarios' => $usuarios]);
     }
 

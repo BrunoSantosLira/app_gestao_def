@@ -12,11 +12,24 @@ class SaidasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $saidas = Saidas::with('produto')->paginate(5);
         $produtos = Produtos::all();
-        
+
+        $query  = Saidas::query();
+
+        // Verifica se tipo foi fornecido na requisição
+        if ($request->filled('produto_id')) {
+            $query->where('produto_id', '=', $request->produto_id);
+        }
+    
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('created_at')) {
+            $query->whereDate('created_at', $request->created_at);
+        }
+
+        $saidas = $query->paginate(5);
+
         return view('pages.app.estoque.saida', ['produtos' => $produtos, 'saidas' => $saidas]);
     }
 

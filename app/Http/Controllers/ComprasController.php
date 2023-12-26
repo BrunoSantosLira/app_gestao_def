@@ -11,6 +11,7 @@ use App\Models\ContaEntradas;
 use App\Models\Conta;
 
 use App\Models\Entradas;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -19,11 +20,35 @@ class ComprasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $compras = Compras::with('fornecedor')->paginate(5);
-        return view('pages.app.financeiro.vendas_compras.compras', ['compras' => $compras]);
+        // Inicializa a consulta de compras
+        $query = Compras::with('fornecedor');
+    
+        // Verifica se fornecedor_id foi fornecido na requisição
+        if ($request->filled('fornecedor_id')) {
+            $query->where('fornecedor_id', $request->fornecedor_id);
+        }
+    
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('created_at')) {
+            $query->whereDate('created_at', $request->created_at);
+        }
+
+        // Verifica se o status foi fornecida na requisição
+        if ($request->filled('status')) {
+            $query->where('status', '=', $request->status);
+        }
+    
+        // Obtém os resultados paginados
+        $compras = $query->paginate(5);
+    
+        // Obtém a lista de fornecedores para exibir no formulário
+        $fornecedores = Fornecedores::all();
+    
+        return view('pages.app.financeiro.vendas_compras.compras', ['compras' => $compras, 'fornecedores' => $fornecedores]);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -111,42 +136,50 @@ class ComprasController extends Controller
     }
 
     public function aprovar(Compras $compra){
-        $produtosDoContrato = $compra->compra_produtos;
-
-        // Atualiza a quantidade em estoque e cria as entradas
-        
-        foreach ($produtosDoContrato as $produto) {
-            $produtoEstoque = Produtos::find($produto->produto_id);
-    
-            $entrada = [
-                'produto_id' => $produto->produto_id,
-                'tipo' => 'ENTRADA POR APROVAÇAO DE COMPRA N:' . $compra->id,
-                'quantidade' => $produto->quantidade
-            ];
-    
-            $produtoEstoque['estoqueAtual'] += $produto->quantidade;
-            $produtoEstoque->save();
-    
-            Entradas::create($entrada);
-        }
-
-        //FINANCEIRO
-        // 1 => CONTA  PRINCIPAL
         $conta = Conta::find(1);
-        $conta['capital'] -= $compra->valorTotal;
-        $conta->save();
 
-        $ContaEntradas = new ContaEntradas([
-            'conta_id' => 1,
-            'tipo' => 'saida',
-            'capital' => $compra->valorTotal,
-            'detalhes' => 'APROVAÇÃO DE ORDEM DE COMPRA N:' . $compra->id
-            // Atribua outros valores conforme necessário
-        ]);
-        $ContaEntradas->save();
+        //Só aprova caso o valor da ordem  de compra seja menor que o valor disponivel na conta
+        if($conta['capital'] >= $compra->valorTotal){
+                $produtosDoContrato = $compra->compra_produtos;
 
-        // Atualiza o status da ordem de ccompra apenas 
-        $compra->update(['status' => 1]);
-        return back()->with('success', 'Ordem de compra Aprovada com sucesso!');
+            // Atualiza a quantidade em estoque e cria as entradas
+            
+            foreach ($produtosDoContrato as $produto) {
+                $produtoEstoque = Produtos::find($produto->produto_id);
+        
+                $entrada = [
+                    'produto_id' => $produto->produto_id,
+                    'tipo' => 'ENTRADA POR APROVAÇAO DE COMPRA N:' . $compra->id,
+                    'quantidade' => $produto->quantidade
+                ];
+        
+                $produtoEstoque['estoqueAtual'] += $produto->quantidade;
+                $produtoEstoque->save();
+        
+                Entradas::create($entrada);
+            }
+
+            //FINANCEIRO
+            // 1 => CONTA  PRINCIPAL
+            $conta = Conta::find(1);
+            $conta['capital'] -= $compra->valorTotal;
+            $conta->save();
+
+            $ContaEntradas = new ContaEntradas([
+                'conta_id' => 1,
+                'tipo' => 'saida',
+                'capital' => $compra->valorTotal,
+                'detalhes' => 'APROVAÇÃO DE ORDEM DE COMPRA N:' . $compra->id
+                // Atribua outros valores conforme necessário
+            ]);
+            $ContaEntradas->save();
+
+            // Atualiza o status da ordem de compra apenas 
+            $compra->update(['status' => 1]);
+            return back()->with('success', 'Ordem de compra Aprovada com sucesso!');
+        }else{
+            return back()->with('erro', 'VALOR INSUFICIENTE NA CONTA');
+        }
+        
     }
 }

@@ -39,15 +39,27 @@ class ContaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Conta $contum)
+    public function show(Conta $contum, Request $request)
     {
-        // Obtém todas as entradas relacionadas à conta específica
-        $historico = ContaEntradas::where('conta_id', $contum->id)
-            ->paginate(10);
-
+        // Inicializa a consulta de histórico
+        $query = ContaEntradas::where('conta_id', $contum->id);
+    
+        // Verifica se o tipo foi fornecido na requisição
+        if ($request->filled('tipo')) {
+            $query->where('tipo', $request->tipo);
+        }
+    
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('data')) {
+            $query->whereDate('created_at', $request->data);
+        }
+    
+        // Obtém os resultados paginados
+        $historico = $query->paginate(10);
+    
         return view('pages.app.financeiro.conta.show', ['conta' => $contum, 'historico' => $historico]);
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */

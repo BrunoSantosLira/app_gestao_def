@@ -11,9 +11,21 @@ class VendasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vendas = Vendas::paginate(5);
+        $query  = Vendas::with('os');
+
+        // Verifica se tipo foi fornecido na requisição
+        if ($request->filled('tipo')) {
+            $query->where('tipo', '=', $request->tipo);
+        }
+    
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('created_at')) {
+            $query->whereDate('created_at', $request->created_at);
+        }
+
+        $vendas = $query->paginate(5);
         return view('pages.app.financeiro.vendas_compras.vendas', ['vendas' => $vendas]);
     }
 

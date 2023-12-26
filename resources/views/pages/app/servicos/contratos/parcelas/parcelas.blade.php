@@ -22,6 +22,8 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
+                                <a href="{{route('contrato.index')}}" class="m-3"><i class="fa-solid fa-square-caret-left fa-2xl"></i></a>
+
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
 

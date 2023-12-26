@@ -13,10 +13,25 @@ class ProdutosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $produtos =  Produtos::with('categoria')->with('unidade')->paginate(5);
-        return view('pages.app.cadastro.produtos.produtos', ['produtos' => $produtos]);
+        $query  = Produtos::with('categoria')->with('unidade');
+
+        // Verifica se tipo foi fornecido na requisição
+        if ($request->filled('id')) {
+            $query->where('id', '=', $request->id);
+        }
+    
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('codigo_de_barras')) {
+            $query->where('codigo_de_barras', 'like', "$request->codigo_de_barras%");
+        }
+
+        $produtos = $query->paginate(5);
+
+        $listaProdutos = Produtos::all();
+
+        return view('pages.app.cadastro.produtos.produtos', ['produtos' => $produtos, 'listaProdutos' => $listaProdutos]);
     }
 
     /**

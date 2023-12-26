@@ -29,31 +29,66 @@
                             <li class="text-danger">{{ $error }}</li>
                             @endforeach
                         </div>
+                            
+                        <form class="row m-3" method="GET" action="{{ route('compras.index') }}">
+                            <div class="col-md-4">
+                                <h5>Buscar pelo Fornecedor</h5>
+                                <label for="inputPassword2" class="visually-hidden">Fornecedor:</label>
+                                <select name="fornecedor_id" class="form-control border border-2 p-2">
+                                    <option value="">Todos</option>
+                                    @foreach ($fornecedores as $f)
+                                        <option value="{{ $f->id }}">{{ $f->nome_fantasia }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        
+                            <div class="col-md-3">
+                                <h5>Data</h5>
+                                <label for="data" class="visually-hidden">Data:</label>
+                                <input type="date" name="created_at" class="form-control border border-2 p-2">
+                            </div>
+                        
+                            <div class="col-md-3">
+                                <h5>Status:</h5>
+                                <label for="status" class="visually-hidden">Status:</label>
+                                <select name="status" id="status" class="form-control border border-2 p-2">
+                                    <option value="">Todos</option>
+                                    <option value="0">PENDENTE</option>
+                                    <option value="1">FINALIZADO</option>
+                                </select>
+                            </div>
+                        
+                            <div class="col-md-2">
+                                <h5>Buscar</h5>
+                                <button type="submit" style="background-color: #fb7609; border:none; border-radius:5px;" class="btn btn-xl">
+                                    <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <hr>
+                        
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
 
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $compras->previousPageUrl() }}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                
+                                       
                                         {{-- Loop através das páginas geradas pela pagination do Laravel --}}
                                         @foreach ($compras->links()->elements[0] as $page => $url)
+                                            @php
+                                                // Adiciona os parâmetros de filtro às URLs de paginação
+                                                $url = $url . "&fornecedor_id=" . request('fornecedor_id') . "&created_at=" . request('created_at' ) . "&status=" . request('status' );
+                                            @endphp
+                                
                                             <li class="page-item {{ $compras->currentPage() == $page ? 'active' : '' }}">
                                                 <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                             </li>
                                         @endforeach
                                 
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $compras->nextPageUrl() }}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
+                                     
                                     </ul>
                                 </nav>
+                                
 
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>

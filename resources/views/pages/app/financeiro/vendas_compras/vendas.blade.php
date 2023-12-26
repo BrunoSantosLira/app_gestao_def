@@ -13,6 +13,34 @@
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                                 <h6 class="text-white text-capitalize ps-3">Listagem de vendas</h6>
                             </div>
+
+                            <!-- BUSCA -->
+                            <form class="row m-3" method="GET" action="{{ route('vendas.index') }}">
+                                <div class="col-md-3">
+                                    <h5>Tipo</h5>
+                                    <label for="tipo" class="visually-hidden">Tipo:</label>
+                                    <select name="tipo" class="form-control border border-2 p-2">
+                                        <option value="">Todos</option>
+                                        <option value="Contrato">Contrato</option>
+                                        <option value="OS">OS</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <h5>Data</h5>
+                                    <label for="data" class="visually-hidden">Data:</label>
+                                    <input type="date" name="created_at" class="form-control border border-2 p-2">
+                                </div>
+
+                                <div class="col-md-2">
+                                    <h5>Buscar</h5>
+                                    <button type="submit" style="background-color: #fb7609; border:none; border-radius:5px;" class="btn btn-xl">
+                                        <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i>
+                                    </button>
+                                </div>
+                            </form>
+                            <hr>
+                            <!-- FIM BUSCA -->
                         
                             @if (Session::has('success'))
                                 <div class="alert alert-success text-white">
@@ -33,24 +61,21 @@
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $vendas->previousPageUrl() }}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
+          
                                 
                                         {{-- Loop através das páginas geradas pela pagination do Laravel --}}
                                         @foreach ($vendas->links()->elements[0] as $page => $url)
+                                            @php
+                                                // Adiciona os parâmetros de filtro às URLs de paginação
+                                                $url = $url . "&tipo=" . request('tipo') . "&created_at=" . request('created_at' );
+                                            @endphp
+                                
                                             <li class="page-item {{ $vendas->currentPage() == $page ? 'active' : '' }}">
                                                 <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                             </li>
                                         @endforeach
                                 
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $vendas->nextPageUrl() }}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </nav>
                                 
@@ -101,12 +126,10 @@
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0">{{$venda['tipo']}}</p>
                                             </td>
-
-                                            
+        
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0">{{\Carbon\Carbon::parse($venda['created_at'])->format('d/m/Y')}}</p>
                                             </td>
-
 
                                         </tr>
                                     @endforeach

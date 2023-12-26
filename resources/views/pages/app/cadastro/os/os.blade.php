@@ -22,16 +22,48 @@
                             @endif
                         </div>
 
-                        <form class="row m-3"  method="GET" action="{{route('os.index')}}">
-                            <h5>Busca por ID</h5>
-                            <div class="col-auto">
-                              <label for="inputPassword2" class="visually-hidden">ID</label>
-                              <input type="text" class="form-control border border-2 p-2" id="inputPassword2" placeholder="Exemplo: 20231131/14" name="id">
+                        <form class="row m-3" method="GET" action="{{ route('os.index') }}">
+                            <div class="col-md-4">
+                                <h5>Cliente</h5>
+                                <label for="inputPassword2" class="visually-hidden">Fornecedor:</label>
+                                <select name="cliente_id" class="form-control border border-2 p-2">
+                                    <option value="">Todos</option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="col-auto">
-                                <button type="submit"  style="background-color: #fb7609; border:none; border-radius:5px;" class=" btn btn-xl" ><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i></button>
+                        
+                            <div class="col-md-3">
+                                <h5>ID</h5>
+                                <div class="col-auto">
+                                  <label for="inputPassword2" class="visually-hidden">ID</label>
+                                  <input type="text" class="form-control border border-2 p-2" id="inputPassword2" placeholder="Exemplo: 20231131/14" name="id">
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-3">
+                                <h5>Status:</h5>
+                                <label for="status" class="visually-hidden">Status:</label>
+                                <select name="status" id="status" class="form-control border border-2 p-2">
+                                    <option value="">Todos</option>
+                                    <option class="" value="finalizado">Finalizado</option>
+                                    <option class="" value="orçamento">Orçamento</option>
+                                    <option class="" value="aberto">Aberto</option>
+                                    <option class="" value="andamento">Em andamento</option>
+                                    <option class="" value="cancelado">Cancelado</option>
+                                    <option class="" value="Aguardando Peças">Aguardando Peças</option>
+                                </select>
+                            </div>
+                        
+                            <div class="col-md-2">
+                                <h5>Buscar</h5>
+                                <button type="submit" style="background-color: #fb7609; border:none; border-radius:5px;" class="btn btn-xl">
+                                    <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i>
+                                </button>
                             </div>
                         </form>
+                        
                         <hr>
 
                         <div class="card-body px-0 pb-2">
@@ -40,24 +72,18 @@
 
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $os->previousPageUrl() }}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                
                                         {{-- Loop através das páginas geradas pela pagination do Laravel --}}
                                         @foreach ($os->links()->elements[0] as $page => $url)
+                                            @php
+                                                // Adiciona os parâmetros de filtro às URLs de paginação
+                                                $url = $url . "&id=" . request('id') . "&status=" . request('status' ) . "&cliente_id=" . request('cliente_id' );
+                                            @endphp
+                                
                                             <li class="page-item {{ $os->currentPage() == $page ? 'active' : '' }}">
                                                 <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                             </li>
                                         @endforeach
-                                
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $os->nextPageUrl() }}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </nav>
                                 

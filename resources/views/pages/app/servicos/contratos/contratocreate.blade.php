@@ -40,7 +40,7 @@
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Nome da contrato</label>
+                                    <label class="form-label">Nome do contrato</label>
                                     <input type="text" name="nome" class="form-control border border-2 p-2" value='' placeholder="Nome:">
                                     @error('nome')
                                 <p class='text-danger inputerror'>{{ $message }} </p>

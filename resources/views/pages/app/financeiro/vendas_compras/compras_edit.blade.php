@@ -170,7 +170,7 @@
         
                                     <div class="mb-3 col-md-6">
                                         <label class="form-label">Quantidade</label>
-                                        <input type="number" name="quantidade" class="form-control border border-2 p-2" value='0' placeholder="Preço">
+                                        <input type="number" name="quantidade" class="form-control border border-2 p-2" value='0' placeholder="Quantidade">
                                     </div>
         
                                     <button type="submit" class="btn btn-primary">Adicionar</button>

@@ -24,16 +24,29 @@ class OSController extends Controller
      */
     public function index(Request $request)
     {
+        $clientes = Clientes::all();
+        $produtos = Produtos::paginate(5);
+
+        $query  = OS::query();
+
+        // Verifica se tipo foi fornecido na requisição
         if ($request->filled('id')) {
-            // Busca as OS pelo buscador a partir do unique_id
-            $os = OS::where('unique_id', 'like', "$request->id%")->paginate(5);
-        } else {
-            $os = OS::paginate(5);
+            $query->where('unique_id', 'like', "$request->id%");
         }
     
-        $produtos = Produtos::paginate(5);
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('cliente_id')) {
+            $query->where('cliente_id', $request->cliente_id);
+        }
+
+        $os = $query->paginate(10);
     
-        return view('pages.app.cadastro.os.os', ['os' => $os, 'produtos' => $produtos]);
+        return view('pages.app.cadastro.os.os', ['os' => $os, 'produtos' => $produtos, 'clientes' => $clientes]);
     }
     
 

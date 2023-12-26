@@ -50,29 +50,51 @@
                             </div>
                             
                         </div>
-                
+                        <!-- BUSCA -->
+                        <form class="row m-3" method="GET" action="{{ route('conta.show', $conta->id) }}">
+                            <div class="col-md-3">
+                                <h5>Tipo</h5>
+                                <label for="tipo" class="visually-hidden">Tipo:</label>
+                                <select name="tipo" class="form-control border border-2 p-2">
+                                    <option value="">Todos</option>
+                                    <option value="entrada">Entrada</option>
+                                    <option value="saida">Saída</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <h5>Data</h5>
+                                <label for="data" class="visually-hidden">Data:</label>
+                                <input type="date" name="data" class="form-control border border-2 p-2">
+                            </div>
+
+                            <div class="col-md-2">
+                                <h5>Buscar</h5>
+                                <button type="submit" style="background-color: #fb7609; border:none; border-radius:5px;" class="btn btn-xl">
+                                    <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <!-- FIM BUSCA -->
+
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $historico->previousPageUrl() }}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                
+                                        
+                                                                        
                                         {{-- Loop através das páginas geradas pela pagination do Laravel --}}
                                         @foreach ($historico->links()->elements[0] as $page => $url)
+                                            @php
+                                                // Adiciona os parâmetros de filtro às URLs de paginação
+                                                $url = $url . "&tipo=" . request('tipo') . "&data=" . request('data');
+                                            @endphp
+
                                             <li class="page-item {{ $historico->currentPage() == $page ? 'active' : '' }}">
                                                 <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                             </li>
                                         @endforeach
-                                
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $historico->nextPageUrl() }}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
+                                        
                                     </ul>
                                 </nav>
                                 <table class="table align-items-center justify-content-center mb-0">

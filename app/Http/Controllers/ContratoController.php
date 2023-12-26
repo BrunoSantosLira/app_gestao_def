@@ -19,15 +19,36 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Parcelas;
 use App\Models\Vendas;
 
+
 class ContratoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contratos = Contrato::with('cliente')->paginate(5);
-        return view('pages.app.servicos.contratos.contrato', ["contratos" => $contratos]);
+        $clientes = Clientes::all();
+
+
+        $query = Contrato::query();
+        // Verifica se tipo foi fornecido na requisição
+        if ($request->filled('cliente_id')) {
+            $query->where('cliente_id',"$request->cliente_id");
+        }
+    
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('status')) {
+            $query->where('status',"$request->status");
+        }
+
+    
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('data_inicio')) {
+            $query->whereDate('data_inicio', $request->data_inicio);
+        }
+
+        $contratos = $query->paginate(10);
+        return view('pages.app.servicos.contratos.contrato', ["contratos" => $contratos, 'clientes' => $clientes]);
     }
 
     /**
@@ -191,21 +212,7 @@ class ContratoController extends Controller
         
             $venda->save();
         
-            //FINANCEIRO
-            // 1 => CONTA  PRINCIPAL
-            $conta = Conta::find(1);
-            $conta['capital'] += $contrato->valorTotal;
-            $conta->save();
 
-            $ContaEntradas = new ContaEntradas([
-                'conta_id' => 1,
-                'tipo' => 'entrada',
-                'capital' => $contrato->valorTotal,
-                'detalhes' => 'APROVAÇÃO DE CONTRATO N:' . $contrato->id
-                // Atribua outros valores conforme necessário
-            ]);
-            $ContaEntradas->save();
-            //FIM FINANCEIRO
 
             // Cria as parcelas com base no valor total do contrato e na quantidade de parcelas
             $valorTotalContrato = $contrato->valorTotal;

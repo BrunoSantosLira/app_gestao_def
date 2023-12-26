@@ -16,9 +16,28 @@ class ClientesController extends Controller
         $this->clientes = $clientes;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Clientes::paginate(5);
+
+        $query  = Clientes::query();
+
+        // Verifica se foi fornecida na requisição
+        if ($request->filled('nome')) {
+            $query->where('nome', 'like', "$request->nome%");
+        }
+
+        // Verifica se foi fornecida na requisição
+        if ($request->filled('email')) {
+            $query->where('email', 'like', "$request->email%");
+        }
+
+        // Verifica se foi fornecida na requisição
+        if ($request->filled('CPF')) {
+            $query->where('CPF/CNPJ', 'like', "$request->CPF%");
+        }
+
+        $clientes = $query->paginate(5);
+
         return view('pages.app.cadastro.clientes.clientes',['clientes' => $clientes]);
     }
 

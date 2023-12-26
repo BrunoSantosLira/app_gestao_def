@@ -33,17 +33,28 @@
                             @endforeach
                         </div>
 
-                        
-                        <form class="row m-3"  method="GET" action="{{route('fornecedores.index')}}">
-                            <h5>Buscar pelo CNPJ</h5>
-                            <div class="col-auto">
+                        <!-- BUSCA -->
+                        <form class="row m-3" method="GET" action="{{ route('fornecedores.index') }}">
+                            <div class="col-md-3">
+                              <h5>Buscar pelo CNPJ</h5>   
                               <label for="inputPassword2" class="visually-hidden">CNPJ</label>
                               <input type="text" class="form-control border border-2 p-2" id="inputPassword2" placeholder="Insira o CNPJ" name="cnpj">
                             </div>
-                            <div class="col-auto">
-                                <button type="submit"  style="background-color: #fb7609; border:none; border-radius:5px;" class=" btn btn-xl" ><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i></button>
+
+                            <div class="col-md-3">
+                                <h5>Email:</h5>
+                                <label for="data" class="visually-hidden">Email:</label>
+                                <input type="text" name="email" class="form-control border border-2 p-2" placeholder="Email:">
+                            </div>
+
+                            <div class="col-md-2">
+                                <h5>Buscar</h5>
+                                <button type="submit" style="background-color: #fb7609; border:none; border-radius:5px;" class="btn btn-xl">
+                                    <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i>
+                                </button>
                             </div>
                         </form>
+                        <!-- FIM BUSCA -->
                         <hr>
 
 
@@ -52,24 +63,19 @@
 
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $fornecedores->previousPageUrl() }}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                
+                                       
                                         {{-- Loop através das páginas geradas pela pagination do Laravel --}}
                                         @foreach ($fornecedores->links()->elements[0] as $page => $url)
+                                            @php
+                                                // Adiciona os parâmetros de filtro às URLs de paginação
+                                                $url = $url . "&cnpj=" . request('cnpj') . "&email=" . request('email' );
+                                            @endphp
+                                
                                             <li class="page-item {{ $fornecedores->currentPage() == $page ? 'active' : '' }}">
                                                 <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                             </li>
                                         @endforeach
-                                
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $fornecedores->nextPageUrl() }}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </nav>
 

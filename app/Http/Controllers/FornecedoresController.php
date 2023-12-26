@@ -13,12 +13,22 @@ class FornecedoresController extends Controller
      */
     public function index(Request $request)
     {
+        $query = Fornecedores::query();
+
+
+        // Verifica se tipo foi fornecido na requisição
         if ($request->filled('cnpj')) {
-            // Busca os fornecedores pelo buscador a partir do cnpj
-            $fornecedores = Fornecedores::where('cnpj', 'like', "$request->cnpj%")->paginate(5);
-        } else {
-            $fornecedores = Fornecedores::paginate(5);
+            $query->where('cnpj', 'like', "$request->cnpj%");
         }
+    
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('email')) {
+            $query->where('email', 'like', "$request->email%");
+        }
+
+        
+
+        $fornecedores = $query->paginate(10);
     
         return view('pages.app.financeiro.fornecedores.fornecedores', ['fornecedores' => $fornecedores]);
     }
