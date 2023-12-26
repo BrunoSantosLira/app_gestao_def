@@ -36,7 +36,7 @@ class ClientesController extends Controller
             $query->where('CPF/CNPJ', 'like', "$request->CPF%");
         }
 
-        $clientes = $query->paginate(5);
+        $clientes = $query->paginate(10);
 
         return view('pages.app.cadastro.clientes.clientes',['clientes' => $clientes]);
     }

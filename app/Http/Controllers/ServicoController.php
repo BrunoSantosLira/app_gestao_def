@@ -13,9 +13,16 @@ class ServicoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $servicos = Servico::all();
+        $query  = Servico::query();
+
+        // Verifica se foi fornecida na requisição
+        if ($request->filled('nome')) {
+            $query->where('nome', 'like', "$request->nome%");
+        }
+
+        $servicos = $query->paginate(10);
         return view('pages.app.servicos', ['servicos' => $servicos]);
     }
 

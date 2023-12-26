@@ -36,9 +36,42 @@
                             @endforeach
                             
                         </div>
+                        <form class="row m-3" method="GET" action="{{ route('checklist.index') }}">
+                            <div class="col-md-4">
+                                <h5>Nome</h5>
+                                <input type="text" class="form-control border border-2 p-2" name="nome" placeholder="Nome:">
+                            </div>
+                        
+                            <div class="col-md-2">
+                                <h5>Buscar</h5>
+                                <button type="submit" style="background-color: #fb7609; border:none; border-radius:5px;" class="btn btn-xl">
+                                    <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <hr>
+
                         <div class="card-body px-0 pb-2">
 
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+
+                                        {{-- Loop através das páginas geradas pela pagination do Laravel --}}
+                                        @foreach ($checklists->links()->elements[0] as $page => $url)
+                                            @php
+                                                // Adiciona os parâmetros de filtro às URLs de paginação
+                                                $url = $url . "&nome=" . request('nome') ;
+                                            @endphp
+                                
+                                            <li class="page-item {{ $checklists->currentPage() == $page ? 'active' : '' }}">
+                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                            </li>
+                                        @endforeach
+                                
+
+                                    </ul>
+                                </nav>
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>

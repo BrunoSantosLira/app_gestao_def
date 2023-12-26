@@ -13,14 +13,23 @@ class ChecklistController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     { 
         // Obtém um serviço com suas checklists
         /*
         $servico = Servico::find(10);
         $checklists = $servico->checklists;
         */
-        $checklists = Checklist::with('servico')->get();
+
+        $query  = Checklist::with('servico');
+
+        // Verifica se foi fornecida na requisição
+        if ($request->filled('nome')) {
+            $query->where('nome', 'like', "$request->nome%");
+        }
+
+        $checklists = $query->paginate(10);
+
 
         $servicos = Servico::all();
         return view('pages.app.checklist', ['servicos' => $servicos, 'checklists' => $checklists]);
