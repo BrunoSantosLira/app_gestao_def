@@ -32,6 +32,7 @@ use App\Http\Controllers\ParcelasController;
 
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\ContaEntradasController;
+use App\Http\Controllers\ContasAPagarController;
 
 use App\Http\Controllers\FornecedoresController;
 use App\Http\Controllers\VendasController;
@@ -94,6 +95,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('conta', ContaController::class);
 	Route::resource('conta_entradas', ContaEntradasController::class);
+
+	Route::resource('ContasAPagar', ContasAPagarController::class);
 
 	Route::resource('fornecedores', FornecedoresController::class);
 	Route::resource('vendas', VendasController::class);

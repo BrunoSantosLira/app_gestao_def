@@ -28,7 +28,7 @@ class EntradasController extends Controller
             $query->whereDate('created_at', $request->created_at);
         }
 
-        $entradas = $query->paginate(5);
+        $entradas = $query->paginate(12);
 
         return view('pages.app.estoque.entrada', ['produtos' => $produtos, 'entradas' => $entradas]);
     }

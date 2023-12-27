@@ -28,7 +28,7 @@ class SaidasController extends Controller
             $query->whereDate('created_at', $request->created_at);
         }
 
-        $saidas = $query->paginate(5);
+        $saidas = $query->paginate(12);
 
         return view('pages.app.estoque.saida', ['produtos' => $produtos, 'saidas' => $saidas]);
     }

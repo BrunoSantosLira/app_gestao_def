@@ -113,7 +113,6 @@ class ProdutosController extends Controller
         $regras = [
             'produto' => 'required|max:255',
             'preco' => 'required',
-            'estoqueAtual' => 'required',
             'codigo_de_barras' => 'required',
             'valorCompra' => 'required',
             'valorVenda' => 'required',
