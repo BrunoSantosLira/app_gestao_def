@@ -18,7 +18,7 @@
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white text-capitalize ps-3">Lista de Checklists de verificação</h6>
+                                <h6 class="text-white text-capitalize ps-3">Lista de Checklists de produtos</h6>
                             </div>
                             <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionar">Adicionar Checklist</button>
                             <a href=" {{route('servico.index')}}"button type="button" class="btn btn-outline-success mt-3 btn-sm">Adicionar Serviço</button></a> 
@@ -54,24 +54,7 @@
                         <div class="card-body px-0 pb-2">
 
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-
-                                        {{-- Loop através das páginas geradas pela pagination do Laravel --}}
-                                        @foreach ($checklists->links()->elements[0] as $page => $url)
-                                            @php
-                                                // Adiciona os parâmetros de filtro às URLs de paginação
-                                                $url = $url . "&nome=" . request('nome') ;
-                                            @endphp
-                                
-                                            <li class="page-item {{ $checklists->currentPage() == $page ? 'active' : '' }}">
-                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                                            </li>
-                                        @endforeach
-                                
-
-                                    </ul>
-                                </nav>
+                          
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>
@@ -92,40 +75,40 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($checklists as $key => $checklist)       
+                                           
                                             <tr>
-                                                <form action="{{route('checklist.update', ['checklist' => $checklist])}}" method="POST">
+                                                <form action="" method="POST">
                                                     @csrf
                                                     @method('PATCH')
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">#{{$checklist['id']}}</h6>
+                                                            <h6 class="mb-0 text-sm">#</h6>
                                                         </div>
                                                     </div>
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"> <input type="text" class="form-control" value="{{$checklist['nome']}}" name="nome"></p>
+                                                    <p class="text-sm font-weight-bold mb-0"> <input type="text" class="form-control" value="" name="nome"></p>
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"> {{$checklist['servico']['nome']}}</p>
+                                                    <p class="text-sm font-weight-bold mb-0"></p>
                                                 </td>
 
                                           
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"> {{ \Carbon\Carbon::parse($checklist['created_at'])->format('d/m/Y') }}
+                                                    <p class="text-sm font-weight-bold mb-0"> 
                                                     </p>
                                                 </td>
                                                 <td class="float-end">
                                                     <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></button>
                                                 </form>
-                                                    <button style="background: none; border:none;" class="btn-xl" onclick="mostrarModal({{$checklist}})"><i class="fa-solid fa-square-plus" style="color: #d6811f;"></i></button>
-                                                    <a href="{{route('checklist.show', ['checklist' => $checklist->id])}}" style="text-decoration: none;color: inherit;"><button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></button>
+                                                    <button style="background: none; border:none;" class="btn-xl" onclick=""><i class="fa-solid fa-square-plus" style="color: #d6811f;"></i></button>
+                                                    <a href="" style="text-decoration: none;color: inherit;"><button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></button>
 
 
-                                                    <form action="{{route('checklist.destroy', ['checklist' => $checklist->id])}}" method="POST" class="d-inline-block" onsubmit="return confirmacao()">
+                                                    <form action="" method="POST" class="d-inline-block" onsubmit="return confirmacao()">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
@@ -133,7 +116,7 @@
                                                 
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -154,12 +137,7 @@
                         <div class="modal-body">
                             <form action="{{route('checklist.store')}}" method="POST">
                                 @csrf
-                                <label for="servico" class="form-label">Serviço pertencente</label>
-                                <select id="servico" class="form-select  p-2" name="servico_id">
-                                    @foreach ($servicos as $key => $servico)
-                                    <option value="{{$servico['id']}}">{{$servico['nome']}}</option>
-                                    @endforeach
-                                </select>
+    
 
                                 <div class="mt-3 mb-3">
                                     <label for="nome" class="form-label">Nome da checklist</label>

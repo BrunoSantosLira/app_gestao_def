@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContasAPagar;
+use App\Models\ChecklistProdutos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ContasAPagarController extends Controller
+class ChecklistProdutosController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('pages.app.checklistprodutos.index');
     }
 
     /**
@@ -35,7 +35,7 @@ class ContasAPagarController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ContasAPagar $contasAPagar)
+    public function show(ChecklistProdutos $checklistProdutos)
     {
         //
     }
@@ -43,7 +43,7 @@ class ContasAPagarController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ContasAPagar $contasAPagar)
+    public function edit(ChecklistProdutos $checklistProdutos)
     {
         //
     }
@@ -51,7 +51,7 @@ class ContasAPagarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ContasAPagar $contasAPagar)
+    public function update(Request $request, ChecklistProdutos $checklistProdutos)
     {
         //
     }
@@ -59,7 +59,7 @@ class ContasAPagarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ContasAPagar $contasAPagar)
+    public function destroy(ChecklistProdutos $checklistProdutos)
     {
         //
     }

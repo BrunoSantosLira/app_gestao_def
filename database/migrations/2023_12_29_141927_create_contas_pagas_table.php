@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contas_a_pagar', function (Blueprint $table) {
+        Schema::create('contas_pagas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fornecedor_id');
-            $table->foreign('fornecedor_id')->references('id')->on('fornecedores');
-            $table->string('descricao')->nullable();
+            $table->string('nome')->nullable();
             $table->decimal('valor', 10, 2);
             $table->date('data_vencimento');
             $table->date('data_pagamento')->nullable();
-            $table->enum('status_pagamento', ['pendente', 'pago', 'atrasado'])->default('pendente');
-            $table->string('metodo_pagamento')->nullable();
+            $table->string('status_pagamento',255)->default('pendente');
+            $table->string('metodo_pagamento',255)->nullable();
             $table->text('observacoes')->nullable();
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contas_a_pagar');
+        Schema::dropIfExists('contas_pagas');
     }
 };

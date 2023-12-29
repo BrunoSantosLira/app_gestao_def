@@ -35,6 +35,10 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             CAMPO
                                             </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            DETALHES
+                                            </th>
                                             <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Data de criação</th>
                                             <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 CONCLUIDO
@@ -53,6 +57,7 @@
                                             </td>
                                             <td> <p class="text-sm font-weight-bold ml-2 mb-0">{{$c['nome']}}</p></td>
                                             <td> <p class="text-sm font-weight-bold ml-2 mb-0">{{ \Carbon\Carbon::parse($c['created_at'])->format('d/m/Y') }}</p></td>
+                                            <td> <p class="text-sm font-weight-bold ml-2 mb-0">{{$c['detalhes']}}</p></td>
                                             <td> 
                                                 <p class="text-sm font-weight-bold ml-2 mb-0">
                                                     <form action="{{route('campo.update', ['campo' => $c['id']])}}" method="POST" class="d-inline-block">

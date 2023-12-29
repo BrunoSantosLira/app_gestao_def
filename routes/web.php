@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\ChecklistProdutosController;
+
+
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\CategoriasController;
@@ -32,7 +35,8 @@ use App\Http\Controllers\ParcelasController;
 
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\ContaEntradasController;
-use App\Http\Controllers\ContasAPagarController;
+
+use App\Http\Controllers\ContasPagaController;
 
 use App\Http\Controllers\FornecedoresController;
 use App\Http\Controllers\VendasController;
@@ -80,6 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::resource('checklist', ChecklistController::class);
+	Route::resource('checklistProdutos', ChecklistProdutosController::class);
 
 	Route::resource('clientes', ClientesController::class);
 	Route::resource('impostos', ImpostosController::class);
@@ -96,7 +101,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('conta', ContaController::class);
 	Route::resource('conta_entradas', ContaEntradasController::class);
 
-	Route::resource('ContasAPagar', ContasAPagarController::class);
+	Route::resource('ContasPagas', ContasPagaController::class);
+	Route::get('ContasPagas.aprovar/{conta}', [\App\Http\Controllers\ContasPagaController::class, 'aprovar'])->name('ContasPagas.aprovar');
+
 
 	Route::resource('fornecedores', FornecedoresController::class);
 	Route::resource('vendas', VendasController::class);

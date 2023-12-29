@@ -9,7 +9,7 @@ use App\Models\Checklist;
 class Campo extends Model
 {
     use HasFactory;
-    protected $fillable = ['checklist_id', 'nome', 'concluida'];
+    protected $fillable = ['checklist_id', 'nome', 'concluida', 'detalhes'];
 
 
     public function checklist()

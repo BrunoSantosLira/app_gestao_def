@@ -117,15 +117,34 @@
             </a>
         </li>
 
-        
+
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'checklist' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('checklist.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle text-white {{ $activePage == 'checklist' ? 'active bg-gradient-primary' : '' }}" 
+                   href="{{ route('checklist.index') }}" 
+                   id="navbarDropdownMenuLink2" 
+                   role="button" 
+                   data-bs-toggle="dropdown" 
+                   aria-haspopup="true" 
+                   aria-expanded="false">
+                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-list-check ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Checklist</span>
-            </a>
+                    </div>
+                     <span class="caret">Checklists</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <li>
+                        <a class="dropdown-item" href="{{route('checklist.index')}}">
+                            Checklist de verificação
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('checklistProdutos.index')}}">
+                            Checklist de produtos
+                        </a>
+                    </li>         
+                </ul>
+            </div>
         </li>
 
         <li class="nav-item mt-3">
@@ -227,7 +246,7 @@
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-book ps-2 pe-2 text-center"></i>
                 </div>
-                <span class="nav-link-text ms-1">Livro Diário</span>
+                <span class="nav-link-text ms-1">Caixa</span>
             </a>
         </li>
 
@@ -252,8 +271,8 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'ContasAPagar' ? 'active bg-gradient-primary' : '' }} "
-                href="{{'ContasAPagar.index'}}">
+            <a class="nav-link text-white {{ $activePage == 'ContasPagas' ? 'active bg-gradient-primary' : '' }} "
+                href="{{route('ContasPagas.index')}}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-file-invoice-dollar ps-2 pe-2 text-center"></i>
                 </div>
