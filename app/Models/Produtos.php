@@ -12,6 +12,7 @@ use App\Models\ContratoProdutos;
 use App\Models\CompraProdutos;
 use App\Models\Entradas;
 use App\Models\Saidas;
+use App\Models\CamposProduto;
 
 
 class Produtos extends Model
@@ -60,5 +61,9 @@ class Produtos extends Model
         return $this->hasMany(Saidas::class);
     }
 
+    public function campos_produto()
+    {
+        return $this->hasMany(CamposProduto::class);
+    }
     
 }

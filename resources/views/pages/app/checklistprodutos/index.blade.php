@@ -21,7 +21,6 @@
                                 <h6 class="text-white text-capitalize ps-3">Lista de Checklists de produtos</h6>
                             </div>
                             <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionar">Adicionar Checklist</button>
-                            <a href=" {{route('servico.index')}}"button type="button" class="btn btn-outline-success mt-3 btn-sm">Adicionar Serviço</button></a> 
                             @if (request('status') == 'sucesso')
                                 <div class="alert alert-success text-white" role="alert">
                                     <strong>Sucesso!</strong> Adicionado com sucesso!
@@ -36,7 +35,7 @@
                             @endforeach
                             
                         </div>
-                        <form class="row m-3" method="GET" action="{{ route('checklist.index') }}">
+                        <form class="row m-3" method="GET" action="{{ route('checklistProdutos.index') }}">
                             <div class="col-md-4">
                                 <h5>Nome</h5>
                                 <input type="text" class="form-control border border-2 p-2" name="nome" placeholder="Nome:">
@@ -54,7 +53,24 @@
                         <div class="card-body px-0 pb-2">
 
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
-                          
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+
+                                        {{-- Loop através das páginas geradas pela pagination do Laravel --}}
+                                        @foreach ($checklists->links()->elements[0] as $page => $url)
+                                            @php
+                                                // Adiciona os parâmetros de filtro às URLs de paginação
+                                                $url = $url . "&nome=" . request('nome') ;
+                                            @endphp
+                                
+                                            <li class="page-item {{ $checklists->currentPage() == $page ? 'active' : '' }}">
+                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                            </li>
+                                        @endforeach
+                                
+
+                                    </ul>
+                                </nav>
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>
@@ -68,32 +84,32 @@
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Serviço
+                                            Descrição
                                             </th>
-                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Data de criação</th>
-                                            <th></th>
+                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 "></th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                           
+                                        @foreach ($checklists as $key => $checklist)  
                                             <tr>
-                                                <form action="" method="POST">
+                                                
                                                     @csrf
                                                     @method('PATCH')
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">#</h6>
+                                                            <h6 class="mb-0 text-sm">#{{$checklist->id}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"> <input type="text" class="form-control" value="" name="nome"></p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist->nome}}</p>
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"></p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist->descricao}}</p>
                                                 </td>
 
                                           
@@ -102,13 +118,10 @@
                                                     </p>
                                                 </td>
                                                 <td class="float-end">
-                                                    <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></button>
-                                                </form>
-                                                    <button style="background: none; border:none;" class="btn-xl" onclick=""><i class="fa-solid fa-square-plus" style="color: #d6811f;"></i></button>
-                                                    <a href="" style="text-decoration: none;color: inherit;"><button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></button>
-
-
-                                                    <form action="" method="POST" class="d-inline-block" onsubmit="return confirmacao()">
+                                                    <a target="_blank" href="{{route('checklistProdutos.edit', ['checklistProduto' => $checklist->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.2em;"></i></a>
+                                                    <a href="{{route('checklistProdutos.show', ['checklistProduto' => $checklist->id])}}" style="text-decoration: none;color: inherit;"><button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></button>
+                                                        
+                                                    <form action="{{route('checklistProdutos.destroy', ['checklistProduto' => $checklist->id])}}" method="POST" class="d-inline-block">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
@@ -116,7 +129,7 @@
                                                 
                                                 </td>
                                             </tr>
-                                       
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -135,13 +148,20 @@
                         </div>
 
                         <div class="modal-body">
-                            <form action="{{route('checklist.store')}}" method="POST">
+                            <form action="{{route('checklistProdutos.store')}}" method="POST">
                                 @csrf
     
 
                                 <div class="mt-3 mb-3">
                                     <label for="nome" class="form-label">Nome da checklist</label>
-                                    <input type="text" class="form-control border border-2 p-2" id="nome" placeholder="Nome" name="nome">
+                                    <input type="text" required class="form-control border border-2 p-2" id="nome" placeholder="Nome" name="nome">
+                                </div>
+
+                                <div class="mb-3 col-md-12">
+                                    <label for="floatingTextarea2">Descrição:</label>
+                                    <textarea class="form-control border border-2 p-2"
+                                        placeholder="Descrição" required id="descricao" name="descricao"
+                                        rows="4" cols="50"></textarea>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Adicionar</button>
@@ -234,26 +254,25 @@
                 </div>
 
             <x-footers.auth></x-footers.auth>
-
-            <script>
-                  function mostrarModal(checklist) {
-                        console.log(checklist);
-                        document.getElementById('option_checklist').innerHTML = checklist['nome'] + `(${checklist['id']})`;
-                        document.getElementById('option_checklist').value = checklist['id'];
-                        
-                        console.log(document.getElementById('option_checklist').value)
-                        var meuModal = new bootstrap.Modal(document.getElementById('ModalAdicionarCampo'));
-                        meuModal.show();
-                    }
-
-                  function confirmacao(){
-                       
-                    let resp = confirm('Ao excluir uma Checklist você também excluirá todos os campos associados a ela. Deseja dar continuidade?');
-                    return resp;
-                  }
-
-            </script>
         </div>
+        <script>
+            function mostrarModal(checklist) {
+                  console.log(checklist);
+                  document.getElementById('option_checklist').innerHTML = checklist['nome'] + `(${checklist['id']})`;
+                  document.getElementById('option_checklist').value = checklist['id'];
+                  
+                  console.log(document.getElementById('option_checklist').value)
+                  var meuModal = new bootstrap.Modal(document.getElementById('ModalAdicionarCampo'));
+                  meuModal.show();
+              }
+
+            function confirmacao(){
+                 
+              let resp = confirm('Ao excluir uma Checklist você também excluirá todos os campos associados a ela. Deseja dar continuidade?');
+              return resp;
+            }
+
+      </script>
     </main>
     <x-plugins></x-plugins>
 

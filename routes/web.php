@@ -25,6 +25,7 @@ use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\CampoController;
+use App\Http\Controllers\CamposProdutoController;
 use App\Http\Controllers\OSController;
 
 use App\Http\Controllers\OsProdutosController;
@@ -78,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('servico', ServicoController::class);
     Route::get('servico.exportar', [\App\Http\Controllers\ServicoController::class, 'exportar'])->name('servico.exportar');
+    Route::get('checklistprodutos.exportar/{checklistProduto}', [\App\Http\Controllers\ChecklistProdutosController::class, 'exportar'])->name('checklistprodutos.exportar');
     Route::get('os.exportar', [\App\Http\Controllers\OSController::class, 'exportar'])->name('os.exportar');
 	Route::get('contrato.exportar', [\App\Http\Controllers\ContratoController::class, 'exportar'])->name('contrato.exportar');
 	Route::get('contrato.update_corpo/{id}', [\App\Http\Controllers\ContratoController::class, 'update_corpo'])->name('update_corpo');
@@ -85,6 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('checklist', ChecklistController::class);
 	Route::resource('checklistProdutos', ChecklistProdutosController::class);
+	Route::resource('camposProduto', CamposProdutoController::class);
 
 	Route::resource('clientes', ClientesController::class);
 	Route::resource('impostos', ImpostosController::class);

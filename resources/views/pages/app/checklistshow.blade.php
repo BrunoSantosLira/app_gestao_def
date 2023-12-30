@@ -35,11 +35,11 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             CAMPO
                                             </th>
+                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Data de criação</th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             DETALHES
                                             </th>
-                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Data de criação</th>
                                             <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 CONCLUIDO
                                             </th>
