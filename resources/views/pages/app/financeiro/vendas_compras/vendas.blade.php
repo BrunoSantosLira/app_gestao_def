@@ -89,7 +89,7 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            OS/CONTRATO ID
+                                            OS/CONTRATO/CHECKLIST ID
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -116,7 +116,7 @@
                                                 </div>
                                             </td>   
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{$venda['os_id']}}  {{$venda['contrato_id']}}</p>
+                                                <p class="text-sm font-weight-bold mb-0">{{$venda['os_id']}}  {{$venda['contrato_id']}} {{$venda['checklist_id']}}</p>
                                             </td>
 
                                             <td>

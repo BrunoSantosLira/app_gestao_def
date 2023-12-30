@@ -9,7 +9,7 @@ use App\Models\CamposProduto;
 class ChecklistProdutos extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'descricao'];
+    protected $fillable = ['nome', 'descricao', 'status', 'valorTotal'];
 
     public function campos_produto()
     {

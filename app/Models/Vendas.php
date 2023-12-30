@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OS;
 use App\Models\Contrato;
+use App\Models\ChecklistProdutos;
 
 class Vendas extends Model
 {
     use HasFactory;
-    protected $fillable = ['os_id', 'contrato_id', 'valor', 'tipo'];
+    protected $fillable = ['os_id', 'contrato_id', 'valor', 'tipo', 'checklist_id'];
 
     public function os()
     {
@@ -20,5 +21,11 @@ class Vendas extends Model
     public function contrato()
     {
         return $this->belongsTo(Contrato::class, 'contrato_id');
+    }
+
+    
+    public function checklist()
+    {
+        return $this->belongsTo(ChecklistProdutos::class, 'checklist_id')->optional();
     }
 }

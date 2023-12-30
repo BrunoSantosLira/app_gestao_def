@@ -20,7 +20,10 @@
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                                 <h6 class="text-white text-capitalize ps-3">Lista de campos da checklist:</h6>
                             </div>
-                            <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarCampo">Adicionar produto</button>
+                            @if ($checklist->status != 'aprovada')
+                                <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarCampo">Adicionar produto</button>
+                                
+                            @endif
                             <a href="{{route('checklistprodutos.exportar', ['checklistProduto' => $checklist->id])}}"> <button class="btn btn-outline-success btn-sm mt-3">Gerar PDF</button> </a> 
 
                         </div>
@@ -62,10 +65,10 @@
                                                     </div>
                                                 </td>
                                                 <td> <p class="text-sm font-weight-bold ml-2 mb-0">{{$campo->produto->produto}}</p></td>
-                                                <td> <p class="text-sm font-weight-bold ml-2 mb-0">R${{$campo->produto->preco}}</p></td>
+                                                <td> <p class="text-sm font-weight-bold ml-2 mb-0">R${{$campo->produto->valorVenda}}</p></td>
                                                 <td> <p class=" font-weight-bold ml-2 mb-0" style="font-size: 12px">{{$campo->detalhes}}</p></td>
                                                 <td> 
-                                                    <form action="{{route('camposProduto.destroy', ['camposProduto' => $checklist->id])}}" method="POST" class="d-inline-block">
+                                                    <form action="{{route('camposProduto.destroy', ['camposProduto' => $campo->id])}}" method="POST" class="d-inline-block">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>

@@ -106,6 +106,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('ContasPagas', ContasPagaController::class);
 	Route::get('ContasPagas.aprovar/{conta}', [\App\Http\Controllers\ContasPagaController::class, 'aprovar'])->name('ContasPagas.aprovar');
+	Route::get('checklist.aprovar/{checklist}', [\App\Http\Controllers\ChecklistProdutosController::class, 'aprovar'])->name('checklist.aprovar');
 
 
 	Route::resource('fornecedores', FornecedoresController::class);

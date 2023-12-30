@@ -6,6 +6,10 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ChecklistProdutos;
 use App\Models\CamposProduto;
 use App\Models\Produtos;
+use App\Models\Conta;
+use App\Models\Vendas;
+use App\Models\Saidas;
+use App\Models\ContaEntradas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -84,5 +88,70 @@ class ChecklistProdutosController extends Controller
 
         $pdf = Pdf::loadView('exportar.listaprodutos', ['produtos' => $checklistProduto->campos_produto]);
         return $pdf->download('lista_de_produtos_id'. $checklistProduto->id .'.pdf');
+    }
+
+    public function aprovar(ChecklistProdutos $checklist){
+        //ESTOQUE
+        $produtosChecklist = $checklist->campos_produto;
+
+        // Verifica o estoque antes de processar os produtos
+        foreach ($produtosChecklist as $produto) {
+            $produtoEstoque = Produtos::find($produto->produto_id);
+         
+            if ($produtoEstoque['estoqueAtual'] < 1) {
+                return back()->with('error', 'HÁ PRODUTOS COM ESTOQUE INSUFICIENTE NA CHECKLIST');
+            }
+        }
+
+        // Atualiza a quantidade em estoque e cria as saídas
+        foreach ($produtosChecklist as $produto) {
+            $produtoEstoque = Produtos::find($produto->produto_id);
+            
+            $saida = [
+                'produto_id' => $produto->produto_id,
+                'tipo' => 'SAIDA POR APROVAÇAO DE CHECKLIST N:' . $checklist->id,
+                'quantidade' => 1
+            ];
+    
+            $produtoEstoque['estoqueAtual'] -= 1;
+            $produtoEstoque->save();
+    
+            Saidas::create($saida);
+        }
+
+        //FIM ESTOQUE
+
+
+        //FINANCEIRO
+        // 1 => CONTA  PRINCIPAL
+        $conta = Conta::find(1);
+        $conta['capital'] += $checklist->valorTotal;
+        $conta->save();
+
+        $ContaEntradas = new ContaEntradas([
+            'conta_id' => 1,
+            'tipo' => 'entrada',
+            'capital' => $checklist->valorTotal,
+            'detalhes' => 'APROVAÇÃO DE CHEKLIST N:' . $checklist->id
+            // Atribua outros valores conforme necessário
+        ]);
+        $ContaEntradas->save();
+
+        // Cria o registro de venda na tabela Vendas
+        $venda = new Vendas([
+            'os_id' => null,
+            'contrato_id' => null,
+            'checklist_id' => $checklist->id,
+            'valor' => $checklist->valorTotal,
+            'tipo' => 'CHECKLIST'
+            // Atribua outros valores conforme necessário
+        ]);
+        $venda->save();
+        //FIM FINANCEIRO
+
+
+        // Atualiza o status para 'aprovada'
+        $checklist->update(['status' => 'aprovada']);
+        return back()->with('success', 'Checklist aprovada com sucesso!');
     }
 }

@@ -21,15 +21,19 @@
                                 <h6 class="text-white text-capitalize ps-3">Lista de Checklists de produtos</h6>
                             </div>
                             <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionar">Adicionar Checklist</button>
-                            @if (request('status') == 'sucesso')
-                                <div class="alert alert-success text-white" role="alert">
-                                    <strong>Sucesso!</strong> Adicionado com sucesso!
-                                </div><br> 
-                            @elseif(request('status') == 'erro')
-                                <div class="alert alert-danger text-white" role="alert">
-                                    <strong>ERRO!</strong> Erro na adição
-                                </div><br> 
+                            @if (Session::has('success'))
+                                <div class="alert alert-success text-white">
+                                    {{ Session::get('success') }}
+                                </div>
                             @endif
+                            @if (Session::has('error'))
+                            <div class="alert alert-danger text-white">
+                                {{ Session::get('error') }}
+                            </div>
+                            @endif
+                            @foreach ($errors->all() as $error)
+                            <li class="text-danger">{{ $error }}</li>
+                            @endforeach
                             @foreach ($errors->all() as $error)
                                 <li class="text-danger">{{ $error }}</li>
                             @endforeach
@@ -83,6 +87,14 @@
                                             Checklist
                                             </th>
                                             <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Valor total na loja
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Status
+                                            </th>
+                                            <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Descrição
                                             </th>
@@ -109,7 +121,16 @@
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist->descricao}}</p>
+                                                    <p class="text-sm font-weight-bold mb-0">R${{$checklist->valorTotal}}</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist->status}}</p>
+                                                </td>
+
+
+                                                <td>
+                                                    <p class=" font-weight-bold mb-0" style="font-size: 12px">{{$checklist->descricao}}</p>
                                                 </td>
 
                                           
@@ -118,14 +139,19 @@
                                                     </p>
                                                 </td>
                                                 <td class="float-end">
+                                                    @if ($checklist->status != 'aprovada')
+                                                        <a  href="{{route('checklist.aprovar', ['checklist' => $checklist->id])}}"><i class="fa-solid fa-check m-2" style="color: #31b452; "></i></a>    
+                                                        
+                                                        <form action="{{route('checklistProdutos.destroy', ['checklistProduto' => $checklist->id])}}" method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
+                                                        </form>
+                                                    @endif
+
                                                     <a target="_blank" href="{{route('checklistProdutos.edit', ['checklistProduto' => $checklist->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.2em;"></i></a>
                                                     <a href="{{route('checklistProdutos.show', ['checklistProduto' => $checklist->id])}}" style="text-decoration: none;color: inherit;"><button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></button>
                                                         
-                                                    <form action="{{route('checklistProdutos.destroy', ['checklistProduto' => $checklist->id])}}" method="POST" class="d-inline-block">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
-                                                    </form>
                                                 
                                                 </td>
                                             </tr>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CamposProduto;
+use App\Models\Produtos;
+use App\Models\ChecklistProdutos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -29,6 +31,11 @@ class CamposProdutoController extends Controller
      */
     public function store(Request $request)
     {
+        $checklist = ChecklistProdutos::find($request->checklist_id);
+        $produto = Produtos::find($request->produto_id);
+        $checklist['valorTotal'] += $produto->valorVenda;
+        $checklist->save();
+
         CamposProduto::create($request->all());
         return back()->with('success', 'Campo adicionado com sucesso!');
     }
@@ -62,6 +69,11 @@ class CamposProdutoController extends Controller
      */
     public function destroy(CamposProduto $camposProduto)
     {
+        $checklist = ChecklistProdutos::find($camposProduto->checklist_id);
+        $produto = Produtos::find($camposProduto->produto_id);
+        $checklist['valorTotal'] -= $produto->valorVenda;
+        $checklist->save();
+
         $camposProduto->delete();
         return back()->with('success', 'Produto deletado com sucesso!');
     }
