@@ -45,7 +45,19 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            VALOR NA LOJA
+                                            VALOR TOTAL
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            QUANTIDADE
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            PREÇO
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            DESCONTO
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -65,14 +77,21 @@
                                                     </div>
                                                 </td>
                                                 <td> <p class="text-sm font-weight-bold ml-2 mb-0">{{$campo->produto->produto}}</p></td>
-                                                <td> <p class="text-sm font-weight-bold ml-2 mb-0">R${{$campo->produto->valorVenda}}</p></td>
+                                                <td> <p class="text-sm font-weight-bold ml-2 mb-0">R${{$campo->valorTotal}}</p></td>
+                                                <td> <p class="text-sm font-weight-bold ml-2 mb-0">{{$campo->quantidade}}</p></td>
+                                                <td> <p class="text-sm font-weight-bold ml-2 mb-0">R${{$campo->preco}}</p></td>
+                                                <td> <p class="text-sm font-weight-bold ml-2 mb-0">R${{$campo->desconto}}</p></td>
+
                                                 <td> <p class=" font-weight-bold ml-2 mb-0" style="font-size: 12px">{{$campo->detalhes}}</p></td>
                                                 <td> 
-                                                    <form action="{{route('camposProduto.destroy', ['camposProduto' => $campo->id])}}" method="POST" class="d-inline-block">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
-                                                    </form>
+                                                    @if ($checklist->status != 'aprovada')
+                                                            <form action="{{route('camposProduto.destroy', ['camposProduto' => $campo->id])}}" method="POST" class="d-inline-block">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
+                                                            </form>
+                                                    @endif
+
                                                 </td>
                                             </tr>                                 
                                        @endforeach
@@ -108,6 +127,23 @@
                                             @endforeach
                                         </select>                                    
                                     </div>
+
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Preço do produto</label>
+                                        <input type="number" name="preco" required class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Preço">
+                                    </div>
+            
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Quantidade</label>
+                                        <input type="number" name="quantidade" required class="form-control border border-2 p-2" value='0' placeholder="Preço">
+                                    </div>
+
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Desconto</label>
+                                        <input type="number" name="desconto" required class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Preço">
+                                        <small>O desconto será aplicado no valor total</small>
+                                    </div>
+
                                     <hr>
                                     <div class="mb-3 col-md-12">
                                         <label for="floatingTextarea2">Detalhes</label>

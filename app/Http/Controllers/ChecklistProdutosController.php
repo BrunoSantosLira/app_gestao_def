@@ -98,7 +98,7 @@ class ChecklistProdutosController extends Controller
         foreach ($produtosChecklist as $produto) {
             $produtoEstoque = Produtos::find($produto->produto_id);
          
-            if ($produtoEstoque['estoqueAtual'] < 1) {
+            if ($produtoEstoque['estoqueAtual'] <  $produto->quantidade) {
                 return back()->with('error', 'HÁ PRODUTOS COM ESTOQUE INSUFICIENTE NA CHECKLIST');
             }
         }
@@ -110,10 +110,10 @@ class ChecklistProdutosController extends Controller
             $saida = [
                 'produto_id' => $produto->produto_id,
                 'tipo' => 'SAIDA POR APROVAÇAO DE CHECKLIST N:' . $checklist->id,
-                'quantidade' => 1
+                'quantidade' => $produto->quantidade
             ];
     
-            $produtoEstoque['estoqueAtual'] -= 1;
+            $produtoEstoque['estoqueAtual'] -= $produto->quantidade;
             $produtoEstoque->save();
     
             Saidas::create($saida);

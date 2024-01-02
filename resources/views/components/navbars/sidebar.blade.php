@@ -16,25 +16,34 @@
         <li class="nav-item mt-3">
             <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Cadastro/Listagem</h6>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'Usuarios' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('usuarios.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-users ps-2 pe-2 text-center"></i>
-                   
-                </div>
-                <span class="nav-link-text ms-1">Usuários</span>
-            </a>
-        </li>
 
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'Clientes' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('clientes.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-users-line ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Clientes</span>
-            </a>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle text-white {{ $activePage == 'Usuarios' ? 'active bg-gradient-primary' : '' }}" 
+                   href="{{ route('usuarios.index') }}" 
+                   id="navbarDropdownMenuLink2" 
+                   role="button" 
+                   data-bs-toggle="dropdown" 
+                   aria-haspopup="true" 
+                   aria-expanded="false">
+                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-box-archive ps-2 pe-2 text-center"></i>
+                    </div>
+                     <span class="caret">Configurações</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <li>
+                        <a class="dropdown-item" href="{{route('usuarios.index')}}">
+                            Usuários do sistema
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('empresa.index')}}">
+                            Empresa
+                        </a>
+                    </li>         
+                </ul>
+            </div>
         </li>
 
         <li class="nav-item">
@@ -105,17 +114,9 @@
                 </ul>
             </div>
         </li>
+
+
         
-        
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'servicos' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('servico.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-list ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Serviços</span>
-            </a>
-        </li>
 
 
         <li class="nav-item">
@@ -146,6 +147,29 @@
                 </ul>
             </div>
         </li>
+        
+        
+        <li class="nav-item">
+            <a class="nav-link text-white {{ $activePage == 'servicos' ? 'active bg-gradient-primary' : '' }} "
+                href="{{ route('servico.index') }}">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-list ps-2 pe-2 text-center"></i>
+                </div>
+                <span class="nav-link-text ms-1">Serviços</span>
+            </a>
+        </li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link text-white {{ $activePage == 'Clientes' ? 'active bg-gradient-primary' : '' }} "
+                href="{{ route('clientes.index') }}">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-users-line ps-2 pe-2 text-center"></i>
+                </div>
+                <span class="nav-link-text ms-1">Clientes</span>
+            </a>
+        </li>
+
 
         <li class="nav-item mt-3">
             <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Estoque</h6>

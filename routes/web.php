@@ -38,6 +38,7 @@ use App\Http\Controllers\ContaController;
 use App\Http\Controllers\ContaEntradasController;
 
 use App\Http\Controllers\ContasPagaController;
+use App\Http\Controllers\EmpresaController;
 
 use App\Http\Controllers\FornecedoresController;
 use App\Http\Controllers\VendasController;
@@ -140,6 +141,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('campo', CampoController::class);
 	Route::resource('usuarios', RegisterController::class);
+	Route::resource('empresa', EmpresaController::class);
 
 
 	Route::get('rtl', function () {

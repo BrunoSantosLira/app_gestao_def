@@ -54,7 +54,7 @@
                                 <div class="mb-3 col-md-12">
                                     <hr>
                                     <div class="text-center">
-                                        <img src="https://equipcasa.com.br/os/assets/uploads/5b9f30af3a64298817e0f0f5b66947f4.jpg" style="max-height: 100px">   
+                                        <img src="{{asset('logomarca.jpeg')}}" style="max-height: 100px">   
                                         <div>
                                             Equip Casa <br>
                                             12.272.914/0001-90 <br>

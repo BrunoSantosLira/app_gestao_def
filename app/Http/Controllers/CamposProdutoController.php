@@ -33,10 +33,15 @@ class CamposProdutoController extends Controller
     {
         $checklist = ChecklistProdutos::find($request->checklist_id);
         $produto = Produtos::find($request->produto_id);
-        $checklist['valorTotal'] += $produto->valorVenda;
+
+        $dados = $request->all();
+        $dados['valorTotal'] = $request->preco * $request->quantidade; //calculando o VALOR TOTAL
+        $dados['valorTotal'] = $dados['valorTotal'] - $request->desconto; //calculando o DESCONTO
+        
+        $checklist['valorTotal'] +=  $dados['valorTotal'];
         $checklist->save();
 
-        CamposProduto::create($request->all());
+        CamposProduto::create($dados);
         return back()->with('success', 'Campo adicionado com sucesso!');
     }
 
