@@ -69,6 +69,14 @@
                                 @enderror
                                 </div>
 
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Email:</label>
+                                    <input type="email" name="email" class="form-control border border-2 p-2" value='{{$empresa->email}}' placeholder="Email:">
+                                    @error('email')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
                                 <hr>
                                 <h6>ENDEREÇO</h6>
 

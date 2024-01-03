@@ -7,6 +7,9 @@ use App\Models\Clientes;
 use App\Models\Produtos;
 use App\Models\Vendas;
 use App\Models\Conta;
+use App\Models\ContasPaga;
+use App\Models\ContasReceba;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -48,6 +51,30 @@ class DashboardController extends Controller
         
         $quantidadeClientes = Clientes::count();
         $quantidadeProdutos = Produtos::count();
-        return view('dashboard.index',['quantidadeClientes' => $quantidadeClientes, 'quantidadeProdutos' => $quantidadeProdutos, 'clientes' => $clientes, 'produtos' => $produtos, 'Valorvendas' => $Valorvendas,  'contaCapital' => $capitalTotal]);
+
+        // Obtém o primeiro dia do mês atual
+        $primeiroDiaDoMes = Carbon::now()->firstOfMonth();
+
+        // Obtém o último dia do mês atual
+        $ultimoDiaDoMes = Carbon::now()->endOfMonth();
+
+        // Consulta para obter os registros do mês atual
+        $contasPagasDoMes = ContasPaga::whereBetween('data_vencimento', [$primeiroDiaDoMes, $ultimoDiaDoMes])->get();
+        $contasAReceberDoMes = ContasReceba::whereBetween('data_vencimento', [$primeiroDiaDoMes, $ultimoDiaDoMes])->get();
+
+        // Obtém a data atual
+        $dataAtual = Carbon::now();
+
+        // Obtém o número do mês (1 a 12)
+        $numeroMes = $dataAtual->month;
+
+        // Obtém o ano (4 dígitos)
+        $ano = $dataAtual->year;
+
+        // Combine o número do mês e o ano como uma string
+        $mesEAno = $numeroMes . '/' . $ano;
+
+        return view('dashboard.index',['quantidadeClientes' => $quantidadeClientes, 'quantidadeProdutos' => $quantidadeProdutos, 'clientes' => $clientes, 'produtos' => $produtos, 'Valorvendas' => $Valorvendas,  'contaCapital' => $capitalTotal, 'ContasAPagar' => $contasPagasDoMes, 'mesEAno' => $mesEAno, 'contasReceber' => $contasAReceberDoMes ]);
     }
 }
+

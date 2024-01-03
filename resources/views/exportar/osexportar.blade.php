@@ -39,12 +39,11 @@
                                         <div style="margin-left: 15px;">
                                             <img src="https://gestor.equipcasa.com.br/assets/img/logomarcas/1703079841_7a6c0ad2ca31fefec88e.jpg" style="display: inline-block;" width="100" height="100">
                                                 <p style="font-size: 10px; display: inline-block; float:right; font-weight:bold;">
-                                                    EQUIP CASA EIRELI <br>
-                                                    Rua 1 Chácara 1, 5 LOTE <br>
-                                                    Setor Habitacional Vicente Pir<br>
-                                                    72005-105 BRASÍLIA - DF<br>
-                                                    TEL: (61)99337-4280<br>
-                                                    E-Mail: equipecasadf@gmail.com<br>
+                                                    {{$empresa['nome_fantasia']}} <br>
+                                                    {{$empresa['logradouro']}} <br>
+                                                    {{$empresa['cep']}} - {{$empresa['municipio']}} - {{$empresa['uf']}} <br>
+                                                    TEL: {{$empresa['fone']}}<br>
+                                                    E-Mail: {{$empresa['email']}}<br>
                                                 </p>
                                         </div> 
                                 </td>
@@ -54,7 +53,7 @@
                                 </td>
                                 <td style="width: 20%;">
                                     <p style="font-size:12px; font-weight:bold; ">
-                                        CÓDIGO: <span>{{$os[0]['id']}}</span> <br>
+                                        CÓDIGO: <span>{{$os[0]['unique_id']}}</span> <br>
                                         DATA:   <span>{{ date('d/m/Y', strtotime($os[0]['created_at'])) }}</span><br>
                                         VENDEDOR:  <span>HUGO</span><br>
                                     </p>
@@ -105,13 +104,13 @@
                                 <td>
                                     <p>
 
-                                        (11) 98363-7399
+                                        {{$os[0]['cliente']['telefone2']}} 
                                     </p>
                                 </td>
                                 <td>
                                     <p>
 
-                                        (99) 96163-7219
+                                        {{$os[0]['cliente']['telefone3']}} 
                                     </p>
                                 </td>
                             </tr>
@@ -252,7 +251,7 @@
                                     </td>
                                     <td>
                                         <p>
-                                            R$0,00
+                                            R${{$produto['desconto']}}
                                         </p>
                                     </td>
                                     <td>
@@ -284,12 +283,11 @@
                                     <div style="margin-left: 15px;">
                                         <img src="https://gestor.equipcasa.com.br/assets/img/logomarcas/1703079841_7a6c0ad2ca31fefec88e.jpg" style="display: inline-block;" width="100" height="100">
                                             <p style="font-size: 10px; display: inline-block; float:right; font-weight:bold;">
-                                                EQUIP CASA EIRELI <br>
-                                                Rua 1 Chácara 1, 5 LOTE <br>
-                                                Setor Habitacional Vicente Pir<br>
-                                                72005-105 BRASÍLIA - DF<br>
-                                                TEL: (61)99337-4280<br>
-                                                E-Mail: equipecasadf@gmail.com<br>
+                                                {{$empresa['nome_fantasia']}} <br>
+                                                {{$empresa['logradouro']}} <br>
+                                                {{$empresa['cep']}} - {{$empresa['municipio']}} - {{$empresa['uf']}} <br>
+                                                TEL: {{$empresa['fone']}}<br>
+                                                E-Mail: {{$empresa['email']}}<br>
                                             </p>
                                     </div> 
                             </td>
@@ -299,7 +297,7 @@
                             </td>
                             <td style="width: 20%;">
                                 <p style="font-size:12px; font-weight:bold; ">
-                                    CÓDIGO: <span>{{$os[0]['id']}}</span> <br>
+                                    CÓDIGO: <span>{{$os[0]['unique_id']}}</span> <br>
                                     DATA:   <span>{{ date('d/m/Y', strtotime($os[0]['created_at'])) }}</span><br>
                                     VENDEDOR:  <span>HUGO</span><br>
                                 </p>
@@ -319,35 +317,33 @@
                 <tbody>
                         <tr style="font-size: 10px; font-weight:none;">
                             <td>
-                                <p>
+                                <p style="font-weight: bold">
                                     FRETE: F
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    LOCAL DE ENTREGA: COND BOSQUE IMPERIAL CONJ E CS, 03 PONTE ALTA NORTE - BRASÍLIA - DF - CEP: 72426020
+                                    <span style="font-weight: bold">LOCAL DE ENTREGA:<span>   {{$os[0]['cliente']['logradouro']}} - {{$empresa['cep']}} - {{$empresa['municipio']}} - {{$empresa['uf']}}
                                 </p>
                             </td>
                         </tr>
 
                         <tr style="font-size: 10px; font-weight:none;">
                             <td>
-                                <p>
+                                <p style="font-weight: bold">
                                     OBSERVAÇÕES: 
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    LOCAL DE ENTREGA: BANHEIRA COM GARANTIA DE MÃO DE OBRA NA:
-                                    PINTURA, HIDRÁULICA, VAZAMENTO E INSTALAÇÃO DA MESMA.
-                                    NÃO ESTA INCLUSO A BOMBA E AQUECEDOR
+                                    {{$os[0]['observacoes']}}
                                 </p>
                             </td>
                         </tr>
 
                         <tr style="font-size: 10px; font-weight:none;">
                             <td>
-                                <p>
+                                <p style="font-weight: bold">
                                     NÚM. SERIAIS: 
                                 </p>
                             </td>
@@ -377,7 +373,7 @@
                 <tbody>
                         <tr style="font-size: 10px; font-weight:none;">
                             <td>
-                                <p>
+                                <p style="font-weight: bold">
                                     Autorizo a execução do(s) serviço(s) assim como a aquisição
                                     da(s) mercadoria(s) acima descrito(s). <br>
 
@@ -395,7 +391,7 @@
                                 </p>
                             </td>
                             <td>
-                                <p>
+                                <p style="font-weight: bold">
                                     Solicitei e recebi o(s) serviço(s) e/ou mercadoria(s) acima descritos e
                                     autorizo, em caso de débito, a emissão de título de cobrança e em caso de
                                     atraso o registro no SPC. Praça de Pagamento.

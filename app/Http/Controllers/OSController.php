@@ -8,6 +8,9 @@ use App\Models\Impostos;
 use App\Models\ContaEntradas;
 use App\Models\Conta;
 
+
+use App\Models\Empresa;
+
 use App\Models\Clientes;
 use App\Models\Servico;
 use App\Models\Produtos;
@@ -94,6 +97,8 @@ class OSController extends Controller
      */
     public function show(OS $o)
     {
+        $empresa = Empresa::find(1);
+
         $produtos = osProdutos::with('produto')->where('os_id', '=', $o->id)->get();
         $servicos = osServico::with('servico')->where('os_id', '=', $o->id)->get();
         // Substitua 'osProdutos' pelo nome correto do seu modelo
@@ -103,7 +108,7 @@ class OSController extends Controller
         $produtosTabela = Produtos::all();
         $servicosTabela = Servico::all();
         $o = Os::with('os_produtos')->where('id', '=', $o->id )->get();
-        return view('pages.app.cadastro.os.osshow', ['os' => $o, 'produtos' => $produtos, 'produtosTabela' => $produtosTabela, 'somaProdutosOS' =>  $somaProdutosOS, 'servicos' => $servicos, 'servicosTabela' => $servicosTabela, 'somaServicosOS' => $somaServicosOS]);
+        return view('pages.app.cadastro.os.osshow', ['os' => $o, 'produtos' => $produtos, 'produtosTabela' => $produtosTabela, 'somaProdutosOS' =>  $somaProdutosOS, 'servicos' => $servicos, 'servicosTabela' => $servicosTabela, 'somaServicosOS' => $somaServicosOS, 'empresa' => $empresa]);
     }
 
     /**
@@ -151,7 +156,9 @@ class OSController extends Controller
     }
 
     public function exportar(Request $request){
+        $empresa = Empresa::find(1);
         
+
         $produtos = osProdutos::with('produto')->where('os_id', '=', $request->o)->get();
         $servicos = osServico::with('servico')->where('os_id', '=', $request->o)->get();
         // Substitua 'osProdutos' pelo nome correto do seu modelo
@@ -161,7 +168,7 @@ class OSController extends Controller
         $produtosTabela = Produtos::all();
         $servicosTabela = Servico::all();
         $o = Os::with('os_produtos')->where('id', '=', $request->o )->get();
-        $pdf = Pdf::loadView('exportar.osexportar', ['os' => $o, 'produtos' => $produtos, 'produtosTabela' => $produtosTabela, 'somaProdutosOS' =>  $somaProdutosOS, 'servicos' => $servicos, 'servicosTabela' => $servicosTabela, 'somaServicosOS' => $somaServicosOS]);
+        $pdf = Pdf::loadView('exportar.osexportar', ['os' => $o, 'produtos' => $produtos, 'produtosTabela' => $produtosTabela, 'somaProdutosOS' =>  $somaProdutosOS, 'servicos' => $servicos, 'servicosTabela' => $servicosTabela, 'somaServicosOS' => $somaServicosOS, 'empresa' => $empresa]);
         return $pdf->download('OS.pdf');
     }
 

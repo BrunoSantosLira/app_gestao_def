@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage="ContasAPagar"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="ContasRecebas"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="ContasAPagar"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Contas A Receber"></x-navbars.navs.auth>
 
         <!-- End Navbar -->
         <div class="container-fluid py-4">
@@ -11,10 +11,10 @@
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white text-capitalize ps-3">Listagem de Contas a Pagar</h6>
+                                <h6 class="text-white text-capitalize ps-3">Listagem de Contas a Receber</h6>
                             </div>
                         
-                            <a href="{{route('ContasPagas.create')}}"><button class="btn btn-outline-primary btn-sm mt-3">Adicionar Conta a pagar</button></a> 
+                            <a href="{{route('ContasReceber.create')}}"><button class="btn btn-outline-primary btn-sm mt-3">Adicionar Conta a receber</button></a> 
                             @if (Session::has('success'))
                                 <div class="alert alert-success text-white">
                                     {{ Session::get('success') }}
@@ -24,18 +24,18 @@
                             <li class="text-danger">{{ $error }}</li>
                             @endforeach
                         </div>
-                        <form class="row m-3" method="GET" action="{{ route('ContasPagas.index') }}">
+                        <form class="row m-3" method="GET" action="{{ route('ContasReceber.index') }}">
                         
                             <div class="col-md-3">
                                 <h5>Data de vencimento</h5>
-                                <label for="data" class="visually-hidden">Data de vencimento:</label>
+                                <label for="data" class="visually-hidden">Data:</label>
                                 <input type="date" name="created_at" class="form-control border border-2 p-2">
                             </div>
 
                             <div class="col-md-3">
                                 <h5>Status</h5>
                                 <label for="data" class="visually-hidden">Status:</label>
-                                <select name="status_pagamento" id="" class="form-control border border-2 p-2">
+                                <select name="status" id="" class="form-control border border-2 p-2">
                                     <option value="">Todos</option>
                                     <option value="pendente">Pendente</option>
                                     <option value="atrasado">Atrasado/Vencida</option>
@@ -62,7 +62,7 @@
                                         @foreach ($contas->links()->elements[0] as $page => $url)
                                             @php
                                                 // Adiciona os parâmetros de filtro às URLs de paginação
-                                                $url = $url . "&created_at=" . request('created_at') . "&status_pagamento=" . request('status_pagamento');
+                                                $url = $url . "&created_at=" . request('created_at') . "&status=" . request('status');
                                             @endphp
                                 
                                             <li class="page-item {{ $contas->currentPage() == $page ? 'active' : '' }}">
@@ -95,7 +95,7 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            DATA DE PAG.
+                                            DATA DE REC.
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -122,7 +122,7 @@
                                             </td>
 
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{$conta->status_pagamento}}</p>
+                                                <p class="text-sm font-weight-bold mb-0">{{$conta->status}}</p>
                                             </td>
 
                                             <td>
@@ -132,8 +132,8 @@
                                             
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0">
-                                                    @if ($conta['data_pagamento'])
-                                                        {{ date('d/m/Y', strtotime($conta['data_pagamento'])) }}
+                                                    @if ($conta['data_recebimento'])
+                                                        {{ date('d/m/Y', strtotime($conta['data_recebimento'])) }}
                                                     @else
                                                         AGUARDANDO
                                                     @endif
@@ -145,10 +145,10 @@
                                             </td>
                                             <td class="float-end">
                                                 <div class="d-flex px-2">
-                                                    @if ($conta->status_pagamento != 'pago')
-                                                    <a  href="{{route('ContasPagas.aprovar', ['conta' => $conta->id])}}"><i class="fa-solid fa-check m-2" style="color: #31b452; "></i></a>    
-                                                    <a target="_blank" href="{{route('ContasPagas.edit', ['ContasPaga' => $conta->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; "></i></a>       
-                                                    <form action="{{route('ContasPagas.destroy', ['ContasPaga' => $conta->id])}}" class="d-inline-block" method="POST">
+                                                    @if ($conta->status != 'pago')
+                                                    <a  href="{{route('ContasReceber.aprovar', ['conta' => $conta->id])}}"><i class="fa-solid fa-check m-2" style="color: #31b452; "></i></a>    
+                                                    <a target="_blank" href="{{route('ContasReceber.edit', ['ContasReceber' => $conta->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; "></i></a>       
+                                                    <form action="{{route('ContasReceber.destroy', ['ContasReceber' => $conta->id])}}" class="d-inline-block" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" style="background: none; border:none;" class="btn-xl" ><i  class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
@@ -156,7 +156,7 @@
                                                     
                                                         
                                                     @endif
-                                                    <a target="_blank" href="{{route('ContasPagas.show', ['ContasPaga' => $conta->id])}}"><i class="fa-solid fa-eye m-2" style="color: #1160e8;"></i></a>
+                                                    <a target="_blank" href="{{route('ContasReceber.show', ['ContasReceber' => $conta->id])}}"><i class="fa-solid fa-eye m-2" style="color: #1160e8;"></i></a>
  
                                                 </div>
                                             </td>

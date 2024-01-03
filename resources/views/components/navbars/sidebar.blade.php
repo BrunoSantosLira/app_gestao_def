@@ -115,10 +115,6 @@
             </div>
         </li>
 
-
-        
-
-
         <li class="nav-item">
             <div class="dropdown">
                 <a class="nav-link dropdown-toggle text-white {{ $activePage == 'checklist' ? 'active bg-gradient-primary' : '' }}" 
@@ -170,34 +166,43 @@
             </a>
         </li>
 
-
-        <li class="nav-item mt-3">
-            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Estoque</h6>
-        </li>
-
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'entradas' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('entradas.index') }}">
+            <a class="nav-link text-white {{ $activePage == 'fornecedores' ? 'active bg-gradient-primary' : '' }} "
+                href="{{ route('fornecedores.index') }}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-arrow-right ps-2 pe-2 text-center"></i>
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-users-rectangle ps-2 pe-2 text-center"></i>
                 </div>
-                <span class="nav-link-text ms-1">Entradas</span>
+                <span class="nav-link-text ms-1">Fornecedores</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'saidas' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('saidas.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-arrow-left ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Saídas</span>
-            </a>
-        </li>
-
-        <!-- INICIO ITENS SERVIÇOS -->
-        <li class="nav-item mt-3">
-            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Serviços</h6>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle text-white {{ $activePage == 'estoque' ? 'active bg-gradient-primary' : '' }}" 
+                   href="" 
+                   id="navbarDropdownMenuLink2" 
+                   role="button" 
+                   data-bs-toggle="dropdown" 
+                   aria-haspopup="true" 
+                   aria-expanded="false">
+                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-boxes-packing ps-2 pe-2 text-center"></i>
+                    </div>
+                     <span class="caret">Estoque</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <li>
+                        <a class="dropdown-item" href="{{route('entradas.index')}}">
+                            Entradas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('saidas.index')}}">
+                            Saídas
+                        </a>
+                    </li>         
+                </ul>
+            </div>
         </li>
 
         <li class="nav-item">
@@ -231,68 +236,55 @@
         <!-- Fim SERVIÇOS -->
 
         <!-- inicio financeiro -->
-        <li class="nav-item mt-3">
-            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Financeiro</h6>
-        </li>
-
         <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'fornecedores' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('fornecedores.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-users-rectangle ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Fornecedores</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'compras' ? 'active bg-gradient-primary' : '' }} "
-                href="{{route('compras.index')}}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle text-white {{ $activePage == 'financeiro' ? 'active bg-gradient-primary' : '' }}" 
+                   href="{{ route('checklist.index') }}" 
+                   id="navbarDropdownMenuLink2" 
+                   role="button" 
+                   data-bs-toggle="dropdown" 
+                   aria-haspopup="true" 
+                   aria-expanded="false">
+                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Compras</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'vendas' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('vendas.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-money-bills ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Vendas</span>
-            </a>
+                    </div>
+                     <span class="caret">Financeiro</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <li>
+                        <a class="dropdown-item" href="{{route('compras.index')}}">
+                            Compras
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('vendas.index')}}">
+                            Vendas
+                        </a>
+                    </li>  
+                    <li>
+                        <a class="dropdown-item" href="{{route('conta.index')}}">
+                            Caixa
+                        </a>
+                    </li>   
+                    <li>
+                        <a class="dropdown-item" href="{{route('ContasPagas.index')}}">
+                            Contas a Pagar
+                        </a>
+                    </li>  
+                    <li>
+                        <a class="dropdown-item" href="{{route('ContasReceber.index')}}">
+                            Contas a Receber
+                        </a>
+                    </li>  
+                    <li>
+                        <a class="dropdown-item" href="{{route('impostos.index')}}">
+                            Impostos
+                        </a>
+                    </li>      
+                </ul>
+            </div>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'conta' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('conta.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-book ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Caixa</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'ContasPagas' ? 'active bg-gradient-primary' : '' }} "
-                href="{{route('ContasPagas.index')}}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-file-invoice-dollar ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Contas a pagar</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'impostos' ? 'active bg-gradient-primary' : '' }} "
-                href="{{route('impostos.index')}}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Impostos</span>
-            </a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
@@ -305,16 +297,6 @@
         </li>
 
 
-
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                href="">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-coins ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Contas a receber</span>
-            </a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "

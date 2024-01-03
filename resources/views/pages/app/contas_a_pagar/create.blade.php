@@ -43,7 +43,7 @@
                                     <label class="form-label">Status:</label>
                                     <select name="status_pagamento" id="" class="form-control border border-2 p-2">
                                         <option value="pendente">Pendente</option>
-                                        <option value="atrasado">Atrasado</option>
+                                        <option value="atrasado">Atrasado/Vencida</option>
                                         <option value="pago">Pago</option>
                                     </select>
                                     @error('produto')

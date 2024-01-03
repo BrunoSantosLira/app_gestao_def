@@ -38,6 +38,8 @@ use App\Http\Controllers\ContaController;
 use App\Http\Controllers\ContaEntradasController;
 
 use App\Http\Controllers\ContasPagaController;
+use App\Http\Controllers\ContasRecebaController;
+
 use App\Http\Controllers\EmpresaController;
 
 use App\Http\Controllers\FornecedoresController;
@@ -106,7 +108,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('conta_entradas', ContaEntradasController::class);
 
 	Route::resource('ContasPagas', ContasPagaController::class);
+	Route::resource('ContasReceber', ContasRecebaController::class);
 	Route::get('ContasPagas.aprovar/{conta}', [\App\Http\Controllers\ContasPagaController::class, 'aprovar'])->name('ContasPagas.aprovar');
+	Route::get('ContasReceber.aprovar/{conta}', [\App\Http\Controllers\ContasRecebaController::class, 'aprovar'])->name('ContasReceber.aprovar');
 	Route::get('checklist.aprovar/{checklist}', [\App\Http\Controllers\ChecklistProdutosController::class, 'aprovar'])->name('checklist.aprovar');
 
 

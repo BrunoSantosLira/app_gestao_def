@@ -33,6 +33,8 @@ class OsServicoController extends Controller
   
         $dados = $request->all();
         $dados['valorTotal'] = $request->preco * $request->quantidade;
+        $dados['valorTotal'] = $request->preco - $request->desconto; //calculando o desconto em cima do valor  total
+
 
 
         osServico::create($dados);

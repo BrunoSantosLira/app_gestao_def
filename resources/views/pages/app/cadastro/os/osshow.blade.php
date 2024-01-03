@@ -42,7 +42,7 @@
                         @endif
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-3">N° OS: {{$os[0]['id']}}</h6>
+                                <h6 class="mb-3">N° OS: {{$os[0]['unique_id']}}</h6>
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
                                 <h6 class="mb-3">Data de emissão: {{ date('d/m/Y', strtotime($os[0]['created_at'])) }}</h6>
@@ -56,10 +56,11 @@
                                     <div class="text-center">
                                         <img src="{{asset('logomarca.jpeg')}}" style="max-height: 100px">   
                                         <div>
-                                            Equip Casa <br>
-                                            12.272.914/0001-90 <br>
-                                            Rua 01, Chacara 38, Lote, 1 - Setor Habitacional Vicente Pires - Brasília - DF<br>
-                                            E-mail: equipecasadf@gmail.com - Fone: (61)99337-4280<br>
+                                            {{$empresa['nome_fantasia']}} <br>
+                                            {{$empresa['logradouro']}} <br>
+                                            {{$empresa['cep']}} - {{$empresa['municipio']}} - {{$empresa['uf']}} <br>
+                                            TEL: {{$empresa['fone']}}<br>
+                                            E-Mail: {{$empresa['email']}}<br>
                                         </div>                                                                 
                                     </div>
                                     <hr>
@@ -162,6 +163,15 @@
                                                 </div>                                                              
                                             </div>                          
                                         </div>  
+                                        <div class="mb-3 col-md-3">                           
+                                            <div class="">
+                                                <h6>Desc.</h6>
+                                                <hr>
+                                                <div>
+                                                    R${{$produto['desconto']}}
+                                                </div>                                                              
+                                            </div>                          
+                                        </div>  
                                         <div class="mb-3 col-md-2">                           
                                             <div class="">
                                                 <h6>Sub-total</h6>
@@ -203,6 +213,15 @@
                                                 <hr>
                                                 <div>
                                                     R$ {{$servico['preco']}}
+                                                </div>                                                              
+                                            </div>                          
+                                        </div>  
+                                        <div class="mb-3 col-md-3">                           
+                                            <div class="">
+                                                <h6>Desc.</h6>
+                                                <hr>
+                                                <div>
+                                                    R${{$servico['desconto']}}
                                                 </div>                                                              
                                             </div>                          
                                         </div>  
@@ -278,7 +297,7 @@
                     <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Excluir Produto da OS</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Excluir Serviço da OS</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
         
@@ -292,7 +311,7 @@
                                     @endforeach
                                 </select>
         
-                                <label for="servico" class="form-label">Produto</label>
+                                <label for="servico" class="form-label">Serviço</label>
                                 <select id="servico" class="form-select  p-2" name="servico_id">
                                     @foreach ($servicos as $key => $servico)
                                     <option value="{{$servico['id']}}">{{$servico['servico']['nome']}} (R${{$servico['valorTotal']}})</option>
@@ -346,6 +365,12 @@
                                     <label class="form-label">Quantidade</label>
                                     <input type="number" name="quantidade" class="form-control border border-2 p-2" value='0' placeholder="Preço">
                                 </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Desconto</label>
+                                    <input type="number" name="desconto" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Desconto:">
+                                    <small>O desconto será aplicado no valor total</small>
+                                </div>
         
                                 <button type="submit" class="btn btn-primary">Adicionar</button>
                             </form>
@@ -385,13 +410,19 @@
                                         </select>
                 
                                         <div class="mb-3 col-md-6">
-                                            <label class="form-label">Preço do produto</label>
+                                            <label class="form-label">Preço do serviço</label>
                                             <input type="number" name="preco" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Preço">
                                         </div>
                 
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Quantidade</label>
                                             <input type="number" name="quantidade" class="form-control border border-2 p-2" value='0' placeholder="Preço">
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Desconto</label>
+                                            <input type="number" name="desconto" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Desconto:">
+                                            <small>O desconto será aplicado no valor total</small>
                                         </div>
                 
                                         <button type="submit" class="btn btn-primary">Adicionar</button>

@@ -82,10 +82,27 @@
                                 @enderror
                                 </div>
 
+                                <div class="mb-3 col-md-6">
+                                    <label for="tel" class="form-label">Telefone 2</label>
+                                    <input type="tel" class="form-control border border-2 p-2" id="telefone2" placeholder="Telefone 2" name="telefone2" value="{{$cliente['telefone2']}}">
+                                    @error('telefone2')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
+                                
+                                <div class="mb-3 col-md-6">
+                                    <label for="tel" class="form-label">Telefone 3</label>
+                                    <input type="tel" class="form-control border border-2 p-2" id="telefone3" placeholder="Telefone 3" name="telefone3" value="{{$cliente['telefone3']}}">
+                                    @error('telefone3')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
                                 <h6 class="mb-3">Endereço</h6>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="logradouro" class="form-label">*Logradouro</label>
+                                    <label for="logradouro" class="form-label">*Endereço</label>
                                     <input type="text" class="form-control border border-2 p-2" id="logradouro" placeholder="Logradouro:" name="logradouro" value="{{$cliente['logradouro']}}">
                                     @error('logradouro')
                                 <p class='text-danger inputerror'>{{ $message }} </p>

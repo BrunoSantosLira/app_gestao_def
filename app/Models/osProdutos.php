@@ -11,7 +11,7 @@ class osProdutos extends Model
 {
     use HasFactory;
     protected $table = 'os_produtos';
-    protected $fillable = ['os_id','produto_id', 'preco', 'quantidade','valorTotal'];
+    protected $fillable = ['os_id','produto_id', 'preco', 'quantidade','valorTotal', 'desconto'];
 
     public function os()
     {

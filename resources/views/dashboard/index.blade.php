@@ -161,15 +161,12 @@
                 </div>
             </div>
             <div class="row mb-4">
-                <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+                <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="row">
                                 <div class="col-lg-6 col-7">
-                                    <h6>Clientes</h6>
-                                    <p class="text-sm mb-0">
-                                        <i class="fa fa-check text-info" aria-hidden="true"></i>
-                                    </p>
+                                    <h6>Contas a Pagar com vencimento em {{$mesEAno}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +177,7 @@
                                         <tr>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                ID
+                                                STATUS
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -188,131 +185,99 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            EMAIL
+                                            VENCIMENTO
                                             </th>
                                             <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                CPF/CNPJ
-                                            </th>
-                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                TELEFONE
-                                            </th>
-                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                LOCALIZAÇÃO
+                                                VALOR
                                             </th>
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($clientes as $cliente)                                                  
-                                        <tr>
-                                                <td>
-                                                    <div class="d-flex px-2">
-                                                        <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">#{{$cliente['id']}}</h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            @if (auth()->user()->email == 'admin@material.com')
-                                                @if ($cliente['email'] != auth()->user()->email)
-                                                    <form method="POST" action="{{route('clientes.update', ['cliente' => $cliente['id']])}}" class="d-inline-block">           
-                                                    @csrf
-                                                    @method('PATCH')                                                
-                                                @endif
-                                            @endif 
-                                                <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="nome" value="{{$cliente['nome']}}"></p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="email" value="{{$cliente['email']}}"></p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="CPF/CNPJ" value="{{$cliente['CPF/CNPJ']}}"></p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="telefone" value="{{$cliente['telefone']}}"></p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-sm font-weight-bold mb-0"><input class="form-control" type="text" name="localizacao" value="{{$cliente['localizacao']}}"></p>
-                                                </td>
-                                                <td class="float-end">
-                                                @if (auth()->user()->email == 'admin@material.com')
-                                                        @if ($cliente['email'] != auth()->user()->email)
-                                                        <button type="submit" class="btn btn-outline-primary btn-sm">Atualizar</button> 
-                                                        </form>
-                                                        
-                                                        <form method="POST" class="d-inline-block" action="{{route('clientes.destroy', ['cliente' => $cliente->id])}}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-outline-danger btn-sm">Excluir</button>
-                                                        </form>     
-                                                    @endif
-                                                @endif 
-                                                </td>
-                                        </tr>
-                                    @endforeach       
+                                    <tbody>    
+                                        @foreach ($ContasAPagar as $conta)                                 
+                                            <tr>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0"># {{$conta->status_pagamento}}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0">{{$conta->nome}}</</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0">{{ date('d/m/Y', strtotime($conta['data_vencimento'])) }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0">{{$conta->valor}}</p>
+                                                    </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body p-3">
-                            <div class="timeline timeline-one-side">
-                                <div class="table-responsive p-0"><!-- TABELA AQUI -->
-                                    <table class="table align-items-center justify-content-center mb-0">
-                                        <thead>
-    
-                                            <tr>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    ID
-                                                </th>
-                                                <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Cod. Barra
-                                                </th>
-                                                <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                UNIDADE
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                    PRODUTO
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($produtos as $produto)                                                  
-                                            <tr>
-                                                    <td>
-                                                        <div class="d-flex px-2">
-                                                            <div class="my-auto">
-                                                                <h6 class="mb-0 text-sm">#{{$produto['id']}}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm font-weight-bold mb-0">{{$produto['codigo_de_barras']}}</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm font-weight-bold mb-0">{{$produto['unidade']['unidade']}}</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-sm font-weight-bold mb-0">{{$produto['produto']}}</p>
-                                                    </td>
-                                            </tr>
-                                        @endforeach       
-                                        </tbody>
-    
-                                    </table>
+            </div>
+
+
+
+            <div class="row mb-4">
+                <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+                    <div class="card">
+                        <div class="card-header pb-0">
+                            <div class="row">
+                                <div class="col-lg-6 col-7">
+                                    <h6>Contas a receber com vencimento em {{$mesEAno}}</h6>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pb-2">
+                            <div class="table-responsive p-1"><!-- TABELA AQUI -->
+                                <table class="table align-items-center justify-content-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                STATUS
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                NOME
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            VENCIMENTO
+                                            </th>
+                                            <th  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                VALOR
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>    
+                                        @foreach ($contasReceber as $conta)                                 
+                                            <tr>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0"># {{$conta->status}}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0">{{$conta->nome}}</</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0">{{ date('d/m/Y', strtotime($conta['data_vencimento'])) }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-sm font-weight-bold mb-0">{{$conta->valor}}</p>
+                                                    </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
             <x-footers.auth></x-footers.auth>
         </div>
     </main>

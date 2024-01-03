@@ -1,9 +1,9 @@
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
 
-    <x-navbars.sidebar activePage="ContasAPagar"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="ContasRecebas"></x-navbars.sidebar>
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage='ContasAPagar'></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage='Contas A Receber'></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid px-2 px-md-4">
             <div class="page-header min-height-300 border-radius-xl mt-4"
@@ -20,7 +20,7 @@
                 </div>
                 <div class="card card-plain h-100">
                     <div class="card-header pb-0 p-3">
-                        <a href="{{route('ContasPagas.index')}}"><button class="btn btn-outline-primary btn-sm mt-3">Listagem de contas a pagar <i class="fa-solid fa-boxes-packing fa-lg" style="font-size: 1.2em"></i> </button></a> 
+                        <a href="{{route('ContasReceber.index')}}"><button class="btn btn-outline-primary btn-sm mt-3">Listagem de contas a receber <i class="fa-solid fa-boxes-packing fa-lg" style="font-size: 1.2em"></i> </button></a> 
                         @if (Session::has('success'))
                             <div class="alert alert-success text-white">
                                 {{ Session::get('success') }}
@@ -28,7 +28,7 @@
                         @endif
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-3">Conta a pagar</h6>
+                                <h6 class="mb-3">Conta a receber</h6>
                             </div>
                             @foreach ($errors->all() as $error)
                                 <li class="text-danger">{{ $error }}</li>
@@ -36,13 +36,13 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('ContasPagas.store') }}'>
+                        <form method='POST' action='{{ route('ContasReceber.store') }}'>
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Status:</label>
                                     <select name="status_pagamento" id="" disabled class="form-control border border-2 p-2">
-                                        <option value="pendente">{{$conta->status_pagamento}}</option>
+                                        <option>{{$conta->status}}</option>
                            
                                     </select>
                                     @error('produto')
@@ -67,8 +67,8 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Data Pag.</label>
-                                    <input type="date"  name="data_pagamento" disabled class="form-control border border-2 p-2" value='{{$conta->data_pagamento}}' id="nome" placeholder="Insira o nome da conta">
+                                    <label class="form-label">Data Rec.</label>
+                                    <input type="date"  name="data_recebimento" disabled class="form-control border border-2 p-2" value='{{$conta->data_recebimento}}' id="nome" placeholder="Insira o nome da conta">
                                     <small>Contada a partir da aprovação</small>
                                     @error('data_pagamento')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
@@ -82,15 +82,6 @@
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Método de pagamento</label>
-                                    <input type="text"  name="metodo_pagamento" disabled class="form-control border border-2 p-2" value='{{$conta->metodo_pagamento}}' id="metodo_pagamento" placeholder="Insira a forma de pagamento">
-                                    @error('metodo_pagamento')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
-                                @enderror
-                                </div>
-
                                 
                                 <div class="mb-3 col-md-12">
                                     <label for="floatingTextarea2">Observações:</label>

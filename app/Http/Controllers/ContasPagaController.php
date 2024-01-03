@@ -17,9 +17,23 @@ class ContasPagaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contas = ContasPaga::all();
+        
+        $query  = ContasPaga::query();
+
+        // Verifica se a data foi fornecida na requisição
+        if ($request->filled('created_at')) {
+           
+            $query->whereDate('data_vencimento', $request->created_at);
+        }
+
+        if ($request->filled('status_pagamento')) {
+           
+            $query->where('status_pagamento', $request->status_pagamento);
+        }
+
+        $contas = $query->paginate(12);
        
         return view('pages.app.contas_a_pagar.index', ['contas' => $contas]);
     }
@@ -82,7 +96,7 @@ class ContasPagaController extends Controller
     {
 
         $ContasPaga->update($request->all());
-        return back()->with('success', 'Compra atualizada com sucesso!');
+        return back()->with('success', 'Conta atualizada com sucesso!');
     }
 
     /**

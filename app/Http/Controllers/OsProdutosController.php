@@ -43,6 +43,7 @@ class OsProdutosController extends Controller
         $request->validate($regras, $feedback);
         $dados = $request->all();
         $dados['valorTotal'] = $request->preco * $request->quantidade; //calculando o valor total
+        $dados['valorTotal'] = $request->preco - $request->desconto; //calculando o desconto em cima do valor  total
 
         //alterando o estoque
         $produto = Produtos::find($request->produto_id);
