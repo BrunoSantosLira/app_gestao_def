@@ -96,7 +96,7 @@ class ContasRecebaController extends Controller
             'conta_id' => 1,
             'tipo' => 'entrada',
             'capital' => $conta->valor,
-            'detalhes' => 'APROVAÇÃO DE UMA CONTA RECCEBIDA NO ID' . $conta->id
+            'detalhes' => 'APROVAÇÃO DE UMA CONTA RECEBIDA NO ID:' . $conta->id
             // Atribua outros valores conforme necessário
         ]);
         $ContaEntradas->save();

@@ -152,6 +152,22 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('relatorio.geralClientes', [\App\Http\Controllers\RelatorioController::class, 'geralClientes'])->name('relatorio.geralClientes');
 	Route::get('relatorio.geralClientesPDF', [\App\Http\Controllers\RelatorioController::class, 'geralClientesPDF'])->name('relatorio.geralClientesPDF');
 
+	Route::get('relatorio.geralFornecedores', [\App\Http\Controllers\RelatorioController::class, 'geralFornecedores'])->name('relatorio.geralFornecedores');
+	Route::get('relatorio.geralFornecedoresPDF', [\App\Http\Controllers\RelatorioController::class, 'geralFornecedoresPDF'])->name('relatorio.geralFornecedoresPDF');
+
+	Route::get('relatorio.ContasAPagar', [\App\Http\Controllers\RelatorioController::class, 'ContasAPagar'])->name('relatorio.ContasAPagar');
+	Route::get('relatorio.ContasAPagarPDF', [\App\Http\Controllers\RelatorioController::class, 'ContasAPagarPDF'])->name('relatorio.ContasAPagarPDF');
+
+	Route::get('relatorio.ContasAReceber', [\App\Http\Controllers\RelatorioController::class, 'ContasAReceber'])->name('relatorio.ContasAReceber');
+	Route::get('relatorio.ContasAReceberPDF', [\App\Http\Controllers\RelatorioController::class, 'ContasAReceberPDF'])->name('relatorio.ContasAReceberPDF');
+
+	Route::get('relatorio.HistoricoCaixa', [\App\Http\Controllers\RelatorioController::class, 'HistoricoCaixa'])->name('relatorio.HistoricoCaixa');
+	Route::get('relatorio.HistoricoCaixaPDF', [\App\Http\Controllers\RelatorioController::class, 'HistoricoCaixaPDF'])->name('relatorio.HistoricoCaixaPDF');
+
+	
+	Route::get('relatorio.ProdutosEstoque', [\App\Http\Controllers\RelatorioController::class, 'ProdutosEstoque'])->name('relatorio.ProdutosEstoque');
+	Route::get('relatorio.ProdutosEstoquePDF', [\App\Http\Controllers\RelatorioController::class, 'ProdutosEstoquePDF'])->name('relatorio.ProdutosEstoquePDF');
+
 
 
 	Route::get('rtl', function () {

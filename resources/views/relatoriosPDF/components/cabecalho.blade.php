@@ -16,17 +16,13 @@
                                 </div> 
                         </td>
                     
-                        <td style="width: 20%;">
-                           <h5 style="text-align: center">ORÇAMENTO</h5>
-                        </td>
-                        <td style="width: 20%;">
-                            <p style="font-size:12px; font-weight:bold; ">
-                                CÓDIGO: <span>01</span> <br>
-                                DATA:   <span>02/01/2024</span><br>
-                                VENDEDOR:  <span>HUGO</span><br>
-                            </p>
-                            <p style="font-size:12px; font-weight:bold; ">EMISSÃO: 02/01/2024</p>
-                        </td>
+                        <td style="width: 40%;">
+                           <h5 style="text-align: center">{{$titulo}}</h5>
+                        @php
+                            $dataAtual = now();
+                            $dataFormatada = $dataAtual->format('d/m/Y');
+                        @endphp
+                           <p style="font-size:12px; font-weight:bold; ">EMISSÃO: {{ $dataFormatada }}
                     </tr>
        
             </tbody>

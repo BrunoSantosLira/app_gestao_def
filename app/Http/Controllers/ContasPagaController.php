@@ -122,7 +122,7 @@ class ContasPagaController extends Controller
                 'conta_id' => 1,
                 'tipo' => 'saida',
                 'capital' => $conta->valor,
-                'detalhes' => 'APROVAÇÃO DE UMA CONTA PAGA NO ID' . $conta->id
+                'detalhes' => 'APROVAÇÃO DE UMA CONTA PAGA NO ID:' . $conta->id
                 // Atribua outros valores conforme necessário
             ]);
             $ContaEntradas->save();

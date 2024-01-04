@@ -308,8 +308,33 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
                     <li>
+                        <a class="dropdown-item" href="{{route('relatorio.ProdutosEstoque')}}">
+                            Estoque: Produtos
+                        </a>
+                    </li> 
+                    <li>
+                        <a class="dropdown-item" href="{{route('relatorio.HistoricoCaixa')}}">
+                            Financeiro: Histórico do caixa
+                        </a>
+                    </li> 
+                    <li>
+                        <a class="dropdown-item" href="{{route('relatorio.ContasAReceber')}}">
+                            Financeiro: Contas a Receber
+                        </a>
+                    </li> 
+                    <li>
+                        <a class="dropdown-item" href="{{route('relatorio.ContasAPagar')}}">
+                            Financeiro: Contas a Pagar
+                        </a>
+                    </li> 
+                    <li>
                         <a class="dropdown-item" href="{{route('relatorio.geralClientes')}}">
                             Geral: Clientes
+                        </a>
+                    </li>        
+                    <li>
+                        <a class="dropdown-item" href="{{route('relatorio.geralFornecedores')}}">
+                            Geral: Fornecedores
                         </a>
                     </li>        
                 </ul>
