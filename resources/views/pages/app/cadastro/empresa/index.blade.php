@@ -35,7 +35,7 @@
                     <div class="card-body p-3">
                         <form method='POST' action='{{ route('empresa.store') }}'>
                             @csrf
-                            @method('PATCH')
+                            
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">CNPJ</label>
