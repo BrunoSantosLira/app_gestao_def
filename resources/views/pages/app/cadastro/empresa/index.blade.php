@@ -33,13 +33,13 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('empresa.update', ['empresa' => $empresa->id]) }}'>
+                        <form method='POST' action='{{ route('empresa.store') }}'>
                             @csrf
                             @method('PATCH')
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">CNPJ</label>
-                                    <input type="text" name="cnpj" class="form-control border border-2 p-2" value='{{$empresa->cnpj}}' placeholder="CNPJ:">
+                                    <input type="text" name="cnpj" class="form-control border border-2 p-2" value='' placeholder="CNPJ:">
                                     @error('cnpj')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -47,7 +47,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Razão Social</label>
-                                    <input type="text" name="razao_social" class="form-control border border-2 p-2" value='{{$empresa->razao_social}}' placeholder="Razão Social:">
+                                    <input type="text" name="razao_social" class="form-control border border-2 p-2" value='' placeholder="Razão Social:">
                                     @error('razao_social')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -55,7 +55,7 @@
                             
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Nome Fantasia</label>
-                                    <input type="text" name="nome_fantasia" class="form-control border border-2 p-2" value='{{$empresa->nome_fantasia}}' placeholder="Nome Fantasia:">
+                                    <input type="text" name="nome_fantasia" class="form-control border border-2 p-2" value='' placeholder="Nome Fantasia:">
                                     @error('nome_fantasia')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -63,7 +63,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">I.E.</label>
-                                    <input type="text" name="ie" class="form-control border border-2 p-2" value='{{$empresa->ie}}' placeholder="I.E:">
+                                    <input type="text" name="ie" class="form-control border border-2 p-2" value='' placeholder="I.E:">
                                     @error('ie')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -71,7 +71,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Email:</label>
-                                    <input type="email" name="email" class="form-control border border-2 p-2" value='{{$empresa->email}}' placeholder="Email:">
+                                    <input type="email" name="email" class="form-control border border-2 p-2" value='' placeholder="Email:">
                                     @error('email')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -82,7 +82,7 @@
 
                                 <div class="mb-3 col-md-3">
                                     <label class="form-label">CEP</label>
-                                    <input type="text" name="cep" class="form-control border border-2 p-2" value='{{$empresa->cep}}' placeholder="CEP:">
+                                    <input type="text" name="cep" class="form-control border border-2 p-2" value='' placeholder="CEP:">
                                     @error('cep')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -90,7 +90,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Logradouro</label>
-                                    <input type="text" name="logradouro" class="form-control border border-2 p-2" value='{{$empresa->logradouro}}' placeholder="Logradouro:">
+                                    <input type="text" name="logradouro" class="form-control border border-2 p-2" value='' placeholder="Logradouro:">
                                     @error('logradouro')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -98,7 +98,7 @@
 
                                 <div class="mb-3 col-md-3">
                                     <label class="form-label">Número</label>
-                                    <input type="text" name="numero" class="form-control border border-2 p-2" value='{{$empresa->numero}}' placeholder="Número">
+                                    <input type="text" name="numero" class="form-control border border-2 p-2" value='' placeholder="Número">
                                     @error('numero')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -107,7 +107,7 @@
                                 
                                 <div class="mb-3 col-md-9">
                                     <label class="form-label">Complemento</label>
-                                    <input type="text" name="complemento" class="form-control border border-2 p-2" value="{{$empresa->complemento}}" placeholder="Complemento">
+                                    <input type="text" name="complemento" class="form-control border border-2 p-2" value="" placeholder="Complemento">
                                     @error('complemento')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -115,7 +115,7 @@
 
                                 <div class="mb-3 col-md-3">
                                     <label class="form-label">Bairro</label>
-                                    <input type="text" name="bairro" class="form-control border border-2 p-2" value='{{$empresa->bairro}}' placeholder="Bairro">
+                                    <input type="text" name="bairro" class="form-control border border-2 p-2" value='' placeholder="Bairro">
                                     @error('bairro')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -123,7 +123,7 @@
 
                                 <div class="mb-3 col-md-3">
                                     <label class="form-label">UF:</label>
-                                    <input type="text" name="uf" class="form-control border border-2 p-2" value='{{$empresa->uf}}' placeholder="uf">
+                                    <input type="text" name="uf" class="form-control border border-2 p-2" value='' placeholder="uf">
                                     @error('uf')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -132,7 +132,7 @@
                                 
                                 <div class="mb-3 col-md-3">
                                     <label class="form-label">Municipio:</label>
-                                    <input type="text" name="municipio" class="form-control border border-2 p-2" value='{{$empresa->municipio}}' placeholder="municipio">
+                                    <input type="text" name="municipio" class="form-control border border-2 p-2" value='' placeholder="municipio">
                                     @error('municipio')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
@@ -140,7 +140,7 @@
 
                                 <div class="mb-3 col-md-3">
                                     <label class="form-label">Fone:</label>
-                                    <input type="text" name="fone" class="form-control border border-2 p-2" value='{{$empresa->fone}}' placeholder="Fone:">
+                                    <input type="text" name="fone" class="form-control border border-2 p-2" value='' placeholder="Fone:">
                                     @error('fone')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
