@@ -15,18 +15,11 @@
                             <button class="btn btn-outline-primary btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionar">Adicionar serviço</button>
                             <a href="{{route('checklist.index')}}"> <button class="btn btn-outline-success btn-sm mt-3">Criar Checklist</button> </a> 
                             <a href="{{route('servico.exportar')}}"> <button class="btn btn-outline-success btn-sm mt-3">Gerar PDF</button> </a> 
-                            @if (request('status') == 'sucesso')
-                                <div class="alert alert-success text-white" role="alert">
-                                    <strong>Sucesso!</strong> Adicionado com sucesso!
-                                </div><br> 
-                            @elseif(request('status') == 'erro')
-                                <div class="alert alert-danger text-white" role="alert">
-                                    <strong>ERRO!</strong> Erro na adição
-                                </div><br> 
-                            @endif
-                            @foreach ($errors->all() as $error)
-                                <li class="text-danger">{{ $error }}</li>
-                            @endforeach
+                            @if (Session::has('success'))
+                            <div class="alert alert-success text-white">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
                         </div>
 
                         <form class="row m-3" method="GET" action="{{ route('servico.index') }}">
@@ -83,9 +76,6 @@
                                     <tbody>
                                         @foreach ($servicos as $key => $s)                         
                                             <tr>
-                                                <form action="{{route('servico.update', ['servico' => $s])}}" method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
                                                     <td>
                                                         <div class="d-flex px-2">
                                                             <div class="my-auto">
@@ -95,17 +85,18 @@
                                                     </td>
                                                     
                                                     <td>
-                                                        <p class="text-sm font-weight-bold mb-0"> <input type="text" value="{{$s['nome']}}" class="form-control" name="nome"></p>
+                                                        <p class="text-sm font-weight-bold mb-0"> {{$s['nome']}}</p>
                                                     </td>
                                                     <td>
-                                                        <p class="text-sm font-weight-bold mb-0"> <input type="number" value="{{$s['preco']}}" class="form-control" name="preco"></p>
+                                                        <p class="text-sm font-weight-bold mb-0">{{$s['preco']}}</p>
                                                     </td>
                                                     <td>
-                                                        <p class="text-sm font-weight-bold mb-0"><input type="text" value="{{$s['descricao']}}" class="form-control" name="descricao"></p>
+                                                        <p class="text-sm font-weight-bold mb-0">{{$s['descricao']}}"</p>
                                                     </td>
                                                     <td class="float-end">
-                                                        <button type="submit" class="btn"><i class="fa-solid fa-pen-to-square fa-xl" style="color: #1160e8;"></i></button>
-                                                    </form>
+                                                        <a href="{{route('servico.edit', ['servico' => $s->id])}}">
+                                                            <button type="submit" class="btn"><i class="fa-solid fa-pen-to-square fa-xl" style="color: #1160e8;"></i></button>       
+                                                        </a>
                                                 </form>
                                                         <form action="{{route('servico.destroy', ['servico' => $s])}}" method="post" class="d-inline-block" onsubmit="return confirmacao()">
                                                             @csrf

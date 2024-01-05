@@ -54,7 +54,7 @@ class ServicoController extends Controller
 
         try {
             Servico::create($request->all());
-            return redirect()->route('servico.index',['status'=> 'sucesso']);
+            return back()->with('success', 'Serviço adicionado com sucesso com sucesso!');
         } catch (\Throwable $th) {
             return redirect()->route('servico.index',['status'=> 'erro']);
         }
@@ -74,7 +74,8 @@ class ServicoController extends Controller
      */
     public function edit(Servico $servico)
     {
-        //
+       
+        return view('pages.app.servicoEdit', ['servico' => $servico]);
     }
 
     /**
@@ -96,7 +97,8 @@ class ServicoController extends Controller
         $request->validate($regras, $feedback);
 
         $servico->update($request->all());
-        return back();
+        return back()->with('success', 'Serviço atualizado com sucesso!');
+
     }
 
     /**
@@ -107,7 +109,7 @@ class ServicoController extends Controller
 
         $servico->checklists()->delete(); //exclui todos os campos da checklist
         $servico->delete(); //excluir a checklist
-        return back();
+        return back()->with('success', 'Serviço deletado com sucesso!');
     }
 
     public function exportar(){
