@@ -10,6 +10,7 @@ use App\Models\ContasPaga;
 use App\Models\ContasReceba;
 use App\Models\ContaEntradas;
 use App\Models\Produtos;
+use App\Models\Vendas;
 
 
 use App\Models\Empresa;
@@ -213,17 +214,16 @@ class RelatorioController extends Controller
             $query->where('tipo', $request->tipo);
         }
 
-        $ContasAReceber = $query->get();
+        $ContasEntradas = $query->get();
 
 
-        $lista = $ContasAReceber;
+        $lista = $ContasEntradas;
         $param = [
             'id',
             'tipo',
             'capital',
             'detalhes',
             'created_at',
-    
         ];
         $cabecalhos = [
             'ID.',
@@ -231,7 +231,6 @@ class RelatorioController extends Controller
             'Valor',
             'detalhes',
             'Data',
-    
         ];
         $titulo = 'Histórico do caixa';
 
@@ -273,6 +272,50 @@ class RelatorioController extends Controller
 
         $pdf = Pdf::loadView('relatoriosPDF.modeloLista', ['empresa' => $empresa, 'lista' => $lista, 'param' => $param, 'cabecalhos' => $cabecalhos, 'titulo' => $titulo ]);
         return $pdf->download('relatorio_estoque.pdf');
+    }
+
+    public function Vendas(){
+        $vendas = Vendas::all();
+        return view('pages.app.relatorios.VendasHist', ['vendas' => $vendas]);
+    }
+
+
+    public function VendasPDF(Request $request){
+        $empresa = Empresa::find(1);
+
+        $query = Vendas::query();
+
+        // Verifica se a data de início foi fornecida na requisição
+        if ($request->filled('data_inicio')) {
+            $query->whereDate('created_at', '>=', $request->data_inicio);
+        }
+
+        // Verifica se a data final foi fornecida na requisição
+        if ($request->filled('data_final')) {
+            $query->whereDate('created_at', '<=', $request->data_final);
+        }
+
+        $vendas = $query->get();
+
+        $lista = $vendas;
+        $param = [
+            'id',
+            'created_at',
+            'valor',
+            'tipo',
+            'updated_at'
+        ];
+        $cabecalhos = [
+            'ID.',
+            'Data',
+            'Valor',
+            'Tipo',
+            'Atualização'
+        ];
+        $titulo = 'Histórico de vendas';
+
+        $pdf = Pdf::loadView('relatoriosPDF.modeloLista', ['empresa' => $empresa, 'lista' => $lista, 'param' => $param, 'cabecalhos' => $cabecalhos, 'titulo' => $titulo ]);
+        return $pdf->download('Hist_Vendas.pdf');
     }
 
 }

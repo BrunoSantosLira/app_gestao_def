@@ -168,6 +168,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('relatorio.ProdutosEstoque', [\App\Http\Controllers\RelatorioController::class, 'ProdutosEstoque'])->name('relatorio.ProdutosEstoque');
 	Route::get('relatorio.ProdutosEstoquePDF', [\App\Http\Controllers\RelatorioController::class, 'ProdutosEstoquePDF'])->name('relatorio.ProdutosEstoquePDF');
 
+	Route::get('relatorio.Vendas', [\App\Http\Controllers\RelatorioController::class, 'Vendas'])->name('relatorio.Vendas');
+	Route::get('relatorio.VendasPDF', [\App\Http\Controllers\RelatorioController::class, 'VendasPDF'])->name('relatorio.VendasPDF');
+
+	Route::get('/soma-vendas-por-dia', [\App\Http\Controllers\DashboardController::class, 'somaVendasPorDia'])->name('/soma-vendas-por-dia');
+
 
 
 	Route::get('rtl', function () {

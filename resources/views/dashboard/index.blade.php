@@ -98,67 +98,28 @@
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="col-lg-12 col-md-12 mt-4 mb-4">
                     <div class="card z-index-2 ">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
                                 <div class="chart">
-                                    <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
+                                    <canvas id="chart-bars" class="chart-canvas" height="300"></canvas>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <h6 class="mb-0 ">Website Views</h6>
-                            <p class="text-sm ">Last Campaign Performance</p>
+                            <h6 class="mb-0 ">Vendas</h6>
+                            <p class="text-sm ">Vendas nos últimos 30 dias</p>
                             <hr class="dark horizontal">
                             <div class="d-flex ">
-                                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                                <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+                                <span class="text-success text-sm font-weight-bolder">
+                                    <a href="{{route('produtos.index')}}">Veja mais</a>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mt-4 mb-4">
-                    <div class="card z-index-2  ">
-                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                            <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
-                                <div class="chart">
-                                    <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="mb-0 "> Daily Sales </h6>
-                            <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today
-                                sales. </p>
-                            <hr class="dark horizontal">
-                            <div class="d-flex ">
-                                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                                <p class="mb-0 text-sm"> updated 4 min ago </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4 mb-3">
-                    <div class="card z-index-2 ">
-                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                            <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
-                                <div class="chart">
-                                    <canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="mb-0 ">Completed Tasks</h6>
-                            <p class="text-sm ">Last Campaign Performance</p>
-                            <hr class="dark horizontal">
-                            <div class="d-flex ">
-                                <i class="material-icons text-sm my-auto me-1">schedule</i>
-                                <p class="mb-0 text-sm">just updated</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="row mb-4">
                 <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -288,22 +249,31 @@
     <script>
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
-        new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: ["M", "T", "W", "T", "F", "S", "S"],
-                datasets: [{
-                    label: "Sales",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    borderRadius: 4,
-                    borderSkipped: false,
-                    backgroundColor: "rgba(255, 255, 255, .8)",
-                    data: [50, 20, 10, 22, 50, 10, 40],
-                    maxBarThickness: 6
-                }, ],
-            },
-            options: {
+        // Fazer uma requisição AJAX para obter os dados do Laravel
+        fetch('/soma-vendas-por-dia')
+            .then(response => response.json())
+            .then(data => {
+                // Extrair as datas e os totais dos dados recebidos
+                const labels = data.map(item => item.data);
+                const values = data.map(item => item.total);
+
+                // Atualizar o gráfico com os dados recebidos
+                new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: data.map(item => item.data),
+                        datasets: [{
+                            label: "Valor",
+                            tension: 0.4,
+                            borderWidth: 0,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                            backgroundColor: "rgba(255, 255, 255, .8)",
+                            data: data.map(item => item.total),
+                            maxBarThickness: 6
+                        }],
+                    },
+                    options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
@@ -364,7 +334,13 @@
                     },
                 },
             },
-        });
+                   
+
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+
 
 
         var ctx2 = document.getElementById("chart-line").getContext("2d");

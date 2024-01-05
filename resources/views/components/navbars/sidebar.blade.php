@@ -308,6 +308,11 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
                     <li>
+                        <a class="dropdown-item" href="{{route('relatorio.Vendas')}}">
+                            Vendas: Hist. Completo
+                        </a>
+                    </li> 
+                    <li>
                         <a class="dropdown-item" href="{{route('relatorio.ProdutosEstoque')}}">
                             Estoque: Produtos
                         </a>

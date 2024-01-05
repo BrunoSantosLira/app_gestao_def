@@ -76,7 +76,7 @@
                                         {{$l[$param[4]]}}
                                     </p>
                                 </td>
-                                @if ($l[$param[5]])
+                                @if (isset($param[5]) && is_array($l) && isset($l[$param[5]]))
                                     <td>
                                         <p>
                                             {{$l[$param[5]]}}
