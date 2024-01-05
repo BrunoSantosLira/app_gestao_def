@@ -116,5 +116,41 @@ class DashboardController extends Controller
         return response()->json($dadosCompletos);
     }
 
+    public function vendasPorMes(){
+
+        $dataAtual = Carbon::now();
+        $dataInicio = $dataAtual->copy()->subMonths(11); // 12 meses atrás
+    
+        // Gere os meses usando Carbon e mapeie para um array de meses no formato M
+        $meses = collect(range(0, 11))
+            ->map(function ($month) use ($dataInicio) {
+                return $dataInicio->copy()->addMonths($month)->format('M');
+            });
+    
+        $somaVendas = Vendas::whereBetween('created_at', [$dataInicio, $dataAtual])
+            ->selectRaw('MONTH(created_at) as mes, COALESCE(SUM(valor), 0) as total')
+            ->groupBy('mes')
+            ->orderBy('mes')
+            ->get();
+            
+        // Complemente com os meses ausentes
+        $dadosCompletos = collect($meses)
+            ->map(function ($mes) use ($somaVendas) {
+                $venda = $somaVendas->first(function ($venda) use ($mes) {
+                    // Use Carbon para comparar meses
+                    $dataVenda = Carbon::createFromDate($venda->ano, $venda->mes, 1); // Substitua 'ano' pelo nome correto da coluna no seu banco de dados
+                    return $dataVenda->format('M') === $mes;
+                });
+
+                return [
+                    'mes' => $mes,
+                    'total' => $venda ? $venda->total : 0,
+                ];
+            });
+
+    
+        return response()->json($dadosCompletos);
+    }
+
 }
 

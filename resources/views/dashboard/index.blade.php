@@ -121,6 +121,32 @@
                 </div>
 
             </div>
+            <div class="row mt-4">
+                <div class="col-lg-12 col-md-12 mt-4 mb-4">
+                    <div class="card z-index-2 ">
+                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                            <div class="bg-gradient-info shadow-primary border-radius-lg py-3 pe-1">
+                                <div class="chart">
+                                    <canvas id="vendasMeses" class="chart-canvas" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="mb-0 ">Vendas</h6>
+                            <p class="text-sm ">Vendas nos últimos 12 meses</p>
+                            <hr class="dark horizontal">
+                            <div class="d-flex ">
+                                <span class="text-success text-sm font-weight-bolder">
+                                    <a href="{{route('produtos.index')}}">Veja mais</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
             <div class="row mb-4">
                 <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
                     <div class="card">
@@ -340,30 +366,29 @@
             })
             .catch(error => console.error('Error fetching data:', error));
 
+        var ctx2 = document.getElementById("vendasMeses").getContext("2d");
+   // Fazer uma requisição AJAX para obter os dados do Laravel
+        fetch('104.131.166.251/app_gestao_def/public/index.php/vendasPorMes')
+        .then(response => response.json())
+        .then(data => {
+            // Extrair os meses e os totais dos dados recebidos
+        const labels = data.map(item => item.mes);
+        const values = data.map(item => item.total);
 
-
-
-        var ctx2 = document.getElementById("chart-line").getContext("2d");
-
+        // Atualizar o gráfico com os dados recebidos
         new Chart(ctx2, {
-            type: "line",
+            type: "bar",
             data: {
-                labels: ["JAN", "FEV", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+                labels: labels,
                 datasets: [{
-                    label: "Vendas",
-                    tension: 0,
+                    label: "Valor",
+                    tension: 0.4,
                     borderWidth: 0,
-                    pointRadius: 5,
-                    pointBackgroundColor: "rgba(255, 255, 255, .8)",
-                    pointBorderColor: "transparent",
-                    borderColor: "rgba(255, 255, 255, .8)",
-                    borderColor: "rgba(255, 255, 255, .8)",
-                    borderWidth: 4,
-                    backgroundColor: "transparent",
-                    fill: true,
-                    data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    backgroundColor: "rgba(255, 255, 255, .8)",
+                    data: values,
                     maxBarThickness: 6
-
                 }],
             },
             options: {
@@ -389,8 +414,9 @@
                             color: 'rgba(255, 255, 255, .2)'
                         },
                         ticks: {
-                            display: true,
-                            color: '#f8f9fa',
+                            suggestedMin: 0,
+                            suggestedMax: Math.max(...values) + 100, // Ajuste conforme necessário
+                            beginAtZero: true,
                             padding: 10,
                             font: {
                                 size: 14,
@@ -399,15 +425,17 @@
                                 style: 'normal',
                                 lineHeight: 2
                             },
-                        }
+                            color: "#fff"
+                        },
                     },
                     x: {
                         grid: {
                             drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
+                            display: true,
+                            drawOnChartArea: true,
                             drawTicks: false,
-                            borderDash: [5, 5]
+                            borderDash: [5, 5],
+                            color: 'rgba(255, 255, 255, .2)'
                         },
                         ticks: {
                             display: true,
@@ -425,6 +453,8 @@
                 },
             },
         });
+    })
+    .catch(error => console.error('Error fetching data:', error));
 
         var ctx3 = document.getElementById("chart-line-tasks").getContext("2d");
 
