@@ -250,7 +250,7 @@
         var ctx = document.getElementById("chart-bars").getContext("2d");
 
         // Fazer uma requisição AJAX para obter os dados do Laravel
-        fetch('http://104.131.166.251/app_gestao_def/public/index.php/soma-vendas-por-dia')
+        fetch('104.131.166.251/app_gestao_def/public/index.php/soma-vendas-por-dia')
             .then(response => response.json())
             .then(data => {
                 // Extrair as datas e os totais dos dados recebidos
