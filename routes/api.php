@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('http://104.131.166.251/app_gestao_def/public/index.php/soma-vendas-por-dia', [\App\Http\Controllers\DashboardController::class, 'somaVendasPorDia'])->name('/soma-vendas-por-dia');
+//Route::get('http://104.131.166.251/app_gestao_def/public/index.php/soma-vendas-por-dia', [\App\Http\Controllers\DashboardController::class, 'somaVendasPorDia'])->name('/soma-vendas-por-dia');
