@@ -82,7 +82,8 @@ class ChecklistController extends Controller
      */
     public function edit(Checklist $checklist)
     {
-        //
+        $servicos = Servico::all();
+        return view('pages.app.checklistEdit', ['checklist' => $checklist, 'servicos' => $servicos]);
     }
 
     /**
@@ -103,7 +104,7 @@ class ChecklistController extends Controller
         $request->validate($regras, $feedback);
 
         $checklist->update($request->all());
-        return back();
+        return back()->with('success', 'Checklist atualizada com sucesso!');
     }
 
     /**

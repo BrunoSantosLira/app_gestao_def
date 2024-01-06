@@ -94,9 +94,7 @@
                                     <tbody>
                                         @foreach ($checklists as $key => $checklist)       
                                             <tr>
-                                                <form action="{{route('checklist.update', ['checklist' => $checklist])}}" method="POST">
-                                                    @csrf
-                                                    @method('PATCH')
+                                    
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
@@ -106,7 +104,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0"> <input type="text" class="form-control" value="{{$checklist['nome']}}" name="nome"></p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist['nome']}}</p>
                                                 </td>
 
                                                 <td>
@@ -119,8 +117,11 @@
                                                     </p>
                                                 </td>
                                                 <td class="float-end">
-                                                    <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></button>
-                                                </form>
+                                                    <a href="{{route('checklist.edit', ['checklist' => $checklist->id])}}">
+                                                        <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8;"></i></button>
+                                                    
+                                                    </a>
+                                               
                                                     <button style="background: none; border:none;" class="btn-xl" onclick="mostrarModal({{$checklist}})"><i class="fa-solid fa-square-plus" style="color: #d6811f;"></i></button>
                                                     <a href="{{route('checklist.show', ['checklist' => $checklist->id])}}" style="text-decoration: none;color: inherit;"><button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-eye m-2" style="color: #31b452;"></i></button>
 
