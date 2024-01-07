@@ -367,6 +367,7 @@
             .catch(error => console.error('Error fetching data:', error));
 
         var ctx2 = document.getElementById("vendasMeses").getContext("2d");
+        
    // Fazer uma requisição AJAX para obter os dados do Laravel
         fetch('104.131.166.251/app_gestao_def/public/index.php/vendasPorMes')
         .then(response => response.json())

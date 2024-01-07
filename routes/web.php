@@ -173,6 +173,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('104.131.166.251/app_gestao_def/public/index.php/soma-vendas-por-dia', [\App\Http\Controllers\DashboardController::class, 'somaVendasPorDia'])->name('104.131.166.251/app_gestao_def/public/index.php/soma-vendas-por-dia');
 	Route::get('104.131.166.251/app_gestao_def/public/index.php/vendasPorMes', [\App\Http\Controllers\DashboardController::class, 'vendasPorMes'])->name('104.131.166.251/app_gestao_def/public/index.php/vendasPorMes');
+	Route::get('/modoEscuro', [\App\Http\Controllers\DashboardController::class, 'modoEscuro'])->name('modoEscuro');
 
 
 

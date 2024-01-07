@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Clientes;
 use App\Models\Produtos;
+use App\Models\Empresa;
 use App\Models\Vendas;
 use App\Models\Conta;
 use App\Models\ContasPaga;
@@ -150,6 +151,11 @@ class DashboardController extends Controller
 
     
         return response()->json($dadosCompletos);
+    }
+
+    public function modoEscuro(){
+        $empresa = Empresa::find(1);
+        return response()->json($empresa);
     }
 
 }

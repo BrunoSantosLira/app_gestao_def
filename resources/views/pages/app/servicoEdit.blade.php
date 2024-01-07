@@ -60,7 +60,7 @@
                                 <div class="mb-3 col-md-12">
                                     <label for="floatingTextarea2">Descrição:</label>
                                     <textarea class="form-control border border-2 p-2"
-                                        placeholder="Descrição" id="desccriccao" name="detalhes"
+                                        placeholder="Descrição" id="desccriccao" name="descricao"
                                         rows="4" cols="50">{{$servico->descricao}}</textarea>
                                         @error('detalhes')
                                         <p class='text-danger inputerror'>{{ $message }} </p>

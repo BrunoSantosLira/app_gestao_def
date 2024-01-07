@@ -13,8 +13,14 @@
     </div>
     <hr class="horizontal light mt-0 mb-2">
     <ul class="navbar-nav">
-        <li class="nav-item mt-3">
-            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Cadastro/Listagem</h6>
+        <li class="nav-item">
+            <a class="nav-link text-white {{ $activePage == 'dashboard' ? 'active bg-gradient-primary' : '' }} "
+                href="{{ route('dashboard') }}">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-house ps-2 pe-2 text-center"></i>
+                </div>
+                <span class="nav-link-text ms-1">Início</span>
+            </a>
         </li>
 
         <li class="nav-item">
@@ -27,7 +33,7 @@
                    aria-haspopup="true" 
                    aria-expanded="false">
                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-box-archive ps-2 pe-2 text-center"></i>
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-gear ps-2 pe-2 text-center"></i>
                     </div>
                      <span class="caret">Configurações</span>
                 </a>
@@ -125,7 +131,7 @@
                    aria-haspopup="true" 
                    aria-expanded="false">
                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-box-archive ps-2 pe-2 text-center"></i>
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-paste ps-2 pe-2 text-center"></i>
                     </div>
                      <span class="caret">OS</span>
                 </a>
