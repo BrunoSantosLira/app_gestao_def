@@ -111,6 +111,20 @@
                                     @enderror
                                 </div>
 
+                                
+                                <div class="mb-3 col-md-6">
+                                    <label for="formas" class="form-label">Forma de Pagamento</label>
+                                    <select id="formas" class="form-select p-2" name="forma_id">
+                                        <option class="" value="{{$os['forma_id']}}">({{$os['forma_id']}})</option>
+                                        @foreach ($formas as $f)
+                                            <option class="" value="{{$f->id}}">{{$f->nome}} - ({{$f->id}})</option>
+                                        @endforeach
+                                    </select>
+                                    @error('formas')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
                                 <div class="mb-3 col-md-12">
                                     <label for="floatingTextarea2">Observações/Ficha Técnica/Defeito</label>
                                     <textarea class="form-control border border-2 p-2"

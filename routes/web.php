@@ -28,11 +28,18 @@ use App\Http\Controllers\CampoController;
 use App\Http\Controllers\CamposProdutoController;
 use App\Http\Controllers\OSController;
 
+use App\Http\Controllers\TaxaController;
+use App\Http\Controllers\FormaPagamentoController;
+
+
 use App\Http\Controllers\OsProdutosController;
 use App\Http\Controllers\OsServicoController;
 use App\Http\Controllers\ContratoProdutosController;
 use App\Http\Controllers\ContratoServicosController;
+
+
 use App\Http\Controllers\ParcelasController;
+use App\Http\Controllers\OSParcelasController;
 
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\ContaEntradasController;
@@ -105,6 +112,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('contrato', ContratoController::class);
 
 
+
+	Route::resource('taxa', TaxaController::class);
+	Route::resource('formaPagamento', FormaPagamentoController::class);
+
+
 	Route::resource('conta', ContaController::class);
 	Route::resource('conta_entradas', ContaEntradasController::class);
 
@@ -125,6 +137,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('parcelas.index/{contrato}', [\App\Http\Controllers\ParcelasController::class, 'index'])->name('parcelas.index');
 	Route::get('parcelas.aprovar/{parcela}', [\App\Http\Controllers\ParcelasController::class, 'aprovar'])->name('parcelas.aprovar');
+
+	
+	Route::get('osparcelas.index/{os}', [\App\Http\Controllers\ParcelasController::class, 'index'])->name('osparcelas.index');
+	Route::get('osparcelas.aprovar/{parcela}', [\App\Http\Controllers\ParcelasController::class, 'aprovar'])->name('osparcelas.aprovar');
 
 	// routes/web.php
 

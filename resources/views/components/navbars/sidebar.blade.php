@@ -54,6 +54,51 @@
 
         <li class="nav-item">
             <div class="dropdown">
+                <a class="nav-link dropdown-toggle text-white {{ $activePage == 'cadastro' ? 'active bg-gradient-primary' : '' }}" 
+                   href="" 
+                   id="navbarDropdownMenuLink2" 
+                   role="button" 
+                   data-bs-toggle="dropdown" 
+                   aria-haspopup="true" 
+                   aria-expanded="false">
+                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i style="font-size: 1.2rem;" class="fa-solid fa-arrow-right-from-bracket ps-2 pe-2 text-center"></i>
+                    </div>
+                     <span class="caret">Cadastro</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <li>
+                        <a class="dropdown-item" href="{{route('servico.index')}}">
+                            Serviços
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('clientes.index')}}">
+                            Clientes
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('fornecedores.index')}}">
+                            Fornecedores
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('taxa.index')}}">
+                            Taxas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{route('formaPagamento.index')}}">
+                            Formas de pagamento
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <div class="dropdown">
                 <a class="nav-link dropdown-toggle text-white {{ $activePage == 'Produtos' ? 'active bg-gradient-primary' : '' }}" 
                    href="{{ route('clientes.index') }}" 
                    id="navbarDropdownMenuLink2" 
@@ -179,38 +224,6 @@
             </div>
         </li>
         
-        
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'servicos' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('servico.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-list ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Serviços</span>
-            </a>
-        </li>
-
-        
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'Clientes' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('clientes.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-users-line ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Clientes</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-white {{ $activePage == 'fornecedores' ? 'active bg-gradient-primary' : '' }} "
-                href="{{ route('fornecedores.index') }}">
-                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1.2rem;" class="fa-solid fa-users-rectangle ps-2 pe-2 text-center"></i>
-                </div>
-                <span class="nav-link-text ms-1">Fornecedores</span>
-            </a>
-        </li>
-
 
 
         <li class="nav-item">

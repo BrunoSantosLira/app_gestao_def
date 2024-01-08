@@ -10,6 +10,7 @@ use App\Models\Conta;
 
 
 use App\Models\Empresa;
+use App\Models\FormaPagamento;
 
 use App\Models\Clientes;
 use App\Models\Servico;
@@ -19,6 +20,7 @@ use App\Models\osServico;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vendas;
+use App\Models\OSParcelas;
 
 class OSController extends Controller
 {
@@ -61,7 +63,8 @@ class OSController extends Controller
         $servicos = Servico::all();
         $produtos = Produtos::all();
         $clientes = Clientes::all();
-        return view('pages.app.cadastro.os.oscreate', ['servicos' => $servicos, 'produtos' => $produtos, 'clientes' => $clientes]);
+        $formas = FormaPagamento::all();
+        return view('pages.app.cadastro.os.oscreate', ['servicos' => $servicos, 'produtos' => $produtos, 'clientes' => $clientes, 'formas' => $formas]);
     }
 
     /**
@@ -119,7 +122,8 @@ class OSController extends Controller
         $servicos = Servico::all();
         $produtos = Produtos::all();
         $clientes = Clientes::all();
-        return view('pages.app.cadastro.os.osedit', ['os'=> $o, 'servicos' => $servicos, 'produtos' => $produtos, 'clientes' => $clientes]);
+        $formas = FormaPagamento::all();
+        return view('pages.app.cadastro.os.osedit', ['os'=> $o, 'servicos' => $servicos, 'produtos' => $produtos, 'clientes' => $clientes, 'formas' =>$formas]);
     }
 
     /**
@@ -175,6 +179,7 @@ class OSController extends Controller
     public function aprovar(OS $os){
         // Atualiza o status da os apenas se todos os produtos tiverem estoque suficiente
 
+        /*
         $impostos = Impostos::all();
         $valor_com_impostos = $os->valorTotal;
 
@@ -193,6 +198,7 @@ class OSController extends Controller
             }
 
         }
+        */
         
 
         
