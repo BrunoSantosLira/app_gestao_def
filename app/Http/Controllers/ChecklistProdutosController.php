@@ -10,6 +10,7 @@ use App\Models\Produtos;
 use App\Models\Conta;
 use App\Models\Vendas;
 use App\Models\Saidas;
+use App\Models\Empresa;
 use App\Models\ContaEntradas;
 use App\Models\CheckParcelas;
 use App\Models\Clientes;
@@ -92,9 +93,9 @@ class ChecklistProdutosController extends Controller
     }
 
     public function exportar(ChecklistProdutos $checklistProduto){
-
+        $empresa = Empresa::find(1);
         $valorTotal = $checklistProduto->campos_produto->sum('valorTotal');
-        $pdf = Pdf::loadView('exportar.listaprodutos', ['produtos' => $checklistProduto->campos_produto, 'parcelas' => $checklistProduto->parcelas, 'valorTotal' => $valorTotal]);
+        $pdf = Pdf::loadView('exportar.listaprodutos', ['produtos' => $checklistProduto->campos_produto, 'parcelas' => $checklistProduto->parcelas, 'valorTotal' => $valorTotal, 'cliente' => $checklistProduto->cliente, 'empresa' => $empresa, 'checklistProduto' => $checklistProduto]);
         return $pdf->download('lista_de_produtos_id'. $checklistProduto->id .'.pdf');
     }
 

@@ -39,12 +39,11 @@
                                         <div style="margin-left: 15px;">
                                             <img src="https://gestor.equipcasa.com.br/assets/img/logomarcas/1703079841_7a6c0ad2ca31fefec88e.jpg" style="display: inline-block;" width="100" height="100">
                                                 <p style="font-size: 10px; display: inline-block; float:right; font-weight:bold;">
-                                                    EQUIP CASA EIRELI <br>
-                                                    Rua 1 Chácara 1, 5 LOTE <br>
-                                                    Setor Habitacional Vicente Pir<br>
-                                                    72005-105 BRASÍLIA - DF<br>
-                                                    TEL: (61)99337-4280<br>
-                                                    E-Mail: equipecasadf@gmail.com<br>
+                                                    {{$empresa['nome_fantasia']}} <br>
+                                                    {{$empresa['logradouro']}} <br>
+                                                    {{$empresa['cep']}} - {{$empresa['municipio']}} - {{$empresa['uf']}} <br>
+                                                    TEL: {{$empresa['fone']}}<br>
+                                                    E-Mail: {{$empresa['email']}}<br>
                                                 </p>
                                         </div> 
                                 </td>
@@ -54,8 +53,8 @@
                                 </td>
                                 <td style="width: 20%;">
                                     <p style="font-size:12px; font-weight:bold; ">
-                                        CÓDIGO: <span>01</span> <br>
-                                        DATA:   <span>02/01/2024</span><br>
+                                        CÓDIGO: <span>{{$checklistProduto['id']}}</span> <br>
+                                        DATA:   <span>{{ date('d/m/Y', strtotime($checklistProduto['created_at'])) }}</span><br>
                                         VENDEDOR:  <span>HUGO</span><br>
                                     </p>
                                     <p style="font-size:12px; font-weight:bold; ">EMISSÃO: 02/01/2024</p>
@@ -85,37 +84,37 @@
                                 <td>
                                     <p>
 
-                                        TESTE
+                                        {{$cliente->nome}}
                                     </p>
                                 </td>
                                 <td>
                                     <p>
 
-                                        RUA MARIO TIMOTEO DE LIRA
+                                        {{$cliente->logradouro}}
                                     </p>
                                 </td>
                                 <td>
                                     <p>
 
-                                        CAMARAGIBE
+                                        {{$cliente->cidade}}
                                     </p>
                                 </td>
                                 <td>
                                     <p>
 
-                                        (91) 98923-5399
+                                        {{$cliente->telefone}}
                                     </p>
                                 </td>     
                                 <td>
                                     <p>
 
-                                        (11) 98363-7399
+                                        {{$cliente->telefone2}}
                                     </p>
                                 </td>
                                 <td>
                                     <p>
 
-                                        (99) 96163-7219
+                                        {{$cliente->telefone3}}
                                     </p>
                                 </td>
                             </tr>
