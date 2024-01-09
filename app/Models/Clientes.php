@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OS;
 use App\Models\Contrato;
+use App\Models\ChecklistProdutos;
 
 class Clientes extends Model
 {
@@ -19,5 +20,9 @@ class Clientes extends Model
     public function contrato()
     {
         return $this->hasMany(Contrato::class);
+    }
+    public function checklist_produtos()
+    {
+        return $this->hasMany(ChecklistProdutos::class, 'cliente_id', 'id');
     }
 }

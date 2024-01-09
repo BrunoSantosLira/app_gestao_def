@@ -166,79 +166,94 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($produtos as $key => $produto)
                         <tr style="font-size: 10px; font-weight:none;">
                             <td>
                                 <p>
-                                    1
+                                    {{$key}}
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    BICO DE HIDROMASSAGEM DE BANHEIRA SANPRAY
+                                    {{$produto->produto->produto}}
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    1
+                                    {{$produto->quantidade}}
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    R$139,99
+                                    {{$produto->preco}}
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    R$0,00
+                                    {{$produto->desconto}}
                                 </p>
                             </td>
                             <td>
                                 <p>
-                                    R$139,99
+                                    {{$produto->valorTotal}}
                                 </p>
                             </td>
-                        </tr>
-
-                        <tr style="font-size: 10px; font-weight:none;">
-                            <td>
-                                <p>
-                                    1
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    VAUVULA DE FUNDO P/ BANHEIRA SANPRAY
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    1
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    R$139,99
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    R$0,00
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    R$139,99
-                                </p>
-                            </td>
-                        </tr>
-            
+                        </tr>   
+                    @endforeach	
                 </tbody>
             </table>
             <div>
-                <h5>TOTAL: R$280,00</h5>
+                <h5>TOTAL: R${{$valorTotal}}</h5>
             </div>
         </div>
     </div>
+
+    <div>
+        <h5 style="text-align: center; font-size: 12px;">Parcelas</h5>
+    </div>
+    <!-- TABELA 4 -->	
+    <div>
+    <div><!-- TABELA AQUI -->
+        <table class="tabela" border="1">
+            <thead>
+                <tr style="font-size: 12px">
+                    <th>PARCELA</th>
+                    <th>VALOR</th>
+                    <th>VENCIMENTO</th>
+                    <th colspan="3">STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($parcelas as $key => $parcela)
+                
+                    <tr style="font-size: 10px; font-weight:none;">
+                        <td>
+                            <p>
+                                {{$key}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{$parcela['valor']}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{$parcela['data_vencimento']}}
+                            </p>
+                        </td>
+                        <td colspan="3">
+                            <p>
+                                {{$parcela['status_pagamento']}}
+                            </p>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
     </body>
 </html>

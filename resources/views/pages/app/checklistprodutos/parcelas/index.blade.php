@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage="cadastro"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="checklist"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Parcelas da OS"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Parcelas da Checklist"></x-navbars.navs.auth>
 
         <!-- End Navbar -->
         <div class="container-fluid py-4">
@@ -11,7 +11,7 @@
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white text-capitalize ps-3">Listagem de parcelas da OS</h6>
+                                <h6 class="text-white text-capitalize ps-3">Listagem de parcelas da checklist</h6>
                             </div>
                         
                             @if (Session::has('success'))
@@ -22,7 +22,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
-                                <a href="{{route('os.index')}}" class="m-3"><i class="fa-solid fa-square-caret-left fa-2xl"></i></a>
+                                <a href="{{route('checklistProdutos.index')}}" class="m-3"><i class="fa-solid fa-square-caret-left fa-2xl"></i></a>
 
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
@@ -86,7 +86,7 @@
                                                             <div class="d-flex ">
                                                                 <div class="my-auto" >
                                                                     @if ($parcela['status_pagamento'] == 'Pendente')  
-                                                                        <a  href="{{route('osparcelas.aprovar', ['parcela' => $parcela->id])}}"><i class="fa-solid fa-square-check m-2" style="color: green; font-size:1.8em;"></i></a>
+                                                                        <a  href="{{route('checkparcelas.aprovar', ['parcela' => $parcela->id])}}"><i class="fa-solid fa-square-check m-2" style="color: green; font-size:1.8em;"></i></a>
                                                                     @endif
                                                                 </div>
                                                             </div>

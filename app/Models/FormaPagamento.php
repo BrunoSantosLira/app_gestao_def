@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Taxa;
 use App\Models\OS;
+use App\Models\Contrato;
+use App\Models\ChecklistProdutos;
 
 class FormaPagamento extends Model
 {
@@ -20,6 +22,16 @@ class FormaPagamento extends Model
     public function OS()
     {
         return $this->hasMany(OS::class, 'forma_id', 'id');
+    }
+
+    public function contrato()
+    {
+        return $this->hasMany(Contrato::class, 'forma_id', 'id');
+    }
+
+    public function checklist()
+    {
+        return $this->hasMany(ChecklistProdutos::class, 'forma_id', 'id');
     }
 
 }

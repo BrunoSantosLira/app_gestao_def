@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ChecklistProdutos;
 use App\Models\CamposProduto;
+use App\Models\FormaPagamento;
 use App\Models\Produtos;
 use App\Models\Conta;
 use App\Models\Vendas;
 use App\Models\Saidas;
 use App\Models\ContaEntradas;
+use App\Models\CheckParcelas;
+use App\Models\Clientes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -20,7 +23,7 @@ class ChecklistProdutosController extends Controller
      */
     public function index(Request $request)
     {
-        $query  = ChecklistProdutos::query();
+        $query  = ChecklistProdutos::with('cliente');
 
         // Verifica se foi fornecida na requisição
         if ($request->filled('nome')) {
@@ -28,7 +31,9 @@ class ChecklistProdutosController extends Controller
         }
 
         $checklists = $query->paginate(10);
-        return view('pages.app.checklistprodutos.index', ['checklists' => $checklists]);
+        $clientes = Clientes::all();
+        $formas = FormaPagamento::all();
+        return view('pages.app.checklistprodutos.index', ['checklists' => $checklists,'clientes' => $clientes, 'formas' => $formas]);
     }
 
     /**
@@ -63,7 +68,9 @@ class ChecklistProdutosController extends Controller
      */
     public function edit(ChecklistProdutos $checklistProduto)
     {
-        return view('pages.app.checklistprodutos.edit', ['checklist' => $checklistProduto]);
+        $clientes = Clientes::all();
+        $formas = FormaPagamento::all();
+        return view('pages.app.checklistprodutos.edit', ['checklist' => $checklistProduto, 'clientes' => $clientes, 'formas' => $formas]);
     }
 
     /**
@@ -86,7 +93,8 @@ class ChecklistProdutosController extends Controller
 
     public function exportar(ChecklistProdutos $checklistProduto){
 
-        $pdf = Pdf::loadView('exportar.listaprodutos', ['produtos' => $checklistProduto->campos_produto]);
+        $valorTotal = $checklistProduto->campos_produto->sum('valorTotal');
+        $pdf = Pdf::loadView('exportar.listaprodutos', ['produtos' => $checklistProduto->campos_produto, 'parcelas' => $checklistProduto->parcelas, 'valorTotal' => $valorTotal]);
         return $pdf->download('lista_de_produtos_id'. $checklistProduto->id .'.pdf');
     }
 
@@ -121,7 +129,7 @@ class ChecklistProdutosController extends Controller
 
         //FIM ESTOQUE
 
-
+        /*
         //FINANCEIRO
         // 1 => CONTA  PRINCIPAL
         $conta = Conta::find(1);
@@ -136,7 +144,7 @@ class ChecklistProdutosController extends Controller
             // Atribua outros valores conforme necessário
         ]);
         $ContaEntradas->save();
-
+        */
         // Cria o registro de venda na tabela Vendas
         $venda = new Vendas([
             'os_id' => null,
@@ -150,8 +158,39 @@ class ChecklistProdutosController extends Controller
         //FIM FINANCEIRO
 
 
+       
+        $valorTaxa = ($checklist->formaPagamento->taxas['valor'] / 100 ) * $checklist->valorTotal; //CALCULANDO O VALOR DA  TAXA
+        
+        $valorTotalOS = $checklist->valorTotal + $valorTaxa;
+        $quantidadeParcelas = $checklist->formaPagamento['qtd_parcelas'];
+    
+        if ($valorTotalOS > 0 && $quantidadeParcelas > 0) {
+            $valorParcela = $valorTotalOS / $quantidadeParcelas;
+        } else {
+            // Caso contrário, define um valor padrão (ajuste conforme necessário)
+            $valorParcela = 0;
+        }
+    
+        // Criação das parcelas
+        for ($i = 1; $i <= $quantidadeParcelas; $i++) {
+            $dataVencimento = now()->addMonths($i);
+    
+            // Crie a parcela com base no valor calculado
+            $parcela = new CheckParcelas([
+                'valor' => $valorParcela,
+                'data_vencimento' => $dataVencimento,
+                'status_pagamento' => 'Pendente',
+            ]);
+    
+            // Associe a parcela ao contrato
+            $checklist->parcelas()->save($parcela);
+        }
+
         // Atualiza o status para 'aprovada'
         $checklist->update(['status' => 'aprovada']);
+
+
+
         return back()->with('success', 'Checklist aprovada com sucesso!');
     }
 }

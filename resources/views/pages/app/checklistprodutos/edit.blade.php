@@ -21,7 +21,7 @@
 
                 <div class="card card-plain h-100">
                     <div class="card-header pb-0 p-3">
-                        <a href="{{route('ContasPagas.index')}}"><button class="btn btn-outline-primary btn-sm mt-3">Listagem de checklists <i class="fa-solid fa-boxes-packing fa-lg" style="font-size: 1.2em"></i> </button></a> 
+                        <a href="{{route('checklistProdutos.index')}}"><button class="btn btn-outline-primary btn-sm mt-3">Listagem de checklists <i class="fa-solid fa-boxes-packing fa-lg" style="font-size: 1.2em"></i> </button></a> 
                         @if (Session::has('success'))
                             <div class="alert alert-success text-white">
                                 {{ Session::get('success') }}
@@ -48,6 +48,32 @@
                                     @error('nome')
                                 <p class='text-danger inputerror'>{{ $message }} </p>
                                 @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label for="name" class="form-label">*Cliente</label>
+                                    <select id="servico_id" class="form-select p-2" name="cliente_id">
+                                        <option class="" value="{{$checklist['cliente_id']}}">Atual: ({{$checklist['cliente_id']}})</option>
+                                        @foreach ($clientes as $key => $cliente)
+                                            <option class="" value="{{$cliente['id']}}">{{$cliente['nome']}}  ({{$cliente['id']}})</option>
+                                        @endforeach
+                                    </select>
+                                    @error('valor')
+                                <p class='text-danger inputerror'>{{ $message }} </p>
+                                @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label for="formas" class="form-label">Forma de Pagamento</label>
+                                    <select id="formas" class="form-select p-2" name="forma_id">
+                                        <option class="" value="{{$checklist['forma_id']}}">ATUAL: ({{$checklist['forma_id']}})</option>
+                                        @foreach ($formas as $f)
+                                            <option class="" value="{{$f->id}}">{{$f->nome}} - ({{$f->id}})</option>
+                                        @endforeach
+                                    </select>
+                                    @error('formas')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
                                 </div>
 
 

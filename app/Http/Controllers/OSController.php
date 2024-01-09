@@ -162,7 +162,7 @@ class OSController extends Controller
     public function exportar(Request $request){
         $empresa = Empresa::find(1);
         
-
+     
         $produtos = osProdutos::with('produto')->where('os_id', '=', $request->o)->get();
         $servicos = osServico::with('servico')->where('os_id', '=', $request->o)->get();
         // Substitua 'osProdutos' pelo nome correto do seu modelo
@@ -171,7 +171,8 @@ class OSController extends Controller
 
         $produtosTabela = Produtos::all();
         $servicosTabela = Servico::all();
-        $o = Os::with('os_produtos')->where('id', '=', $request->o )->get();
+        $o = Os::with(['os_produtos', 'parcelas'])->where('id', $request->o)->get();
+    
         $pdf = Pdf::loadView('exportar.osexportar', ['os' => $o, 'produtos' => $produtos, 'produtosTabela' => $produtosTabela, 'somaProdutosOS' =>  $somaProdutosOS, 'servicos' => $servicos, 'servicosTabela' => $servicosTabela, 'somaServicosOS' => $somaServicosOS, 'empresa' => $empresa]);
         return $pdf->download('OS.pdf');
     }
@@ -201,9 +202,9 @@ class OSController extends Controller
         */
         
 
-        
         $os->update(['status' => 'finalizado']);
 
+        
         // Cria o registro de venda na tabela Vendas
         $venda = new Vendas([
             'os_id' => $os->id,
@@ -215,6 +216,7 @@ class OSController extends Controller
     
         $venda->save();
 
+        /*
         //FINANCEIRO
         // 1 => CONTA  PRINCIPAL
         $conta = Conta::find(1);
@@ -230,6 +232,36 @@ class OSController extends Controller
         ]);
         $ContaEntradas->save();
         //FIM FINANCEIRO
+        */
+        
+        // Cria as parcelas com base no valor total do contrato e na quantidade de parcelas
+       
+        $valorTaxa = ($os->formaPagamento->taxas['valor'] / 100 ) * $os->valorTotal; //CALCULANDO O VALOR DA  TAXA
+        
+        $valorTotalOS = $os->valorTotal + $valorTaxa;
+        $quantidadeParcelas = $os->formaPagamento['qtd_parcelas'];
+    
+        if ($valorTotalOS > 0 && $quantidadeParcelas > 0) {
+            $valorParcela = $valorTotalOS / $quantidadeParcelas;
+        } else {
+            // Caso contrário, define um valor padrão (ajuste conforme necessário)
+            $valorParcela = 0;
+        }
+    
+        // Criação das parcelas
+        for ($i = 1; $i <= $quantidadeParcelas; $i++) {
+            $dataVencimento = now()->addMonths($i);
+    
+            // Crie a parcela com base no valor calculado
+            $parcela = new OSParcelas([
+                'valor' => $valorParcela,
+                'data_vencimento' => $dataVencimento,
+                'status_pagamento' => 'Pendente',
+            ]);
+    
+            // Associe a parcela ao contrato
+            $os->parcelas()->save($parcela);
+        }
 
         return back()->with('success', 'OS Aprovada com sucesso!');
         

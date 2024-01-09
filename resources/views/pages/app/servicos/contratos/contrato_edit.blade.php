@@ -79,19 +79,12 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Método de pagamento</label>
-                                    <input type="text" name="metodo_de_pagemento" class="form-control border border-2 p-2" value='{{$contrato['metodo_de_pagemento']}}' placeholder="Responsável:">
-                                    @error('responsavel')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
-                                @enderror
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Quantidade de parcelas</label>
-                                    <input type="number" name="quantidade_parcelas" class="form-control border border-2 p-2" min="1" value='{{$contrato['quantidade_parcelas']}}' placeholder="Parcelas:">
-                                    <small>Valor mínimo de 1 parcela(a vista)</small>
-                                    @error('responsavel')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
-                                @enderror
+                                    <select id="formas" class="form-select p-2" name="forma_id">
+                                        <option class="" value="{{$contrato->forma_id}}">ATUAL:({{$contrato->forma_id}})</option>
+                                        @foreach ($formas as $f)
+                                            <option class="" value="{{$f->id}}">{{$f->nome}} - ({{$f->id}})</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="mb-3 col-md-6">

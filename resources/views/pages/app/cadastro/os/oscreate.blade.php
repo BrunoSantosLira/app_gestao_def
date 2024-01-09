@@ -112,9 +112,10 @@
                                     <label for="formas" class="form-label">Forma de Pagamento</label>
                                     <select id="formas" class="form-select p-2" name="forma_id">
                                         @foreach ($formas as $f)
-                                            <option class="" value="{{$f->id}}">{{$f->nome}}</option>
+                                            <option class="" value="{{$f->id}}">{{$f->nome}} / (TAXA:{{$f->taxas->valor}}%)</option>
                                         @endforeach
                                     </select>
+                                    <small class="text-danger">O Valor da taxa será acrescentado ao aprovar</small>
                                     @error('formas')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror

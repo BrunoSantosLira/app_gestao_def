@@ -132,6 +132,10 @@
                                     rows="4" cols="50"></textarea>
                             </div>
                             
+                            <div class="mt-3 mb-3">
+                                <label for="nome" class="form-label">Quantidade de parcelas:</label>
+                                <input type="number" required class="form-control border border-2 p-2" id="numero" placeholder="Quantidade de parcelas" name="qtd_parcelas">
+                            </div>
                             
                             <div class="mt-3 mb-3">
                                 <label for="nome" class="form-label">Taxa:</label>

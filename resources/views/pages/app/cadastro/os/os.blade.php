@@ -199,6 +199,9 @@
                                                                 <a  href="{{route('os.aprovar', ['os' => $o->id])}}"><i class="fa-solid fa-check m-2" style="color: #31b452; font-size:1.5em;"></i></a>
                                                                 <button type="submit" style="background: none; border:none;" class="btn-xl" ><i  class="fa-solid fa-trash m-2" style="color: #f01800; font-size:1.5em;"></i></button>
                                                             @endif
+                                                            @if ($o['status'] == 'finalizado')
+                                                                <a  href="{{route('osparcelas.index', ['os' => $o->id])}}"><i class="fa-solid fa-file m-2" style="color: #000000; font-size:1.5em;"></i></a>
+                                                            @endif
                                                             <a target="_blank" href="{{route('os.show', ['o' => $o->id])}}"><i class="fa-solid fa-eye m-2" style="color: #31b452; font-size:1.5em;"></i></a>
                                                             <a target="_blank" href="{{route('os.edit', ['o' => $o->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.5em;"></i></a>
                                                             <form action="{{route('os.destroy', ['o' => $o->id])}}" class="d-inline-block" method="POST">

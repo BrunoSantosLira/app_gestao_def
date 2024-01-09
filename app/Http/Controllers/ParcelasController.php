@@ -18,11 +18,11 @@ class ParcelasController extends Controller
      */
     public function index(Contrato $contrato)
     {
-    // Obtém todas as parcelas relacionadas ao contrato
-    $parcelas = $contrato->parcelas()->get();
+        // Obtém todas as parcelas relacionadas ao contrato
+        $parcelas = $contrato->parcelas()->get();
 
-    // Exibe as parcelas
-    return view('pages.app.servicos.contratos.parcelas.parcelas', ['parcelas' => $parcelas]);
+        // Exibe as parcelas
+        return view('pages.app.servicos.contratos.parcelas.parcelas', ['parcelas' => $parcelas]);
     }
 
     public function aprovar(Parcelas $parcela){

@@ -209,69 +209,115 @@
         </div>
     </div>
 
-            <!-- TABELA 5 -->	
-            <div>
-                <div><!-- TABELA AQUI -->
-                    <table class="tabela" border="1">
-                        <thead>
-                            <tr>
-                                <td colspan="6" style="text-align: center; font-size:12px; font-weight:bold;">MERCADORIAS</td>
-                            </tr>
-                            <tr style="font-size: 12px">
-                                <th>CÓDIGO</th>
-                                <th>DESCRIÇÃO</th>
-                                <th>QTD.</th>
-                                <th>PR. UNIT. 1</th>
-                                <th>DESC.</th>
-                                <th>TOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($produtos as $produto)
-                                <tr style="font-size: 10px; font-weight:none;">
-                                    <td>
-                                        <p>
-                                            {{$produto['produto']['id']}}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p>
-                                            {{$produto['produto']['produto']}}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p>
-                                            {{$produto['quantidade']}}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p>
-                                            {{$produto['preco']}}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p>
-                                            R${{$produto['desconto']}}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p>
-                                            {{$produto['valorTotal']}}
-                                        </p>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                <tr>
-                                    <td colspan="6" style="font-size: 12px;font-weight:bold;">TOTAL EM PRODUTOS: R${{$somaProdutosOS}} </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" style="font-size: 14px;font-weight:bold;">TOTAL DA ORDEM DE SERVIÇO:: R${{$os[0]['valorTotal']}} </td>
-                                </tr>
-                        </tbody>
-                    </table>
-                   
-                </div>
-            </div>
+    <!-- TABELA 5 -->	
+    <div>
+        <div><!-- TABELA AQUI -->
+            <table class="tabela" border="1">
+                <thead>
+                    <tr>
+                        <td colspan="6" style="text-align: center; font-size:12px; font-weight:bold;">MERCADORIAS</td>
+                    </tr>
+                    <tr style="font-size: 12px">
+                        <th>CÓDIGO</th>
+                        <th>DESCRIÇÃO</th>
+                        <th>QTD.</th>
+                        <th>PR. UNIT. 1</th>
+                        <th>DESC.</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($produtos as $produto)
+                        <tr style="font-size: 10px; font-weight:none;">
+                            <td>
+                                <p>
+                                    {{$produto['produto']['id']}}
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{$produto['produto']['produto']}}
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{$produto['quantidade']}}
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{$produto['preco']}}
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    R${{$produto['desconto']}}
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{$produto['valorTotal']}}
+                                </p>
+                            </td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <td colspan="6" style="font-size: 12px;font-weight:bold;">TOTAL EM PRODUTOS: R${{$somaProdutosOS}} </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="font-size: 14px;font-weight:bold;">TOTAL DA ORDEM DE SERVIÇO:: R${{$os[0]['valorTotal']}} </td>
+                        </tr>
+                </tbody>
+            </table>
+        
+        </div>
+    </div>
+
+       <!-- TABELA 5 -->	
+       <div>
+        <div><!-- TABELA AQUI -->
+            <table class="tabela" border="1">
+                <thead>
+                    <tr>
+                        <td colspan="6" style="text-align: center; font-size:12px; font-weight:bold;">Parcelas</td>
+                    </tr>
+                    <tr style="font-size: 12px">
+                        <th>PARCELA</th>
+                        <th>VALOR</th>
+                        <th>VENCIMENTO</th>
+                        <th colspan="3">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($os[0]->parcelas as $key => $parcela)
+                        <tr style="font-size: 10px; font-weight:none;">
+                            <td >
+                                <p>
+                                    {{$key + 1}}
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{$parcela['valor']}}
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{$parcela['data_vencimento']}}
+                                </p>
+                            </td>
+                            <td colspan="3">
+                                <p>
+                                    {{$parcela['status_pagamento']}}
+                                </p>
+                            </td>
+                        </tr>
+                        @endforeach
+                </tbody>
+            </table>
+        
+        </div>
+    </div>
         
     <div class="page-break "></div>
     <div class="card-body px-0 pb-2">

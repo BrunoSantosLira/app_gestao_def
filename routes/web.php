@@ -40,6 +40,7 @@ use App\Http\Controllers\ContratoServicosController;
 
 use App\Http\Controllers\ParcelasController;
 use App\Http\Controllers\OSParcelasController;
+use App\Http\Controllers\CheckParcelasController;
 
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\ContaEntradasController;
@@ -139,8 +140,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parcelas.aprovar/{parcela}', [\App\Http\Controllers\ParcelasController::class, 'aprovar'])->name('parcelas.aprovar');
 
 	
-	Route::get('osparcelas.index/{os}', [\App\Http\Controllers\ParcelasController::class, 'index'])->name('osparcelas.index');
-	Route::get('osparcelas.aprovar/{parcela}', [\App\Http\Controllers\ParcelasController::class, 'aprovar'])->name('osparcelas.aprovar');
+	Route::get('osparcelas.index/{os}', [\App\Http\Controllers\OSParcelasController::class, 'index'])->name('osparcelas.index');
+	Route::get('osparcelas.aprovar/{parcela}', [\App\Http\Controllers\OSParcelasController::class, 'aprovar'])->name('osparcelas.aprovar');
+
+
+	Route::get('checkparcelas.index/{checklist}', [\App\Http\Controllers\CheckParcelasController::class, 'index'])->name('checkparcelas.index');
+	Route::get('checkparcelas.aprovar/{parcela}', [\App\Http\Controllers\CheckParcelasController::class, 'aprovar'])->name('checkparcelas.aprovar');
 
 	// routes/web.php
 

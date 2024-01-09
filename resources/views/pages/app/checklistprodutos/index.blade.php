@@ -88,6 +88,10 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Cliente
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Valor total na loja
                                             </th>
                                             <th
@@ -111,21 +115,30 @@
                                                 <td>
                                                     <div class="d-flex px-2">
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">#{{$checklist->id}}</h6>
+                                                            <h6 class="mb-0" style="font-size: 12px">#{{$checklist->id}}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist->nome}}</p>
+                                                    <p style="font-size: 12px" class=" font-weight-bold mb-0">{{$checklist->nome}}</p>
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0">R${{$checklist->valorTotal}}</p>
+                                                    @if($checklist->cliente)
+                                                        <p style="font-size: 12px" class="font-weight-bold mb-0">{{ $checklist->cliente->nome }}</p>
+                                                    @else
+                                                        <p style="font-size: 12px" class="font-weight-bold mb-0">Cliente não definido</p>
+                                                    @endif
+                                                </td>
+                                                
+
+                                                <td>
+                                                    <p style="font-size: 12px" class=" font-weight-bold mb-0">R${{$checklist->valorTotal}}</p>
                                                 </td>
 
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0">{{$checklist->status}}</p>
+                                                    <p style="font-size: 12px" class="text-sm font-weight-bold mb-0">{{$checklist->status}}</p>
                                                 </td>
 
 
@@ -147,6 +160,9 @@
                                                             @method('DELETE')
                                                             <button type="submit" style="background: none; border:none;" class="btn-xl"><i class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
                                                         </form>
+                                                    @endif
+                                                    @if ($checklist['status'] == 'aprovada')
+                                                            <a  href="{{route('checkparcelas.index', ['checklist' => $checklist->id])}}"><i class="fa-solid fa-file m-2" style="color: #000000; font-size:1.2em;"></i></a>
                                                     @endif
 
                                                     <a target="_blank" href="{{route('checklistProdutos.edit', ['checklistProduto' => $checklist->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.2em;"></i></a>
@@ -181,6 +197,25 @@
                                 <div class="mt-3 mb-3">
                                     <label for="nome" class="form-label">Nome da checklist</label>
                                     <input type="text" required class="form-control border border-2 p-2" id="nome" placeholder="Nome" name="nome">
+                                </div>
+
+                                
+                                <div class="mt-3 mb-3">
+                                    <label for="nome" class="form-label">Cliente</label>
+                                    <select name="cliente_id" id="" class="form-control border border-2 p-2">
+                                        @foreach ($clientes as $c)
+                                           <option value="{{$c->id}}">{{$c->nome}}</option> 
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="mt-3 mb-3">
+                                    <label for="nome" class="form-label">Forma de pagamento</label>
+                                    <select name="forma_id" id="" class="form-control border border-2 p-2">
+                                        @foreach ($formas as $f)
+                                           <option value="{{$f->id}}">{{$f->nome}}</option> 
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="mb-3 col-md-12">

@@ -11,6 +11,8 @@ use App\Models\ContratoServicos;
 use App\Models\ContaEntradas;
 use App\Models\Conta;
 
+use App\Models\FormaPagamento;
+
 use App\Models\Clientes;
 use App\Models\Produtos;
 use App\Http\Controllers\Controller;
@@ -57,7 +59,8 @@ class ContratoController extends Controller
     public function create()
     {
         $clientes = Clientes::all();
-        return view('pages.app.servicos.contratos.contratocreate', ['clientes' => $clientes]);
+        $formas = FormaPagamento::all();
+        return view('pages.app.servicos.contratos.contratocreate', ['clientes' => $clientes, 'formas' => $formas]);
     }
 
     /**
@@ -70,8 +73,6 @@ class ContratoController extends Controller
             'responsável' => 'required|min:3',
             'data_inicio' => 'required',
             'data_fim' => 'required',
-            'metodo_de_pagemento'  => 'required',
-            'quantidade_parcelas'  => 'required',
             'corpo'  => 'required',
             
         ];
@@ -108,8 +109,9 @@ class ContratoController extends Controller
         $servicos = ContratoServicos::with('servico')->where('contrato_id', '=', $contrato->id)->get();
         $somaProdutosContrato = ContratoProdutos::where('contrato_id', $contrato->id)->sum('valorTotal');
         $somaServicosContrato = ContratoServicos::where('contrato_id', $contrato->id)->sum('valorTotal');
+        $formas = FormaPagamento::all();
 
-        return view('pages.app.servicos.contratos.contrato_edit', ["contrato" => $contrato, 'clientes' => $clientes, 'produtosTabela' => $produtosTabela, 'produtos' => $produtos, 'somaProdutosContrato' => $somaProdutosContrato, 'servicosTabela' => $servicosTabela, 'servicos' => $servicos, 'somaServicosContrato' => $somaServicosContrato]);
+        return view('pages.app.servicos.contratos.contrato_edit', ["contrato" => $contrato, 'clientes' => $clientes, 'produtosTabela' => $produtosTabela, 'produtos' => $produtos, 'somaProdutosContrato' => $somaProdutosContrato, 'servicosTabela' => $servicosTabela, 'servicos' => $servicos, 'somaServicosContrato' => $somaServicosContrato, 'formas' => $formas]);
     }
 
     /**
@@ -122,8 +124,6 @@ class ContratoController extends Controller
             'responsável' => 'required|min:3',
             'data_inicio' => 'required',
             'data_fim' => 'required',
-            'metodo_de_pagemento'  => 'required',
-            'quantidade_parcelas'  => 'required',
             'corpo'  => 'required',
             
         ];
@@ -215,8 +215,10 @@ class ContratoController extends Controller
 
 
             // Cria as parcelas com base no valor total do contrato e na quantidade de parcelas
-            $valorTotalContrato = $contrato->valorTotal;
-            $quantidadeParcelas = $contrato->quantidade_parcelas;
+            $valorTaxa = ($contrato->formaPagamento->taxas['valor'] / 100 ) * $contrato->valorTotal; //CALCULANDO O VALOR DA  TAXA
+        
+            $valorTotalContrato = $contrato->valorTotal + $valorTaxa;
+            $quantidadeParcelas = $contrato->formaPagamento['qtd_parcelas'];
         
             if ($valorTotalContrato > 0 && $quantidadeParcelas > 0) {
                 $valorParcela = $valorTotalContrato / $quantidadeParcelas;
