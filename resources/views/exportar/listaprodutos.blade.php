@@ -49,7 +49,7 @@
                                 </td>
                             
                                 <td style="width: 20%;">
-                                   <h5 style="text-align: center">ORÇAMENTO</h5>
+                                   <h5 style="text-align: center">LISTA DE PRODUTOS</h5>
                                 </td>
                                 <td style="width: 20%;">
                                     <p style="font-size:12px; font-weight:bold; ">
