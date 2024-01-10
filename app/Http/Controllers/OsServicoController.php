@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\osServico;
+use App\Models\Servico;
 use App\Models\OS;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -30,17 +31,32 @@ class OsServicoController extends Controller
      */
     public function store(Request $request)
     {
-  
+
+        //CALCULANDO O VALOR DOS IMPOSTOS
+        $produtoComImpostos = Servico::with('impostos')->find($request['servico_id']); //pega os impostos
+        $valorImpostos = 0;
+
+        foreach ($produtoComImpostos->impostos as $key => $imposto) {
+            $valorImpostos += ($imposto->aliquota / 100) * $request->preco;
+        }
+   
+        $precoUNI = $valorImpostos + $request->preco;
+        $valorImpostos =  $valorImpostos * $request->quantidade;
+
         $dados = $request->all();
         $dados['valorTotal'] = $request->preco * $request->quantidade;
-        $dados['valorTotal'] = $request->preco - $request->desconto; //calculando o desconto em cima do valor  total
+        $dados['valorTotal'] = $dados['valorTotal'] - $request->desconto; //calculando o desconto em cima do valor  total
+        $dados['valorTotal'] += $valorImpostos;
 
 
-
-        osServico::create($dados);
         $OS = OS::find($dados['os_id']);
         $OS->valorTotal += $dados['valorTotal'];
         $OS->save();
+
+        $dados['preco'] = $precoUNI;
+        osServico::create($dados);
+
+
         return back();
     }
 

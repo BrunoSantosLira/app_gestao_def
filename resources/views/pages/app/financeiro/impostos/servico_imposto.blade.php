@@ -29,7 +29,6 @@
                             <li class="text-danger">{{ $error }}</li>
                             @endforeach
                         </div>
-                
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
                                 <table class="table align-items-center justify-content-center mb-0">
@@ -78,7 +77,7 @@
                                             <td>
                                                 <div class="d-flex px-2">
                                                     <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">{{$imposto['produto']['produto']}}</h6>
+                                                        <h6 class="mb-0 text-sm">{{$imposto['servico']['nome']}}</h6>
                                                     </div>
                                                 </div>
                                             </td>      
@@ -91,7 +90,7 @@
                                                 </div>
                                             </td>   
                                             <td>
-                                                <form action="{{route('impostos.destroy', ['imposto' => $imposto->id])}}" class="d-inline-block" method="POST">
+                                                <form action="{{route('servico_imposto.destroy', ['servico_imposto' => $imposto->id])}}" class="d-inline-block" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" style="background: none; border:none;" class="btn-xl" ><i  class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
@@ -120,12 +119,12 @@
                     </div>
 
                     <div class="modal-body">
-                        <form action="{{route('impostos.store')}}" method="POST">
+                        <form action="{{route('servico_imposto.store')}}" method="POST">
                             @csrf
 
 
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Nome do imposto</label>
+                                <label class="form-label">Nome do servico</label>
                                 <input type="text" name="nome" class="form-control border border-2 p-2" required placeholder="Imposto">
                             </div>
 
@@ -135,10 +134,10 @@
                             </div>
 
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Produto</label>
-                                <select name="produto_id" id="" class="form-control border border-2 p-2">
-                                    @foreach ($produtos as $produto)
-                                        <option value="{{$produto->id}}">{{$produto->produto}}</option>
+                                <label class="form-label">Serviço</label>
+                                <select name="servico_id" id="" class="form-control border border-2 p-2">
+                                    @foreach ($servicos as $servico)
+                                        <option value="{{$servico->id}}">{{$servico->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>

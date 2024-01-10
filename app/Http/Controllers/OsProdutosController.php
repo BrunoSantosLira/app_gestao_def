@@ -31,7 +31,7 @@ class OsProdutosController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {        
         $regras = [
             'preco' => 'required',
             'quantidade' => 'required',
@@ -41,9 +41,25 @@ class OsProdutosController extends Controller
         ];
   
         $request->validate($regras, $feedback);
+
+        
+        //CALCULANDO O VALOR DOS IMPOSTOS
+        $produtoComImpostos = Produtos::with('impostos')->find($request['produto_id']); //pega os impostos
+        $valorImpostos = 0;
+
+        foreach ($produtoComImpostos->impostos as $key => $imposto) {
+            $valorImpostos += ($imposto->aliquota / 100) * $request->preco;
+        }
+
+        $precoUNI = $valorImpostos + $request->preco;
+        $valorImpostos =  $valorImpostos * $request->quantidade;
+        
+
         $dados = $request->all();
         $dados['valorTotal'] = $request->preco * $request->quantidade; //calculando o valor total
-        $dados['valorTotal'] = $request->preco - $request->desconto; //calculando o desconto em cima do valor  total
+        $dados['valorTotal'] = $dados['valorTotal'] - $request->desconto; //calculando o desconto em cima do valor  total
+        $dados['valorTotal'] += $valorImpostos;
+
 
         //alterando o estoque
         $produto = Produtos::find($request->produto_id);
@@ -62,10 +78,14 @@ class OsProdutosController extends Controller
             return back()->withErrors('Produto com estoque insuficiente')->withInput();
         };
 
-        osProdutos::create($dados);
         $OS = OS::find($dados['os_id']);
         $OS->valorTotal += $dados['valorTotal'];
         $OS->save();
+
+        
+        $dados['preco'] = $precoUNI;
+      
+        osProdutos::create($dados);
 
         return back();
     }

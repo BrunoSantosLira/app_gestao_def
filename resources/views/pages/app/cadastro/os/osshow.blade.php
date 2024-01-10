@@ -368,7 +368,7 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Desconto</label>
+                                    <label class="form-label">Desconto em R$</label>
                                     <input type="number" name="desconto" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Desconto:">
                                     <small>O desconto será aplicado no valor total</small>
                                 </div>
@@ -413,6 +413,8 @@
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Preço do serviço</label>
                                             <input type="number" name="preco" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Preço">
+                                            <small>O valor dos impostos do produto ainda será adicionado em cima desse preço</small>
+
                                         </div>
                 
                                         <div class="mb-3 col-md-6">
@@ -421,7 +423,7 @@
                                         </div>
 
                                         <div class="mb-3 col-md-6">
-                                            <label class="form-label">Desconto</label>
+                                            <label class="form-label">Desconto em R$</label>
                                             <input type="number" name="desconto" class="form-control border border-2 p-2" value='0' step="0.01" min="0" placeholder="Desconto:">
                                             <small>O desconto será aplicado no valor total</small>
                                         </div>

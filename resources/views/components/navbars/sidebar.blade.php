@@ -295,7 +295,12 @@
                     </li>  
                     <li>
                         <a class="dropdown-item" href="{{route('impostos.index')}}">
-                            Impostos
+                            Impostos de Produtos
+                        </a>
+                    </li> 
+                    <li>
+                        <a class="dropdown-item" href="{{route('servico_imposto.index')}}">
+                            Impostos de Serviços
                         </a>
                     </li> 
                     <li>

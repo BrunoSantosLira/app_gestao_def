@@ -8,6 +8,7 @@ use App\Models\Checklist;
 use App\Models\OS;
 use App\Models\osServico;
 use App\Models\ContratoServicos;
+use App\Models\ServicoImposto;
 
 class Servico extends Model
 {
@@ -31,5 +32,10 @@ class Servico extends Model
     public function contrato_servico()
     {
         return $this->hasMany(ContratoServicos::class, 'servico_id');
+    }
+
+    public function impostos()
+    {
+        return $this->hasMany(ServicoImposto::class, 'servico_id', 'id');
     }
 }

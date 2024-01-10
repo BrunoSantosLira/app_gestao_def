@@ -56,6 +56,7 @@ use App\Http\Controllers\VendasController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\CompraProdutosController;
 use App\Http\Controllers\ImpostosController;
+use App\Http\Controllers\ServicoImpostoController;
 
 
 use App\Http\Controllers\EntradasController;
@@ -167,6 +168,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('campo', CampoController::class);
 	Route::resource('usuarios', RegisterController::class);
+	Route::resource('servico_imposto', ServicoImpostoController::class);
 
 	Route::resource('empresa', EmpresaController::class);
 

@@ -15,7 +15,7 @@ class ServicoController extends Controller
      */
     public function index(Request $request)
     {
-        $query  = Servico::query();
+        $query  = Servico::with('impostos');
 
         // Verifica se foi fornecida na requisição
         if ($request->filled('nome')) {
@@ -74,8 +74,7 @@ class ServicoController extends Controller
      */
     public function edit(Servico $servico)
     {
-       
-        return view('pages.app.servicoEdit', ['servico' => $servico]);
+        return view('pages.app.servicoEdit', ['servico' => $servico, 'impostos' => $servico->impostos]);
     }
 
     /**
