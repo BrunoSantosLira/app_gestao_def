@@ -159,6 +159,66 @@
                             <button type="submit" class="btn bg-gradient-dark">Atualizar</button>
                         </form>
 
+
+                        <div class="col-md-8 d-flex align-items-center">
+                            <h6 class="mb-3">Impostos aplicados</h6>
+                        </div>
+                        <button class="btn btn-outline-success btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarImposto">Adicionar Imposto <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
+                                <table class="table align-items-center justify-content-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            ID
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Nome
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Taxa em %
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>           
+                                        @foreach ($impostos as $key => $imposto)
+                                            <tr>
+                                                    <td>
+                                                        <div class="d-flex px-2">
+                                                            <div class="my-auto">
+                                                                <h6 class="mb-0 text-sm">{{$key + 1 }}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex px-2">
+                                                            <div class="my-auto">
+                                                                <h6 class="mb-0 text-sm">{{$imposto->nome}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex px-2">
+                                                            <div class="my-auto">
+                                                                <h6 class="mb-0 text-sm">{{$imposto->aliquota}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <form action="{{route('impostos.destroy', ['imposto' => $imposto->id])}}" class="d-inline-block" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" style="background: none; border:none;" class="btn-xl" ><i  class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
+                                                        </form>
+                                                    </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                        <br>
                         <div class="col-md-8 d-flex align-items-center">
                             <h6 class="mb-3">Dados monetários</h6>
                         </div>
@@ -214,6 +274,48 @@
             });
             </script>
         <x-footers.auth></x-footers.auth>
+    </div>
+    <!-- Modal ADICIONAR IMPOSTOS -->
+    <div class="modal fade" id="ModalAdicionarImposto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Adicionar Imposto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{route('impostos.store')}}" method="POST">
+                    @csrf
+
+
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Nome do imposto</label>
+                        <input type="text" name="nome" class="form-control border border-2 p-2" required placeholder="Imposto">
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">% da Aliquota</label>
+                        <input type="number" name="aliquota" step="0.01" class="form-control border border-2 p-2" required placeholder="Aliquota(%)">
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label">Produto</label>
+                        <select name="produto_id" id="" class="form-control border border-2 p-2">
+                            <option value="{{$produto->id}}">{{$produto->produto}}</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+
+        </div>
+        </div>
     </div>
     <x-plugins></x-plugins>
 

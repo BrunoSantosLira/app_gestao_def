@@ -82,11 +82,7 @@
                             Fornecedores
                         </a>
                     </li>
-                    <li>
-                        <a class="dropdown-item" href="{{route('taxa.index')}}">
-                            Taxas
-                        </a>
-                    </li>
+
                     <li>
                         <a class="dropdown-item" href="{{route('formaPagamento.index')}}">
                             Formas de pagamento
@@ -303,10 +299,10 @@
                         </a>
                     </li> 
                     <li>
-                        <a class="dropdown-item" href="{{route('impostos.index')}}">
-                            Taxa das máquinas
+                        <a class="dropdown-item" href="{{route('taxa.index')}}">
+                            Taxas
                         </a>
-                    </li>        
+                    </li>       
                 </ul>
             </div>
         </li>

@@ -1,5 +1,5 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage="impostos"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="financeiro"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <x-navbars.navs.auth titlePage="impostos"></x-navbars.navs.auth>
@@ -32,7 +32,6 @@
                 
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
-                                
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
 
@@ -44,6 +43,10 @@
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             NOME
+                                            </th>
+                                            <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            PRODUTO/SERVIÇO
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -70,7 +73,15 @@
                                                         <h6 class="mb-0 text-sm">{{$imposto['nome']}}</h6>
                                                     </div>
                                                 </div>
-                                            </td>   
+                                            </td>
+                                                                                 
+                                            <td>
+                                                <div class="d-flex px-2">
+                                                    <div class="my-auto">
+                                                        <h6 class="mb-0 text-sm">{{$imposto['produto']['produto']}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>      
                                     
                                             <td>
                                                 <div class="d-flex px-2">
@@ -80,7 +91,11 @@
                                                 </div>
                                             </td>   
                                             <td>
-
+                                                <form action="{{route('impostos.destroy', ['imposto' => $imposto->id])}}" class="d-inline-block" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" style="background: none; border:none;" class="btn-xl" ><i  class="fa-solid fa-trash m-2" style="color: #f01800;"></i></button>
+                                                </form>
                 
                                             </td>
                                         </tr>
@@ -117,6 +132,15 @@
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">% da Aliquota</label>
                                 <input type="number" name="aliquota" step="0.01" class="form-control border border-2 p-2" required placeholder="Aliquota(%)">
+                            </div>
+
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Produto</label>
+                                <select name="produto_id" id="" class="form-control border border-2 p-2">
+                                    @foreach ($produtos as $produto)
+                                        <option value="{{$produto->id}}">{{$produto->produto}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Adicionar</button>

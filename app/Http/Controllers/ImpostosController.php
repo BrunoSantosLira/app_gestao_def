@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Impostos;
+use App\Models\Produtos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,9 @@ class ImpostosController extends Controller
      */
     public function index()
     {
-        $impostos = Impostos::all();
-        return view('pages.app.financeiro.impostos.impostos', ['impostos' => $impostos]);
+        $impostos = Impostos::with('produto')->get();
+        $produtos = Produtos::all();
+        return view('pages.app.financeiro.impostos.impostos', ['impostos' => $impostos, 'produtos' => $produtos]);
 
     }
 

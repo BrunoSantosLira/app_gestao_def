@@ -13,6 +13,7 @@ use App\Models\CompraProdutos;
 use App\Models\Entradas;
 use App\Models\Saidas;
 use App\Models\CamposProduto;
+use App\Models\Impostos;
 
 
 class Produtos extends Model
@@ -66,4 +67,10 @@ class Produtos extends Model
         return $this->hasMany(CamposProduto::class);
     }
     
+        
+    public function impostos()
+    {
+        return $this->hasMany(Impostos::class, 'produto_id', 'id');
+    }
+
 }

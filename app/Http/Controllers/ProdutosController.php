@@ -15,7 +15,7 @@ class ProdutosController extends Controller
      */
     public function index(Request $request)
     {
-        $query  = Produtos::with('categoria')->with('unidade');
+        $query  = Produtos::with('categoria')->with('unidade')->with('impostos');
 
         // Verifica se tipo foi fornecido na requisição
         if ($request->filled('id')) {
@@ -93,6 +93,8 @@ class ProdutosController extends Controller
      */
     public function edit(Produtos $produto)
     {
+        $impostos = $produto->impostos;
+        
         $categorias = Categorias::all();
         $unidades =  Unidades::all();
         $dadosMonetarios = [
@@ -102,7 +104,7 @@ class ProdutosController extends Controller
             'Rentabilidade' =>  (($produto['valorVenda']- $produto['valorCompra']) / $produto['valorVenda']) * 100
         ];
 
-        return view('pages.app.cadastro.produtos.produtoedit', ['categorias' => $categorias,'unidades' => $unidades, 'produto' => $produto, 'dadosMonetarios' => $dadosMonetarios]);
+        return view('pages.app.cadastro.produtos.produtoedit', ['categorias' => $categorias,'unidades' => $unidades, 'produto' => $produto, 'dadosMonetarios' => $dadosMonetarios, 'impostos' => $impostos]);
     }
 
     /**

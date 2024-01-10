@@ -234,7 +234,7 @@ class OSController extends Controller
         //FIM FINANCEIRO
         */
         
-        // Cria as parcelas com base no valor total do contrato e na quantidade de parcelas
+        // Cria as parcelas com base no valor total da OS e na quantidade de parcelas
        
         $valorTaxa = ($os->formaPagamento->taxas['valor'] / 100 ) * $os->valorTotal; //CALCULANDO O VALOR DA  TAXA
         
