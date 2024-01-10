@@ -77,10 +77,14 @@
                                             <td>
                                                 <div class="d-flex px-2">
                                                     <div class="my-auto">
-                                                        <h6 class="mb-0 text-sm">{{$imposto['servico']['nome']}}</h6>
+                                                        @if(isset($imposto['servico']) && !is_null($imposto['servico']))
+                                                            <h6 class="mb-0 text-sm">{{$imposto['servico']['nome']}}</h6>
+                                                        @else
+                                                            <p class="text-danger">Serviço não definido</p>
+                                                        @endif
                                                     </div>
                                                 </div>
-                                            </td>      
+                                            </td>
                                     
                                             <td>
                                                 <div class="d-flex px-2">
