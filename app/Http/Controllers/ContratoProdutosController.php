@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContratoProdutos;
 use App\Models\Contrato;
+use App\Models\Produtos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -39,13 +40,30 @@ class ContratoProdutosController extends Controller
         ];
   
         $request->validate($regras, $feedback);
+
+        //calculo de impostos
+        $produtoComImpostos = Produtos::with('impostos')->find($request['produto_id']); //pega os impostos
+        $valorImpostos = 0;
+
+        foreach ($produtoComImpostos->impostos as $key => $imposto) {
+            $valorImpostos += ($imposto->aliquota / 100) * $request->preco;
+        }
+
+        $precoUNI = $valorImpostos + $request->preco;
+        $valorImpostos =  $valorImpostos * $request->quantidade;
+ 
+
         $dados = $request->all();
         $dados['valorTotal'] = $request->preco * $request->quantidade; //calculando o valor total
+        $dados['valorTotal'] += $valorImpostos; //SOMANDO OS IMPOSTOS AO TOTAL
 
-        ContratoProdutos::create($dados);
         $Contrato = Contrato::find($dados['contrato_id']);
         $Contrato->valorTotal += $dados['valorTotal'];
         $Contrato->save();
+
+        $dados['preco'] = $precoUNI;
+      
+        ContratoProdutos::create($dados);
         return back()->with('success', 'Produto adicionado ao contrato com sucesso!');
     }
 

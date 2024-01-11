@@ -58,7 +58,7 @@ class OsProdutosController extends Controller
         $dados = $request->all();
         $dados['valorTotal'] = $request->preco * $request->quantidade; //calculando o valor total
         $dados['valorTotal'] = $dados['valorTotal'] - $request->desconto; //calculando o desconto em cima do valor  total
-        $dados['valorTotal'] += $valorImpostos;
+        $dados['valorTotal'] += $valorImpostos; //SOMANDO OS IMPOSTOS AO TOTAL
 
 
         //alterando o estoque

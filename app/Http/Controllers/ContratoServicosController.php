@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContratoServicos;
 use App\Models\Contrato;
+use App\Models\Servico;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -39,13 +40,30 @@ class ContratoServicosController extends Controller
         ];
   
         $request->validate($regras, $feedback);
+
+        //CALCULANDO O VALOR DOS IMPOSTOS
+        $produtoComImpostos = Servico::with('impostos')->find($request['servico_id']); //pega os impostos
+        $valorImpostos = 0;
+
+        foreach ($produtoComImpostos->impostos as $key => $imposto) {
+            $valorImpostos += ($imposto->aliquota / 100) * $request->preco;
+        }
+
+        $precoUNI = $valorImpostos + $request->preco;
+        $valorImpostos =  $valorImpostos * $request->quantidade;    
+        //FIM CALCULO
+
         $dados = $request->all();
         $dados['valorTotal'] = $request->preco * $request->quantidade; //calculando o valor total
-        
-        ContratoServicos::create($dados);
+        $dados['valorTotal'] += $valorImpostos; //SOMANDO OS IMPOSTOS AO TOTAL
+
         $Contrato = Contrato::find($dados['contrato_id']);
         $Contrato->valorTotal += $dados['valorTotal'];
         $Contrato->save();
+
+        $dados['preco'] = $precoUNI;
+        ContratoServicos::create($dados);
+
         return back()->with('success', 'Serviço adicionado ao contrato com sucesso!');
     }
 

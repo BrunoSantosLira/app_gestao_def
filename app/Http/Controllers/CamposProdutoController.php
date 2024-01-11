@@ -35,12 +35,26 @@ class CamposProdutoController extends Controller
         $produto = Produtos::find($request->produto_id);
 
         $dados = $request->all();
+
+        //CALCULANDO O VALOR DOS IMPOSTOS
+        $produtoComImpostos = Produtos::with('impostos')->find($request['produto_id']); //pega os impostos
+        $valorImpostos = 0;
+       
+        
+        foreach ($produtoComImpostos->impostos as $key => $imposto) {
+            $valorImpostos += ($imposto->aliquota / 100) * $request->preco;
+        }
+        $precoUNI = $valorImpostos + $request->preco;
+        $valorImpostos =  $valorImpostos * $request->quantidade;
+
         $dados['valorTotal'] = $request->preco * $request->quantidade; //calculando o VALOR TOTAL
         $dados['valorTotal'] = $dados['valorTotal'] - $request->desconto; //calculando o DESCONTO
+        $dados['valorTotal'] += $valorImpostos; //SOMANDO OS IMPOSTOS AO TOTAL
         
         $checklist['valorTotal'] +=  $dados['valorTotal'];
         $checklist->save();
 
+        $dados['preco'] = $precoUNI;
         CamposProduto::create($dados);
         return back()->with('success', 'Campo adicionado com sucesso!');
     }
