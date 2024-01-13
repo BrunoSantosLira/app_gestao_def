@@ -61,15 +61,18 @@ class ServicoImpostoController extends Controller
      */
     public function edit(ServicoImposto $servicoImposto)
     {
-        //
+        $Servico = Servico::all();
+        return view('pages.app.financeiro.impostos.edit', ['imposto' => $servicoImposto, 'Servico' => $Servico]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ServicoImposto $servicoImposto)
+    public function update(Request $request, ServicoImposto $servico_imposto)
     {
-        //
+        $servico_imposto->update($request->all());
+        return back()->with('success', 'Serviço atualizado com sucesso!');
     }
 
     /**

@@ -59,17 +59,20 @@ class ImpostosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Impostos $impostos)
+    public function edit(Impostos $imposto)
     {
-        //
+        $produtos = Produtos::all();
+        return view('pages.app.financeiro.impostos.imposto_edit', ['imposto' => $imposto, 'produtos' => $produtos]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Impostos $impostos)
+    public function update(Request $request, Impostos $imposto)
     {
-        //
+        $imposto->update($request->all());
+        return back()->with('success', 'Serviço atualizado com sucesso!');
     }
 
     /**

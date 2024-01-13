@@ -1,5 +1,5 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage="cadastro"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="financeiro"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <x-navbars.navs.auth titlePage="cadastro de Taxas"></x-navbars.navs.auth>
@@ -64,6 +64,8 @@
                                                 <p class="text-sm font-weight-bold mb-0">{{$taxa->valor}}%</p>
                                             </td>
                                             <td>
+                                                <a target="_blank" href="{{route('taxa.edit', ['taxon' => $taxa->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.5em;"></i></a>
+
                                                 <form action="{{route('taxa.destroy', ['taxon' => $taxa->id])}}" class="d-inline-block" method="POST">
                                                     @csrf
                                                     @method('DELETE')

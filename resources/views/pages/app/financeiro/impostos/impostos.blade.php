@@ -46,7 +46,7 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            SERVIÇO
+                                            Produto
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -95,6 +95,8 @@
                                                 </div>
                                             </td>   
                                             <td>
+                                                <a target="_blank" href="{{route('impostos.edit', ['imposto' => $imposto->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.2em;"></i></a>
+
                                                 <form action="{{route('impostos.destroy', ['imposto' => $imposto->id])}}" class="d-inline-block" method="POST">
                                                     @csrf
                                                     @method('DELETE')

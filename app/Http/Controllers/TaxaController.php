@@ -47,17 +47,19 @@ class TaxaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Taxa $taxa)
+    public function edit(Taxa $taxon)
     {
-        //
+        return view('pages.app.cadastro.taxa.edit',['taxa' => $taxon]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Taxa $taxa)
+    public function update(Request $request, Taxa $taxon)
     {
-        //
+
+        $taxon->update($request->all());
+        return back()->with('success', 'Serviço atualizado com sucesso!');
     }
 
     /**

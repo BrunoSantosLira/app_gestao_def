@@ -94,6 +94,8 @@
                                                 </div>
                                             </td>   
                                             <td>
+                                                <a target="_blank" href="{{route('servico_imposto.edit', ['servico_imposto' => $imposto->id])}}"><i class="fa-solid fa-pen-to-square m-2" style="color: #1160e8; font-size:1.2em;"></i></a>
+
                                                 <form action="{{route('servico_imposto.destroy', ['servico_imposto' => $imposto->id])}}" class="d-inline-block" method="POST">
                                                     @csrf
                                                     @method('DELETE')
