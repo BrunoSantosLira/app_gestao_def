@@ -103,7 +103,7 @@
 
                             <div class="mt-3 mb-3">
                                 <label for="nome" class="form-label">Valor da taxa em %:</label>
-                                <input type="number" required class="form-control border border-2 p-2" id="valor" placeholder="Valor:" name="valor">
+                                <input type="number" required class="form-control border border-2 p-2" id="valor"  step="0.01" min="1" placeholder="Valor:" name="valor">
                             </div>
 
 
