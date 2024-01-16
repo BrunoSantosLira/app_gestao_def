@@ -45,7 +45,7 @@
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            SERVIÇO
+                                            SERVIÇO/CATEGORIA
                                             </th>
                                             <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -77,8 +77,8 @@
                                             <td>
                                                 <div class="d-flex px-2">
                                                     <div class="my-auto">
-                                                        @if(isset($imposto['servico']) && !is_null($imposto['servico']))
-                                                            <h6 class="mb-0 text-sm">{{$imposto['servico']['nome']}}</h6>
+                                                        @if(isset($imposto['categoria']) && !is_null($imposto['categoria']))
+                                                            <h6 class="mb-0 text-sm">{{$imposto['categoria']['nome']}}</h6>
                                                         @else
                                                             <p class="text-danger">Serviço não definido</p>
                                                         @endif
@@ -130,7 +130,7 @@
 
 
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Nome do servico</label>
+                                <label class="form-label">Nome do imposto</label>
                                 <input type="text" name="nome" class="form-control border border-2 p-2" required placeholder="Imposto">
                             </div>
 
@@ -140,10 +140,10 @@
                             </div>
 
                             <div class="mb-3 col-md-6">
-                                <label class="form-label">Serviço</label>
-                                <select name="servico_id" id="" class="form-control border border-2 p-2">
-                                    @foreach ($servicos as $servico)
-                                        <option value="{{$servico->id}}">{{$servico->nome}}</option>
+                                <label class="form-label">Categoria</label>
+                                <select name="categoria_id" id="" class="form-control border border-2 p-2">
+                                    @foreach ($categorias as $categoria)
+                                        <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>

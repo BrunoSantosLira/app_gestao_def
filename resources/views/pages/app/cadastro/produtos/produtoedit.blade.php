@@ -163,7 +163,6 @@
                         <div class="col-md-8 d-flex align-items-center">
                             <h6 class="mb-3">Impostos aplicados</h6>
                         </div>
-                        <button class="btn btn-outline-success btn-sm mt-3"  data-bs-toggle="modal" data-bs-target="#ModalAdicionarImposto">Adicionar Imposto <i class="fa-solid fa-plus fa-lg" style="font-size: 1.2em"></i></button>
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>

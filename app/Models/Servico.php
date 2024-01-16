@@ -9,11 +9,17 @@ use App\Models\OS;
 use App\Models\osServico;
 use App\Models\ContratoServicos;
 use App\Models\ServicoImposto;
+use App\Models\ServicoCategoria;
 
 class Servico extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome','preco','descricao'];
+    protected $fillable = ['nome','preco','descricao', 'categoria_id'];
+
+    public function categoria()
+    {
+        return $this->belongsTo(ServicoCategoria::class);
+    }
 
     public function checklists()
     {

@@ -133,6 +133,20 @@
                                     <label for="nome" class="form-label">Preço</label>
                                     <input type="number" name="preco" class="form-control border border-2 p-2" value='' step="0.01" min="0" placeholder="Preço">
                                 </div>
+
+
+                                <div class="mb-3">
+                                    <label for="categoria" class="form-label">Categoria:</label>
+                                    <select id="categoria" class="form-select p-2" name="categoria_id">
+                                        @foreach ($categorias as $key => $categoria)
+                                            <option class="" value="{{$categoria['id']}}">{{$categoria['nome']}}  ({{$categoria['id']}})</option>
+                                        @endforeach
+                                    </select>
+                                    @error('estoqueAtual')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
                                 <div class="mb-3 col-md-12">
                                     <label for="floatingTextarea2">Descrição</label>
                                     <textarea class="form-control border border-2 p-2"

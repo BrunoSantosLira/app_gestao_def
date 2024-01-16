@@ -73,6 +73,11 @@
                         </a>
                     </li>
                     <li>
+                        <a class="dropdown-item" href="{{route('servico_categoria.index')}}">
+                            Serviços:Categorias
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" href="{{route('clientes.index')}}">
                             Clientes
                         </a>

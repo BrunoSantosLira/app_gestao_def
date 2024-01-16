@@ -23,6 +23,9 @@ use App\Http\Controllers\ChecklistProdutosController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\ServicoCategoriaController;
+
+
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\CampoController;
 use App\Http\Controllers\CamposProdutoController;
@@ -120,6 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::resource('conta', ContaController::class);
+	Route::resource('servico_categoria', ServicoCategoriaController::class);
 	Route::resource('conta_entradas', ContaEntradasController::class);
 
 	Route::resource('ContasPagas', ContasPagaController::class);

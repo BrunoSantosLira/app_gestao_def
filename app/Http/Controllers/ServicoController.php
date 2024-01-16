@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Servico;
+use App\Models\ServicoCategoria;
 use App\Models\Checklist;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class ServicoController extends Controller
     public function index(Request $request)
     {
         $query  = Servico::with('impostos');
+        $categorias = ServicoCategoria::all();
 
         // Verifica se foi fornecida na requisição
         if ($request->filled('nome')) {
@@ -23,7 +25,7 @@ class ServicoController extends Controller
         }
 
         $servicos = $query->paginate(10);
-        return view('pages.app.servicos', ['servicos' => $servicos]);
+        return view('pages.app.servicos', ['servicos' => $servicos, 'categorias' => $categorias]);
     }
 
     /**
@@ -74,7 +76,8 @@ class ServicoController extends Controller
      */
     public function edit(Servico $servico)
     {
-        return view('pages.app.servicoEdit', ['servico' => $servico, 'impostos' => $servico->impostos]);
+        $categorias = ServicoCategoria::all();
+        return view('pages.app.servicoEdit', ['servico' => $servico, 'impostos' => $servico->impostos, 'categorias' => $categorias]);
     }
 
     /**
