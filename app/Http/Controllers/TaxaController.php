@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Taxa;
+use App\Models\Categorias;
 use App\Models\FormaPagamento;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ class TaxaController extends Controller
      */
     public function store(Request $request)
     {
+
         Taxa::create($request->all());
         return back()->with('success', 'Taxa adicionada com sucesso!');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Impostos;
 use App\Models\Produtos;
+use App\Models\Categorias;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class ImpostosController extends Controller
     {
         $impostos = Impostos::with('produto')->get();
         $produtos = Produtos::all();
-        return view('pages.app.financeiro.impostos.impostos', ['impostos' => $impostos, 'produtos' => $produtos]);
+        $categorias = Categorias::all();
+        return view('pages.app.financeiro.impostos.impostos', ['impostos' => $impostos, 'produtos' => $produtos, 'categorias' => $categorias]);
 
     }
 
@@ -44,7 +46,18 @@ class ImpostosController extends Controller
   
         $request->validate($regras, $feedback);
 
-        Impostos::create($request->all());
+        $produtos = Produtos::where('categoria_id', $request->categoria_id)->get();
+       
+            // Criar um imposto para cada produto
+            foreach ($produtos as $produto) {
+                $impostoProduto = Impostos::create([
+                    'nome' => $request->nome,
+                    'aliquota' => $request->aliquota,
+                    'produto_id' => $produto->id,
+                    'categoria_id' => $request->categoria_id,
+                    // Adicione outros campos conforme necessário
+                ]);
+            }
         return back()->with('success', 'Imposto adicionado com sucesso!');
     }
 

@@ -24,8 +24,6 @@
                             <li class="text-danger">{{ $error }}</li>
                             @endforeach
                         </div>
-
-                       
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
                                 <table class="table align-items-center justify-content-center mb-0">

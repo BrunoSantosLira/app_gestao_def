@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\FormaPagamento;
+use App\Models\Categorias;
 
 class Taxa extends Model
 {
@@ -15,6 +16,5 @@ class Taxa extends Model
     {
         return $this->hasMany(FormaPagamento::class, 'taxa_id', 'id');
     }
-
 
 }

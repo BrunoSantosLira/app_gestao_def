@@ -149,6 +149,15 @@
                                 </select>
                             </div>
 
+                            <div class="mt-3 mb-3">
+                                <label class="form-label">Categoria</label>
+                                <select name="categoria_id" id="" class="form-control border border-2 p-2">
+                                    @foreach ($categorias as $categoria)
+                                        <option value="{{$categoria->id}}">{{$categoria->categoria}} - ({{$categoria->id}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">Adicionar</button>
                         </form>
                     </div>
