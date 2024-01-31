@@ -26,7 +26,44 @@ class VendasController extends Controller
         }
 
         $vendas = $query->paginate(5);
-        return view('pages.app.financeiro.vendas_compras.vendas', ['vendas' => $vendas]);
+
+                // Obter a data de início do ano corrente (1º de janeiro)
+        $dataInicio = \Carbon\Carbon::now()->startOfYear();
+
+        // Obter a data de fim do ano corrente (31 de dezembro)
+        $dataFim = \Carbon\Carbon::now()->endOfYear();
+
+        // Consultar o banco de dados para obter o valor total das vendas de janeiro a dezembro
+        $valorVendas = Vendas::whereBetween('created_at', [$dataInicio, $dataFim])
+            ->sum('valor');
+
+        $imposto = 0;
+        if($valorVendas <= 180000){
+            $imposto = (4.50 / 100) * $valorVendas;
+            $impostoqtd= 4.50;
+        }
+        if($valorVendas >= 180000.01 && $valorVendas <= 360000){
+            $imposto = (9.00 / 100) * $valorVendas;
+            $impostoqtd= 9.00;
+        }
+        if($valorVendas >= 360000.01 && $valorVendas <= 720000){
+            $imposto = (10.20 / 100) * $valorVendas;
+            $impostoqtd= 10.20;
+        }
+        if($valorVendas >= 720000.01 && $valorVendas <= 1800000){
+            $imposto = (14.00 / 100) * $valorVendas;
+            $impostoqtd= 10.20;
+        }
+        if($valorVendas >= 1800000.01 && $valorVendas <= 3600000.01){
+            $imposto = (22.00 / 100) * $valorVendas;
+            $impostoqtd= 22.20;
+        }
+        if($valorVendas >= 3600000.01 && $valorVendas <= 4800000.01){
+            $imposto = (33.00 / 100) * $valorVendas;
+            $impostoqtd= 33.20;
+        }
+
+        return view('pages.app.financeiro.vendas_compras.vendas', ['impostoqtd' => $impostoqtd ,'imposto' => $imposto,'vendas' => $vendas, 'valorVendas' => $valorVendas]);
     }
 
     /**

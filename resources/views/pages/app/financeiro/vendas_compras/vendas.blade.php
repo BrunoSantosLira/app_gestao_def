@@ -14,6 +14,8 @@
                                 <h6 class="text-white text-capitalize ps-3">Listagem de vendas</h6>
                             </div>
 
+                            
+
                             <!-- BUSCA -->
                             <form class="row m-3" method="GET" action="{{ route('vendas.index') }}">
                                 <div class="col-md-3">
@@ -41,6 +43,50 @@
                             </form>
                             <hr>
                             <!-- FIM BUSCA -->
+
+                            
+                            <!-- BUSCA -->
+                            <form class="row m-3" method="GET" action="{{ route('vendas.index') }}">
+                                <div class="col-md-3">
+                                    <div class="card">
+                                        <div class="card-header p-3 pt-2">
+                                            <div
+                                                class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                                                <i class="fa-solid fa-money-bill"></i>                                        </div>
+                                            <div class="text-end pt-1">
+                                                <p class="text-sm mb-0 text-capitalize">Total de vendas/ano</p>
+                                                <h4 class="mb-0">R${{$valorVendas}}</h4>
+                                            </div>
+                                            <small>De Janeiro a Dezembro</small>
+                                        </div>
+                                        <hr class="dark horizontal my-0">
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="card">
+                                        <div class="card-header p-3 pt-2">
+                                            <div
+                                                class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                                                <i class="fa-solid fa-magnifying-glass-dollar"></i>                                 </div>
+                                            <div class="text-end pt-1">
+                                                <p class="text-sm mb-0 text-capitalize">Imposto a pagar</p>
+                                                <h4 class="mb-0">R${{$imposto}}</h4>
+                                            </div>
+                                            <small>{{$impostoqtd}}%</small>
+                                        </div>
+                                        <hr class="dark horizontal my-0">
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+
+                                </div>
+                            </form>
+                            <hr>
+                            <!-- FIM BUSCA -->
                         
                             @if (Session::has('success'))
                                 <div class="alert alert-success text-white">
@@ -56,6 +102,8 @@
                             <li class="text-danger">{{ $error }}</li>
                             @endforeach
                         </div>
+
+                        
                 
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0"><!-- TABELA AQUI -->
