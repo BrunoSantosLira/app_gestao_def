@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div class="card">
-                        <div class="card-header p-3 pt-2">
+                        <div  class="card-header p-3 pt-2">
                             <div
                                 class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
                                 <i class="fa-solid fa-users"></i>
@@ -101,7 +101,7 @@
                 <div class="col-lg-12 col-md-12 mt-4 mb-4">
                     <div class="card z-index-2 ">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                            <div style="background-color: #61655d" class=" shadow-primary border-radius-lg py-3 pe-1">
                                 <div class="chart">
                                     <canvas id="chart-bars" class="chart-canvas" height="300"></canvas>
                                 </div>
@@ -125,7 +125,7 @@
                 <div class="col-lg-12 col-md-12 mt-4 mb-4">
                     <div class="card z-index-2 ">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                            <div class="bg-gradient-info shadow-primary border-radius-lg py-3 pe-1">
+                            <div style="background-color: #61655d" class=" shadow-primary border-radius-lg py-3 pe-1">
                                 <div class="chart">
                                     <canvas id="vendasMeses" class="chart-canvas" height="300"></canvas>
                                 </div>
