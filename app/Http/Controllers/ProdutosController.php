@@ -27,7 +27,11 @@ class ProdutosController extends Controller
             $query->where('codigo_de_barras', 'like', "$request->codigo_de_barras%");
         }
 
-        $produtos = $query->paginate(5);
+        if ($request->qtde_itens) {
+            $produtos = $query->paginate($request->qtde_itens);
+        }else{
+            $produtos = $query->paginate(25);
+        }
 
         $listaProdutos = Produtos::all();
 

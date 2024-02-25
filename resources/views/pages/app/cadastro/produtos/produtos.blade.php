@@ -37,6 +37,11 @@
                                 <h5>Cod. Barra</h5>
                                 <input type="text" name="codigo_de_barras" class="form-control border border-2 p-2" placeholder="Código de barras do produto">
                             </div>
+                            
+                            <div class="col-md-3">
+                                <h5>Quantidade de itens</h5>
+                                <input type="number" name="qtde_itens" class="form-control border border-2 p-2" placeholder="Insira a quantidade de itens exibida">
+                            </div>
 
                             <div class="col-md-2">
                                 <h5>Buscar</h5>

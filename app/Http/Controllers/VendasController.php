@@ -25,7 +25,7 @@ class VendasController extends Controller
             $query->whereDate('created_at', $request->created_at);
         }
 
-        $vendas = $query->paginate(5);
+        $vendas = $query->paginate(20);
 
                 // Obter a data de início do ano corrente (1º de janeiro)
         $dataInicio = \Carbon\Carbon::now()->startOfYear();
