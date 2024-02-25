@@ -72,7 +72,7 @@
                                     </ul>
                                 </nav>
 
-                                <table class="table align-items-center justify-content-center mb-0">
+                                <table class="table align-items-center justify-content-center mb-0 table-hover">
                                     <thead>
 
                                         <tr>
