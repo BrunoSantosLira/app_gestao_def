@@ -31,6 +31,7 @@ class ProdutosController extends Controller
             $produtos = $query->paginate($request->qtde_itens);
         }else{
             $produtos = $query->paginate(25);
+
         }
 
         $listaProdutos = Produtos::all();

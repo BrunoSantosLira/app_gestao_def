@@ -61,7 +61,7 @@
                                         @foreach ($produtos->links()->elements[0] as $page => $url)
                                             @php
                                                 // Adiciona os parâmetros de filtro às URLs de paginação
-                                                $url = $url . "&id=" . request('id') . "&codigo_de_barras=" . request('codigo_de_barras' );
+                                                $url = $url . "&id=" . request('id') . "&codigo_de_barras=" . request('codigo_de_barras' ) . "&qtde_itens=" . request('qtde_itens' );
                                             @endphp
                                 
                                             <li class="page-item {{ $produtos->currentPage() == $page ? 'active' : '' }}">
