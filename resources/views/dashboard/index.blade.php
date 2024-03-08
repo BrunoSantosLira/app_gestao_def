@@ -113,7 +113,7 @@
                             <hr class="dark horizontal">
                             <div class="d-flex ">
                                 <span class="text-success text-sm font-weight-bolder">
-                                    <a href="{{route('produtos.index')}}">Veja mais</a>
+                                    <a href="{{route('vendas.index')}}">Veja mais</a>
                                 </span>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                             <hr class="dark horizontal">
                             <div class="d-flex ">
                                 <span class="text-success text-sm font-weight-bolder">
-                                    <a href="{{route('produtos.index')}}">Veja mais</a>
+                                    <a href="{{route('vendas.index')}}">Veja mais</a>
                                 </span>
                             </div>
                         </div>
